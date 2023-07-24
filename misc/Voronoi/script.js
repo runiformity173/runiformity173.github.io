@@ -6,6 +6,7 @@ let HEIGHT = 600;
 let CELLS = [];
 let AUTO_RELAX = true;
 let NEW_POINTS = [];
+let AUTOMATIC = true;
 Array.prototype.includes2=function(n){for(var i of this){let r=0;for(l in n)l in i&&i[l]==n[l]&&r++;if(2==r)return!0}return!1};
 function voronoi(sites) {
   var bbox = {xl:0, xr:800, yt:0, yb:600};
@@ -66,6 +67,10 @@ function display(relax=false,t=true) {
     }
     while (POINTS.length < POINT_N) {
       POINTS.push(NEW_POINTS.pop());
+    }
+    if (AUTOMATIC) {
+      POINTS.splice(Math.floor(Math.random()*POINT_N), 1);
+      POINTS.push({x:Math.random()*WIDTH,y:Math.random()*HEIGHT});
     }
   }
   document.getElementById("point-display").innerHTML = POINTS.length;
