@@ -47,9 +47,11 @@ function removeSpell(spell2) {
   let spelll = spell2;
   let vv = JSON.parse(getCookie(window.location.href.split("?list=")[1])).sort(nameSort);
   let final = [];
+  let d = true;
     for (const spell in vv) {
-      if (vv[spell]["linkd"] != spelll) {
+      if (vv[spell]["linkd"] != spelll && d) {
         final.push(vv[spell]);
+        d = false;
       }
       
     }
