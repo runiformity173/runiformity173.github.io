@@ -1,0 +1,15 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin:0px;
+  background-color:#000000;
+}
+#my-canvas {
+  height:100%;
+  width:auto;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}

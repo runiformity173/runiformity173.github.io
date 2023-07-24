@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Voronoi</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <canvas id="output" width="256" height="256"></canvas>
+  
+  <button onclick="display()" style="position:absolute;right:0px;cursor:pointer;">Voronoi</button>
+  <button onclick="display(true)" style="position:absolute;right:0px;cursor:pointer;top:30px;">Relax</button>
+  <span style="position:absolute;right:0px;top:60px;">Auto-Relax: <input type="checkbox" checked onchange="AUTO_RELAX=this.checked;"></span>
+  <span style="position:absolute;right:0px;top:90px;">Points: <input id="point-n" type="number" value="50"></span>
+  <span style="position:absolute;right:0px;top:150px;"><p>Current Points: <span id="point-display"></span></p></span>
+  <span style="position:absolute;right:0px;top:180px;"><p>Average Area: <span id="average-area"></span></p></span>
+  <span style="position:absolute;right:0px;top:210px;width:200px;"><p>Standard Deviation Area: <span id="stdev-area"></span></p></span>
+  
+  <span style="position:absolute;right:0px;bottom:0px;"><p>Left click to add a point.<br>Right click to remove the point you're hovering over.<br>With a small amount of points, the page can black out.</p></span>
+  
+
+  <script src="fortune.min.js"></script>
+  <script src="script.min.js"></script>
+</body>
+
+</html>
