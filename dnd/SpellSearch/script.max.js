@@ -76,7 +76,7 @@ function start() {
     const node = document.createElement("a");
 const textnode = document.createTextNode(f["name"]+"");
 node.appendChild(textnode);
-    node.href = "https://dndspellsearch.ezhgamer173.repl.co/display/?spell="+f["name"].toLowerCase().replaceAll("-","--").replaceAll(" ","-");
+    node.href = "display/?spell="+f["name"].toLowerCase().replaceAll("-","--").replaceAll(" ","-");
     node.target = "_blank";
 document.getElementById("output").appendChild(node);
     document.getElementById("output").appendChild(document.createElement("br"));
