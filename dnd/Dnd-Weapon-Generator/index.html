@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Weapon Generator</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="bootstrap.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+
+<body class="bg-dark text-light" onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))">
+<script src="bootstrap.js"></script>
+  <script src="tables/history.js"></script>
+  <script src="tables/origin.js"></script>
+  <script src="tables/property.js"></script>
+  <script src="tables/quirk.js"></script>
+  <script src="tables/weapon.js"></script>
+  <script src="script.js"></script>
+
+
+  <input type="number" id="override" min="-1" max="4" value="-1" onchange="checkDisable(this)">
+  <label for="override" data-bs-toggle="tooltip" data-bs-title="When set to -1, uses the chances. When above -1, always has that amount of attributes">Override Chances</label><br><br>
+  
+  <label for="history">History chance (%)</label>
+  <input id="history" type="number" value="50" autocomplete="off" class="chanceInput"/><br>
+  <label for="origin">Origin chance (%)</label>
+  <input id="origin" type="number" value="50" autocomplete="off" class="chanceInput"/><br>
+  <label for="property">Property chance (%)</label>
+  <input id="property" type="number" value="50" autocomplete="off" class="chanceInput"/><br>
+  <label for="quirk">Quirk chance (%)</label>
+  <input id="quirk" type="number" value="50" autocomplete="off" class="chanceInput"/><br><br>
+  <label for="weapon">Weapon (leave "random" for random)</label>
+  <input id="weapon" type="text" value="random" autocomplete="off"/><br><br>
+
+  <center><button onclick="start();" class="btn btn-outline-light">Roll</button></center>
+
+  <p id=output></p>
+</body>
+
+</html>

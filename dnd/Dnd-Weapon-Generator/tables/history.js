@@ -1,0 +1,10 @@
+let histories = {
+    "Arcane":"ARCANE<br>This item was created for an ancient order of spellcasters and bears the order's symbol.",
+  "no_name1":"BANE<br>This item was created by the foes of a particular culture or kind of creature. If the culture or creatures are still around, they might recognize the item and single out the bearer as an enemy.",
+    "Heroic":"HEROIC<br>A great hero once wielded this item. Anyone who's familiar with the item's history expects great deeds from the new owner.",
+    "Ornamental":"ORNAMENT<br>The item was created to honor a special occasion. Inset gemstones, gold or platinum inlays, and gold or silver filigree adorn its surface.",
+    "Fabled":"PROPHECY<br>The item features in a prophecy: its bearer is destined to play a key role in future events. Someone else who wants to play that role might try to steal the item, or someone who wants to prevent the prophecy from being fulfilled might try to kill the item's bearer.",
+    "Holy":"RELIGIOUS<br>This item was used in religious ceremonies dedicated to a particular deity. It has holy symbols worked into it. The god's followers might try to persuade its owner to donate it to a temple, steal the item for themselves, or celebrate its use by a cleric or paladin of the same deity.",
+    "Sinister":"SINISTER<br>This item is linked to a deed of great evil such as a massacre or an assassination. It might have a name or be closely associated with a villain who used it. Anyone familiar with the item's history is likely to treat it and its owner with suspicion.",
+    "Symbolic":"SYMBOL OF POWER<br>This item was once used as symbol of royal regalia or as a badge of high office. Its former owner or that person's descendants might desire it, or someone might mistakenly assume its new owner is the item's legitimate inheritor."
+}

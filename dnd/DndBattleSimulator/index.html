@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Combat Simulation</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <script src="script.js"></script>
+  <script src="monsters.js"></script>
+</head>
+<body onload="duplicateChoice()" id="bod">
+  <h1>Battle Simulator</h1>
+  <select id="m1" class="left" onchange="checkPlayer('1')">
+    <option>Monster</option>
+    <option>Player</option>
+  </select>
+  <select id="p1" class="left-down">
+    <option>Evie</option>
+  </select>
+    <select id="mm1" class="left-down">
+    <option>Goblin</option>
+  </select>
+  <div class="centered">
+    Sims: <input type="number" id="sims"><br>
+  <button onclick="start()" id="startButton">Start!</button></div>
+  <p id="output"></p>
+</body>
+
+</html>
