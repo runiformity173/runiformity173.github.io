@@ -1,0 +1,56 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+.remove {
+  border-radius:2px;
+  cursor:pointer;
+  position:relative;
+  top:3px;
+  display:inline-block;
+  background-color:red;
+  width:19px;
+  height:19px;
+  text-align:center;
+  transition:0.075s ease-out;
+}
+.remove:hover {
+  background-color:darkred;
+}
+.remove p {
+  transform:translateY(-4px);
+}
+.no-select {
+  user-select:none;
+}
+br {
+  user-select:none;
+}
+#all2 {
+  position:absolute;
+  left:32%;
+  width:36%;
+  height:100%;
+}
+
+#checkboxes {
+  display:none;
+}
+.add {
+  border-radius:2px;
+  cursor:pointer;
+  position:relative;
+  top:3px;
+  display:inline-block;
+  background-color:lime;
+  width:19px;
+  height:19px;
+  text-align:center;
+  transition:0.075s ease-out;
+}
+.add:hover {
+  background-color:green;
+}
+.add p {
+  transform:translateY(-4px);
+}

@@ -1,0 +1,8 @@
+Aseir,Bardeid,Haseid,Khemed,Mehmed,Sudeiman,Zasheir
+Darvin,Dorn,Evandur,Gorstag,Grim,Helm,Malark,Morn,Randal,Stedd
+Bor,Fodel,Glar,Grigor,Igan,Ivor,Kosef,Mival,Orel,Pavel,Sergor
+Ander,Blath,Bran,Frath,Geth,Lander,Luth,Malcer,Stor,Taman,Urth
+Aoth,Bareris,Ehput-Ki,Kethoth,Mumed,Ramas,So-Kehur,Thazar-De,Urhur
+Borivik,Faurgar,Jandar,Kanithar,Madislak,Ralmevik,Shaumar,Vladislak
+An,Chen,Chi,Fai,Jiang,Jun,Lian,Long,Meng,On,Shan,Shui,Wen
+Anton,Diero,Marcon,Pieron,Rimardo,Romero,Salazar,Umbero

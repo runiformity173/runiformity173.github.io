@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Downtime Sim</title>
+  <link href="../style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
+  <script src="script.max.js"></script>
+  <script src="../bootstrap.bundle.min.js"></script>
+  <div id="header"></div>
+  <center><input id="bonus1" type="number" placeholder="Bonus" autocomplete="off"><input id="adv1" type="checkbox"><label for="adv1">Advantage</label><br><input id="bonus2" type="number" placeholder="Bonus" autocomplete="off"><input id="adv2" type="checkbox"><label for="adv2">Advantage</label><br><input id="bonus3" type="number" placeholder="Bonus" autocomplete="off"><input id="adv3" type="checkbox"><label for="adv3">Advantage</label><br></center>
+  <center><input id="target" type="number" placeholder="DC" autocomplete="off"><br></center>
+  <br>
+  <center><button onclick='start()' class="btn btn-outline-light">Run</button></center>
+  
+  <br><br>
+ <p id="output" class="text-light search"></p>
+  
+</body>
+
+</html>

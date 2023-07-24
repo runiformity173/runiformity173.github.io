@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Feat Search</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body class="bg-dark text-light no-select">
+  <script src="all_feats.js"></script>
+  <script src="script.max.js"></script>
+  <script src="bootstrap.bundle.min.js"></script>
+  <div id="header"><br><h5 class="text-light">Ability score you need a bonus to</h1></div>
+  <div id="filters">
+    <span id="col2">
+      <input type="radio" id="level0" name="score" value="strength" class="levelRadio" checked>
+      <label for="level0">Strength</label><br>
+      <input type="radio" id="level1" name="score" value="dexterity" class="levelRadio">
+      <label for="level1">Dexterity</label><br>
+      <input type="radio" id="level2" name="score" value="constitution" class="levelRadio">
+      <label for="level2">Constitution</label><br>
+      <input type="radio" id="level3" name="score" value="intelligence" class="levelRadio">
+      <label for="level3">Intelligence</label><br>
+      <input type="radio" id="level4" name="score" value="wisdom" class="levelRadio">
+      <label for="level4">Wisdom</label><br>
+      <input type="radio" id="level5" name="score" value="charisma" class="levelRadio">
+      <label for="level5">Charisma</label><br>
+    </span>
+  </div>
+  <br><br><br><br><br><br><br><br>
+  <center><button onclick='start()' class="btn btn-outline-light">Filter</button></center>
+ <p id="output" class="text-light search"></p>
+  
+</body>
+
+</html>
