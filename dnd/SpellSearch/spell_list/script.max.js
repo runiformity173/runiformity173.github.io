@@ -49,8 +49,9 @@ function removeSpell(spell2) {
   let final = [];
   let d = true;
     for (const spell in vv) {
-      if (vv[spell]["linkd"] != spelll && d) {
+      if (vv[spell]["linkd"] != spelll) {
         final.push(vv[spell]);
+      } else if (d) {
         d = false;
       }
       
