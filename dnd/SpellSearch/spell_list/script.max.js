@@ -55,7 +55,6 @@ function removeSpell(spell2) {
         d = false;
       } else {
         final.push(vv[spell]);
-
       }
       
     }
