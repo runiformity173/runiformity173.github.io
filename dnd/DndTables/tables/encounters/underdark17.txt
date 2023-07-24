@@ -1,0 +1,43 @@
+100
+1 1d4 grick alphas
+2 2d8 spectators
+3 3d6 minotaurs or 2d8 kuo-toa monitors
+5 2d8 grells
+7 2d10 phase spiders
+9 4d4 hell hounds
+11 1d6 + 2 ropers
+13 2d10 wights
+15 3d6 doppelgangers
+17 1d8 + 1 chimeras
+19 1d4 cloakers
+21 1d4 hobgoblin captains with 5d10 hobgoblins
+22 1d8 + 1 earth elementals
+24 2d4 vampire spawn
+26 3d6 minotaurs
+28 A 30-foot-tall inverted black pyramid floating 1 inch above the floor in a large cave
+31 1d10 beholder zombies
+33 1d4 mind flayer arcanists
+35 1d6 + 2 otyughs
+37 1d12 trolls
+39 1d10 wraiths
+41 A beautiful obsidian sculpture of a panther lying on the floor
+44 1d4 drow mages with 1d6 drow elite warriors
+46 1d4 spirit nagas
+48 1d8 + 1 salamanders
+50 2d4 umber hulks
+52 1d10 xorn
+54 1 young red shadow dragon
+57 2d4 fomorians
+60 1d8 + 1 driders
+63 1d20 + 20 spiders crawling on the walls of a web-filled cave
+66 1d4 fire giants
+69 1d10 mind flayers
+71 2d4 stone giants
+74 1d12 cyclopes
+77 A large cave in which stands a 50-foot-tall idol of Blibdoolpoolp
+81 1d3 dao
+86 1d4 beholders
+91 1d4 behirs
+94 1 death tyrant
+97 1d3 purple worms
+100 2d4 aboleths

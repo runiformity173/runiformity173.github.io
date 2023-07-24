@@ -1,0 +1,25 @@
+100
+1 1 young green dragon
+6 1 treant
+11 1 guardian naga
+14 1d10 revenants
+17 1d8 + 1 unicorns
+20 1d3 grick alphas
+23 For a few hundred feet, wherever the characters step, flowers bloom and emit soft light.
+26 1 young gold dragon
+29 1d6 + 2 shambling mounds
+32 2d4 werebears
+35 1d4 oni
+38 4d6 + 10 elves living in a small community in the treetop
+41 1d6 + 2 gorgons
+44 2d4 trolls
+47 1d4 giant apes
+50 1d3 yuan-ti abominations
+53 1d3 young green dragons
+63 A 50-foot-tall stone statue of an elf warrior with hand raised, palm out, as if to forbid travelers from coming this way
+66 1d4 treants
+76 A cairn set atop a low hill
+81 1 adult gold dragon
+91 1 ancient green dragon
+97 2d4 + 1 treants
+100 1 ancient gold dragon

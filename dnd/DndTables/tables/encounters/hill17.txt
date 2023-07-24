@@ -1,0 +1,23 @@
+100
+1 1d2 rocs
+2 1 young red dragon
+6 2d6 ettins
+11 1d4 bulettes
+16 1d10 revenants
+21 The white outline of an enormous horse carved into the side of a high hill
+26 1d6 + 1 gorgons
+31 2d4 + 1 trolls
+36 The scorched remains of 2d10 humanoids littering a hillside
+41 2d4 hill giants
+46 1d6 + 2 werebears
+51 2d4 galeb duhr
+56 1d4 + 2 wyverns
+61 A massive boulder partly buried in the earth as if it fell or was thrown there
+66 1 adult copper dragon
+71 1d6 + 3 cyclopes
+76 The stub of an old stone tower jutting from the top of a hill
+81 2d4 stone giants
+86 1 adult red dragon
+91 1 ancient copper dragon
+97 1 ancient red dragon
+100 1d2 adult red dragons with 1d3 young red dragons

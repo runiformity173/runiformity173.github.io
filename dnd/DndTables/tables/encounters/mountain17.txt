@@ -1,0 +1,21 @@
+100
+1 1d10 bulettes
+6 1d8 + 1 chimeras
+11 1 adult silver dragon
+16 1d8 + 1 wyverns
+21 A massive boat perched atop a mountain
+26 2d4 galeb duhr
+31 1d4 frost giants
+36 A wooded valley haunted by secretive and reclusive elves who tell warily of their master: a mad wizard who lives in the heart of the valley
+41 1d10 air elementals
+46 1d6 + 3 trolls
+51 1 adult red dragon
+56 1d4 cloud giants
+61 A waterfall hundreds of feet high that drops into a clear pool
+66 1d3 fire giants
+71 2d4 stone giants
+76 A force of 100 dwarves (veterans) standing guard at a mountain pass, permitting no passage until a traveler pays 100 gp (if on foot) or 200 gp (if mounted)
+81 1d4 rocs
+86 1d4 young red dragons
+91 1 ancient silver dragon
+97 1 ancient red dragon

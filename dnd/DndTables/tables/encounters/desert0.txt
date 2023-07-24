@@ -1,0 +1,58 @@
+100
+1 3d8 scorpions
+2 2d4 vultures
+3 1 abandoned mule
+4 2d6 commoners with 2d4 camels bound for a distant city
+5 1d6 flying snakes
+6 2d6 hyenas or 2d6 jackals
+7 1d6 guards escorting a noble to the edge of the desert, all of them astride camels
+8 1d6 cats
+9 1 pseudodragon
+10 1d4 poisonous snakes
+11 2d4 stirges
+14 1d6 + 2 giant wolf spiders
+16 1 scout
+18 2d4 giant poisonous snakes
+21 Single-file tracks marching deeper into the desert
+26 4d4 kobolds
+28 1 jackalwere
+30 3d6 tribal warriors
+32 1d6 giant lizards
+34 1 swarm of insects
+36 An oasis surrounded by palm trees and containing the remnants of an old camp
+41 3d6 bandits
+45 1d4 constrictor snakes
+47 2d4 winged kobold
+49 1 dust mephit
+51 1d3 + 1 giant toads
+53 1d4 giant spiders
+55 1 druid
+56 2d4 hobgoblins
+58 1 wight
+59 1 ogre
+61 A brass lamp lying on the ground
+66 1d4 giant vultures
+68 1 phase spider
+69 1 giant constrictor snake
+70 1 gnoll pack lord with 1d3 giant hyenas
+72 1d6 + 2 gnolls
+73 1 mummy
+75 1d3 half-ogres
+76 A pile of humanoid bones wrapped in rotting cloth
+81 1 lamia
+83 1 hobgoblin captain with 2d6 hobgoblins
+84 2d4 death dogs
+85 1d4 giant scorpions
+87 1 yuan-ti malison with 1d4 + 1 yuan-ti purebloods
+88 1 bandit captain with 1 druid and 3d6 bandits
+90 2d4 thri-kreen
+91 1 air elemental
+92 1d3 couatls
+93 1 fire elemental
+94 1d4 gnoll fangs of Yeenoghu
+95 1 revenant
+96 1d4 weretigers
+97 1 cyclops
+98 1 young brass dragon
+99 1 medusa
+100 1 yuan-ti abomination

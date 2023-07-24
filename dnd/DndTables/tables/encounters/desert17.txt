@@ -1,0 +1,20 @@
+100
+1 1 adult brass dragon
+6 1d2 yuan-ti abominations with 2d10 + 5 yuan-ti malisons and 4d6 + 6 yuan-ti purebloods
+11 1d6 + 2 medusas
+15 1d2 purple worms
+19 2d4 cyclopes
+23 An abandoned city made from white marble, empty during the day. At night, harmless apparitions roam the streets, replaying the final moments of their lives.
+26 1d3 young blue dragons
+31 1 mummy lord
+36 1d4 hours of extreme heat (see chapter 5 of the Dungeon Master's Guide)
+41 1d3 guardian nagas
+51 1d4 efreet
+61 An old signpost identifying a single destination, called Pazar
+64 1d4 rocs
+73 1d3 gynosphinxes
+81 1 adult blue dracolich
+86 1 androsphinx
+91 1 ancient brass dragon
+97 1 ancient blue dragon
+100 1d4 adult brass dragons

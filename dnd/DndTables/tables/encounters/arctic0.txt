@@ -1,0 +1,40 @@
+100
+1 1 giant owl
+2 1d6 + 3 kobolds
+6 1d4 + 3 trappers (commoners)
+9 1 owl
+11 2d4 blood hawks
+13 2d6 bandits
+18 1d3 winged kobolds with 1d6 kobolds
+21 The partially eaten carcass of a mammoth, from which 1d4 weeks of rations can be harvested.
+26 2d8 hunters (tribal warriors)
+30 1 half-ogre
+36 Single-file tracks in the snow that stop abruptly
+41 1d3 ice mephits
+46 1 brown bear
+51 1d6 + 1 orcs
+54 1 polar bear
+56 1d6 scouts
+58 1 saber-toothed tiger
+61 A frozen pond with a jagged hole in the ice that appears recently made
+66 1 berserker
+69 1 ogre
+71 1 griffon
+73 1 druid
+76 3d4 refugees (commoners) fleeing from orcs
+81 1d3 veterans
+82 1d4 orogs
+83 2 brown bears
+84 1 orc Eye of Gruumsh and 2d8 orcs
+85 1d3 winter wolves
+86 1d4 yetis
+88 1 half-ogre
+89 1d3 manticores
+90 1 bandit captain with 2d6 bandits
+91 1 revenant
+92 1 troll
+94 1 werebear
+96 1 young remorhaz
+98 1 mammoth
+99 1 young white dragon
+100 1 frost giant

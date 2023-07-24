@@ -1,0 +1,9 @@
+100
+1 Potion of healing
+51 Spell scroll (cantrip)
+61 Potion of climbing
+71 Spell scroll (1st level)
+91 Spell scroll (2nd level)
+95 Potion of greater healing
+99 Bag of holding
+100 Driftglobe

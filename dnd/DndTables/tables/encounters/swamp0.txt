@@ -1,0 +1,48 @@
+100
+1 1d4 poisonous snakes
+2 3d6 rats
+6 2d8 ravens
+11 3d6 giant rats
+13 1d10 + 5 tribal warriors
+14 1d8 + 1 giant lizards
+16 1 crocodile
+18 1 swarm of insects
+20 1 giant spider
+21 1d4 + 1 mud huts partially sunken in murky water
+23 2d8 + 1 kobolds
+26 2d4 mud mephits
+27 1d6 + 2 giant poisonous snakes
+30 2d4 winged kobolds
+31 1 scout
+33 The corpse of an adventurer tangled in the weeds. Looting the body turns up an explorer's pack and perhaps (50% chance) a random common magic item.
+35 1 giant toad
+39 1d6 + 2 constrictor snakes
+42 2d4 giant frogs
+45 1d8 + 1 swarms of rats or 1d6 + 2 swarms of ravens
+46-48 2d10 stirges
+49-52 2d6 + 3 bullywugs
+53-54 1d8 + 1 orcs
+55-56 1d4 yuan-ti purebloods
+57 1 druid
+58 1 yuan-ti malison: type 1, type 2, type 3
+60 1 giant constrictor snake
+63 A high-pitched shriek that lasts for 1d4 minutes
+65 2d4 lizardfolk
+68 1d4 ghouls
+70 1 will-o'-wisp
+72 1 wight
+73 1 ghast
+74 1 swarm of poisonous snakes
+76 A foul stench bubbling up from brackish waters
+78 1d4 + 2 ogres
+81 1 shambling mound
+84 1 lizardfolk shaman with 1d6 giant lizards and 2d10 lizardfolk
+87 1 troll
+88 1d4 green hags
+90 1 revenant
+92  1 giant crocodile
+94 1 orc Eye of Gruumsh with 1d3 orogs and 2d6 + 3 orcs
+96 1 young black dragon
+98 1 yuan-ti abomination
+99 1d4 water elementals
+100 1 hydra

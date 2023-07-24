@@ -1,0 +1,47 @@
+100
+1 1 eagle
+3 1d3 swarms of bats
+6 1d6 goats
+9 1d10 + 5 tribal warriors
+12 1d6 + 3 pteranodons
+15 1d8 + 1 winged kobolds
+18 1 lion
+21 Stairs chiseled into the side of the mountain that climb 3d20 + 40 feet before ending abruptly
+25 2d10 stirges
+28 2d4 aarakocra
+31 2d6 dwarf soldiers (guards) with 1d6 mules laden with iron ore
+34 1 giant eagle
+37 A small shrine dedicated to a lawful neutral god, perched on a stone outcropping
+39 2d8 + 1 blood hawks
+42 1 giant goat
+45 3d4 kobolds
+48 1 half-ogre
+51 1 berserker
+54 1 orog
+56 1 hell hound
+57 1 druid
+58 1 peryton
+60 1d2 hippogriffs
+62 1 manticore
+63 1d6 + 2 scouts
+65 Enormous footprints left by a giant, which head into the mountain peaks
+68 2d4 orcs
+74 1 giant elk
+76 1 veteran
+78 1 orc Eye of Gruumsh
+80 1d4 harpies
+81 1 ogre
+82 1 griffon
+83 1 basilisk
+84 1 saber-toothed tiger
+86 A sparkling stream of water spilling from a crevice
+91 1d2 ettins
+92 1 cyclops
+93 1 troll
+94 1 galeb duhr
+95 1 air elemental
+96 1 bulette
+97 1 chimera
+98 1 wyvern
+99 1 stone giant
+100 1 frost giant

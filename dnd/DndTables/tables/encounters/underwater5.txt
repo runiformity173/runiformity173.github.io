@@ -1,0 +1,24 @@
+100
+1 3d6 steam mephits
+3 1d10 sahuagin
+5 1 giant octopus
+7 3d6 constrictor snakes
+9 2d10 merfolk with 1d4 giant sea horses
+11 1d4 sea hags
+16 2d4 swarms of quippers
+21 A sunken galleon with a 50% chance of a random treasure hoard inside (roll on the Treasure Hoard: Challenge 5-10 table in chapter 7 of the Dungeon Master's Guide)
+26 1d4 plesiosauruses
+31 3d6 reef sharks
+36 An abandoned bathysphere
+41 1d4 giant constrictor snakes
+51 2d4 hunter sharks
+56 1d3 sahuagin priestesses with 2d10 sahuagin
+61 An empty castle made from coral
+66 1d4 killer whales
+71 1d10 merrow
+76 An eerie statue of a squatting humanoid, with bat wings on its back and tentacles sprouting from its face
+81 1d4 water elementals
+86 1 sahuagin baron with 2d8 sahuagin
+91 1d4 giant sharks
+97 1 marid
+100 1 storm giant

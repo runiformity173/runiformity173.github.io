@@ -1,0 +1,17 @@
+100
+1 Potion of supreme healing
+21 Potion of invisibility
+31 Potion of speed
+41 Spell scroll (6th level)
+51 Spell scroll (7th level)
+58 Ammunition, +3
+63 Oil of sharpness
+68 Potion of flying
+73 Potion of cloud giant strength
+78 Potion of longevity
+83 Potion of vitality
+88 Spell scroll (8th level)
+93 Horseshoes of a zephyr
+96 Nolzur's marvelous pigments
+99 Bag of devouring
+100 Portable hole

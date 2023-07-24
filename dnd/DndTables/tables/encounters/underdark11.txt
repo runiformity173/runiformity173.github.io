@@ -1,0 +1,65 @@
+100
+1 3d6 carrion crawlers
+3 1d6 + 1 gelatinous cubes
+5 1d8 + 2 gibbering mouthers
+7 2d8 minotaur skeletons
+9 2d6 ochre jellies
+11 2d4 doppelgangers
+13 1d4 quaggoth thonots with 1d10 + 2 quaggoths
+15 1d3 ropers
+17 3d6 gargoyles
+19 1d10 mimics
+21 A 100-foot-long ravine, 4d10 feet wide and 5d20 + 200 feet deep
+26 1 hobgoblin captain with 3d10 hobgoblins
+28 2d4 spectators
+30 3d6 ghasts
+32 2d8 intellect devourers
+34 1d3 orc Eyes of Gruumsh with 2d4 orogs and 2d10 orcs
+36 A large cave containing 2d10 extraordinarily detailed statues of various creatures
+41 1d8 + 1 kuo-toa monitors
+43 2d4 water weirds
+45 2d10 gricks
+47 3d6 nothics
+49 2d8 + 1 ogres
+51 1d6 + 2 chuuls
+53 1d8 + 1 ettins
+55 3d6 grells
+56 2d4 flameskulls
+57 2d12 dwarf soldiers (veterans) on patrol
+58 2d8 hell hounds
+59 1d10 ghosts
+60 3d4 wights
+61 3d6 phase spiders
+62 1d8 + 1 bone nagas
+63 A shrill scream followed by dark laughter
+66 1d4 chimeras
+67 1d10 black puddings
+68 3d6 minotaurs
+69 2d4 otyughs
+70 1d6 + 1 beholder zombies
+71 4d4 hook horrors
+72 1d8 + 1 umber hulks
+73 2d4 salamanders
+74 1d3 grick alphas
+75 1d6 + 2 xorn
+76 A ruined village that once belonged to deep gnomes. A search has a 50% chance of uncovering 1d3 potions of healing and a 25% chance of finding a random common magic item
+81 2d4 earth elementals
+82 1d3 spirit nagas
+83 1d8 + 1 cyclopes
+84 1d6 + 2 trolls
+85 2d4 stone giants
+86 2d4 wraiths
+87 1d4 fomorians
+88 1d3 drow mages with 1d4 drow elite warriors
+89 1d10 vampire spawn
+90 1d3 cloakers
+91 1d4 fire giants
+92 1 mind flayer arcanist with 1d6 + 1 mind flayers
+93 1d4 dao
+94 1d8 + 1 driders
+95 1d3 behirs
+96 1d4 aboleths
+97 1 beholder
+98 1 young red shadow dragon
+99 1 death tyrant
+100 1 purple worm

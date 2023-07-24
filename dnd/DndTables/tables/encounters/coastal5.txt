@@ -1,0 +1,36 @@
+100
+1 2d8 giant wolf spiders
+2 3d6 pteranodons
+4 2d4 scouts
+6 1d6 + 2 sahuagin
+8 1 sea hag
+9 1d4 + 1 giant toads
+11 3d6 sahuagin
+16 2d6 giant eagles
+21 A pseudodragon chasing gulls through the air
+26 1d2 druids
+30 2d4 + 1 giant toads
+33 1 commoner singing a dirge (day only) or 1 banshee (night only)
+36 A stoppered bottle containing an illegible note and half buried in the sand
+41 3 sea hags
+44 1d8 + 1 harpies
+47 1d4 plesiosauruses
+51 1d4 manticores
+54 2d4 ogres
+57 1d10 griffons
+61 A battle at sea between two galleons
+66 1d4 + 3 merrow
+71 A pirate crew consisting of 1 bandit captain, 1 druid, 2 berserkers, and 2d12 bandits, all searching for buried treasure
+76 A severed humanoid hand tangled in a net
+81 1 water elemental
+83 1 cyclops
+85 1d4 banshees (night only)
+87 2d4 veterans
+89 1 young bronze dragon
+91 1d3 cyclopes
+94 1 young blue dragon
+96 1 sahuagin baron with 1d3 sahuagin priestesses and 2d8 sahuagin
+97 1 djinni
+98 1 roc
+99 1 marid
+100 1 storm giant

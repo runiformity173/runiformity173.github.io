@@ -1,0 +1,15 @@
+100
+1 2d6 triceratopses
+11 1d10 gorgons
+21 2d6 hyenas feeding on the carcass of a dead dinosaur
+26 3d6 bulettes
+36 A fiery chariot that races across the sky
+41 1d3 young gold dragons
+51 2d4 cyclopes
+61 A valley where all the grass has died and the ground is littered with stumps and fallen tree trunks, all petrified
+66 2d10 wolves
+76 A friendly adventuring party of 1d6 + 1 characters of varying races, classes, and levels (average level 1d6 + 2). They share information about their recent travels.
+81 1d12 chimeras
+91 1d6 + 2 tyrannosaurus rexes
+97 1 adult gold dragon
+100 1 ancient gold dragon

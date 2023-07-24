@@ -1,0 +1,68 @@
+100
+1 1d6 cats
+2 1 commoner with 1d6 goats
+4 2d10 rats
+6 1 raven perched on a signpost
+7 1 commoner on a draft horse
+8 2d4 mastiffs
+9 1d2 commoners leading 1d4 mules or 1d4 ponies
+10 1 pseudodragon
+11 1 spy
+12 1d8 + 1 acolytes
+14 1d6 + 6 flying snakes
+15 3d6 kobolds
+16 2d4 giant centipedes
+17 1d8 + 1 skeletons
+18 1d6 + 2 swarms of rats
+20 1d12 zombies
+21 A peddler weighed down with a load of pots, pans, and other basic supplies
+26 1 giant wasp
+27 1 warhorse
+29 2d8 cultists
+30 3d4 giant rats
+32 2d8 stirges
+33 1d3 + 2 giant poisonous snakes
+34 1d4 + 2 swarms of bats
+35 2d4 winged kobolds
+36 A wagon loaded with apples that has a broken wheel and holds up traffic
+41 1 crocodile
+42 1 swarm of insects
+44 3d6 bandits
+46 1d3 + 2 nobles on riding horses with an escort of 1d10 guards
+48 2d4 kenku
+49 1d6 + 2 smoke mephits
+50 1d8 + 1 swarms of ravens
+51 1 wererat
+53 1d3 half-ogres
+55 1 mimic
+57 1d4 ghouls
+59 1d4 specters
+61 1d10 shadows
+63 Someone empties a chamber pot onto the street from a second-floor window
+66 1 ghast
+68 1 priest
+70 1 will-o'-wisp
+72 1d3 giant-spiders
+74 1d4 yuan-ti purebloods
+76 2d4 thugs
+78 A doomsayer who preaches the end of the world from a street corner
+81 1 cambion
+82 1 vampire spawn
+83 1 couatl
+84 1 ghost
+85 1 succubus or 1 incubus
+86 1 bandit captain with 3d6 bandits
+87 1d4 + 1 cult fanatics
+88 1 knight or 1 veteran
+89 1 water weird
+90 1 wight
+91 1 mage
+92 1 shield guardian
+93 1 gladiator
+94 1 revenant
+95 2d4 gargoyles
+96 1d4 doppelgangers
+97 1 oni
+98 1 invisible stalker
+99 1d3 + 1 phase spiders
+100 1 assassin

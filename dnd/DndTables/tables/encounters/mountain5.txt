@@ -1,0 +1,35 @@
+100
+1 2d8 + 1 aarakocra
+3 1 lion or 1 saber-toothed tiger
+5 1d8 + 1 giant goats
+7 1d4 + 3 dwarf trailblazers (scouts)
+9 1d6 + 2 orcs
+11 1d10 giant eagles
+16 1d8 + 1 hippogriffs
+21 1d8 fissures venting steam that partially obscures a 20-foot cube above each fissure
+26 1 basilisk
+31 1d12 half-ogres
+36 A ravine blocked by a 100-foot-high wall, which has an opening in the center where a gate used to be
+41 1 manticore
+46 2d4 harpies
+51 1 galeb duhr
+53 1 bulette
+55 1d10 berserkers
+57 1d3 hell hounds
+59 1d8 + 1 veterans
+61 A distant mountain whose peak resembles a tooth
+66 1d4 ettins
+70 1 wyvern
+74 1 orc Eye of Gruumsh with 1d6 orogs and 3d6 + 10 orcs
+76 A row of 1d10 + 40 stakes upon which the bodies of kobolds, dwarves, or orcs are impaled
+81 1 fire giant
+84 1 young silver dragon
+86 1d4 air elementals
+88 1d4 trolls
+91 1d3 + 1 cyclopes
+93 1d4 chimeras
+95 1 cloud giant
+97 1 roc
+98 1d4 stone giants
+99 1 young red dragon
+100 1d4 frost giants

@@ -1,0 +1,14 @@
+100
+1 1 roc
+11 1 storm giant
+21 An adult bronze dragon fighting an adult blue dragon to the death
+26 2d4 cyclopes
+41 1 adult bronze dragon or 1 adult blue dragon
+51 1d3 djinni or 1d3 marids
+61 1 dragon turtle
+71 1d3 rocs
+76 1d6 + 2 waterspouts that dance on the water before stopping abruptly
+81 1d6 young blue dragons
+91 1 ancient bronze dragon
+97 1 ancient blue dragon
+100 1d3 + 1 storm giants

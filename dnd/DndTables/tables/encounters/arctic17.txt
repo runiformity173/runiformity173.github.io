@@ -1,0 +1,19 @@
+100
+1 2d10 revenants
+3 2d8 trolls
+5 2d10 werebears
+7 1 frost giant
+9 2d4 young remorhazes
+11 1d4 frost giants
+21 A Circular patch of black ice on the ground. The air temperature around the patch is warmer than in the surrounding area, and characters who inspect the ice find bits of machinery frozen within.
+26 1 ancient white dragon
+36 An adventurer frozen 6 feet under the ice; 50% chance the corpse has a rare magic item of the DM's choice
+41 1d3 abominable yetis
+51 1d4 remorhazes
+61 A 500-foot-high wall of ice that is 300 feet thick and spread across 1d4 miles
+66 1d4 rocs
+76 The likeness of a stern woman with long, flowing hair, carved into the side of a mountain
+81 1d10 frost giants with 2d4 polar bears
+91 1d3 adult white dragons
+97 2d4 abominable yetis
+100 1 ancient white dragon with 1d3 young white dragons

@@ -1,0 +1,43 @@
+100
+1 1 pseudodragon
+2 2d8 crabs
+6 2d6 fishers (commoners)
+11 1d3 poisonous snakes
+12 1d6 guards protecting a standard noble
+14 2d4 scouts
+16 2d10 merfolk
+19 1d6 + 2 sahuagin
+21 1d4 ghouls feeding on corpses aboard the wreckage of a merchant ship. A search uncovers 2d6 bolts of ruined silk, a 50-foot length of rope. and a barrel of salted herring.
+26 1d4 winged kobolds with 1d6 + 1 kobolds
+28 2d6 tribal warriors
+30 3d4 kobolds
+32 2d4 + 5 blood hawks
+34 1d8 + 1 pteranodons
+36 A few dozen baby turtles struggling to make their way to the sea
+41 1d6 + 2 giant lizards
+43 1d6 + 4 giant crabs
+45 2d4 stirges
+47 2d6 + 3 bandits
+49 2d4 sahuagin
+54 1d6 + 2 scouts
+56 1 sea hag
+61 A momentary formation in the waves that looks like an enormous humanoid face
+66 1 druid
+71 1d4 harpies
+76 A lone hermit (acolyte) sitting on the beach contemplating the meaning of the multiverse
+81 1d4 berserkers
+82 1d6 giant eagles
+83 2d4 giant toads
+84 1d4 ogres or 1d4 merrow
+85 3d6 sahuagin
+86 1d4 veterans
+87 1d2 plesiosauruses
+88 1 bandit captain with 2d6 bandits
+89 1d3 manticores
+90 1 banshee
+91 1d4 + 3 griffons
+93 1 sahuagin priestess with 1d3 merrow and 2d6 sahuagin
+95 1 sahuagin baron
+97 1 water elemental
+99 1 cyclops
+100 1 young bronze dragon

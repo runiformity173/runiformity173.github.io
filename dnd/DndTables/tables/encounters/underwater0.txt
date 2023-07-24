@@ -1,0 +1,24 @@
+100
+1 3d6 quippers
+11 2d4 steam mephits
+15 1d4 sahuagin
+19 2d6 merfolk
+23 2d4 corpses of drowned sailors tangled in kelp
+26 2d4 constrictor snakes
+30 1d4 reef sharks
+34 1 swarm of quippers
+38 A bed of enormous clams
+41 1d10 merfolk with 1d3 giant sea horses
+46 1 giant octopus
+51 1 merrow
+56 1 plesiosaurus
+61 2d10 pieces of corroded brass dinnerware littering the bottom
+66 1 giant constrictor snake
+71 1 sea hag
+76 A school of silvery fish darting through the water
+81 1d4 hunter sharks
+86 1 sahuagin priestess with 2d4 sahuagin
+91 1d4 killer whales
+97 1 giant shark
+99 1 water elemental
+100 1 sahuagin baron

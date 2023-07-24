@@ -1,0 +1,12 @@
+100
+1 1 sahuagin baron with 1d4 sahuagin priestesses and 2d10 sahuagin
+11 1d10 killer whales
+36 A ghost ship passing overhead, containing 2d6 + 10 ghosts
+41 1d6 giant sharks
+61 A 1-mile-radius sphere of effervescent water that allows air-breathing creatures to breathe water while in the sphere
+66 1d10 water elementals
+76 A shimmering, blue-green portal to the Elemental Plane of Water
+81 1d4 marids
+91 1d3 storm giants
+97 1 dragon turtle
+100 1 kraken

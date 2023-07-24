@@ -1,0 +1,47 @@
+100
+1 1 scouts
+2 2d4 jackalweres
+3 2d6 hobgoblins
+4 1d4 + 3 dust mephits
+5 1d6 swarm of insects
+6 1 giant constrictor snake
+7 1 lion
+9 2d4 gnolls
+11 2d6 giant toads
+13 1 mummy
+18 1d8 + 1 giant vultures
+21 A stone obelisk partly buried in the sand
+26 1 ogre with 1d3 half-ogres
+29 1d10 giant hyenas
+36 1d6 + 1 empty tents
+41 1d6 + 2 thri-kreen
+44 2d4 yuan-ti purebloods
+47 1d6 + 3 death dogs
+51 1d4 giant scorpions
+53 1 fire elemental
+54 1 hobgoblin captain with 3d4 hobgoblins
+56 1d6 + 2 ogres
+57 1d4 lamias
+59 1 air elemental
+61 A meteorite resting at the bottom of a glassy crater
+66 1d4 + 1 wights
+67 1 young brass dragon
+69 1 bandit captain with 1d3 berserkers and 3d6 bandits
+71 1 cyclops
+73 1d4 couatls
+74 1d4 yuan-ti malisons
+76 Strong winds that kick up dust and reduce visibility to 1d6 feet for 1d4 hours
+81 1 revenant with 1d3 wights
+84 1d8 + 1 phase spiders
+86 1d6 + 2 weretigers
+88 2d4 gnoll fangs of Yeenoghu
+91 1 young blue dragon
+92 1d4 cyclopes
+93 1d3 yuan-ti abominations
+94 1d4 medusas
+95 1 guardian naga
+96 1d3 young brass dragons
+97 1 efreeti
+98 1 roc
+99 1 gynosphinx
+100 1 adult brass dragon

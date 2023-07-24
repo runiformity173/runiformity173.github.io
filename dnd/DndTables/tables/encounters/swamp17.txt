@@ -1,0 +1,18 @@
+100
+1	1d4 giant crocodiles
+11	1d3 yuan-ti abominations
+16	1d6 + 1 green hags
+21	A large, spreading tree from which 2d6 armored knights hang by the neck
+26	2d4 wights
+31	1d8 + 1 yuan-ti malisons: type 1, type 2, type 3
+36	Fog that rolls across the terrain, making the area within 1d3 miles heavily obscured for 1d4 hours
+41	1d4 revenants
+46	1d6 shambling mounds
+51	1d10 water elementals
+56	1d4 young black dragons
+61	An eerie, bat-headed idol almost completely covered by vines
+66	1d8 + 2 trolls
+71	1d3 hydras
+76	The sound of drums beating several miles away
+81	1 adult black dragon
+97	1 ancient black dragon

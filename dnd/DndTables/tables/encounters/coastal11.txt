@@ -1,0 +1,25 @@
+100
+1 1d4 banshees (night only)
+2 1 cyclops
+5 1d6 + 2 manticores
+9 1d8 + 2 veterans
+11 1 young blue dragon
+21 A nest of 1d6 dragon turtle eggs
+26 1d4 sahuagin barons
+36 A trident partially buried in the sand
+41 1 young bronze dragon
+51 1 marid
+56 1d6 water elementals
+61 2d6 ghasts crawling over 1d6 wrecked ships and feeding on the dead
+66 1 djinni
+71 1d3 young bronze dragons
+76 A beached whale, dead and bloated. If it takes any damage, it explodes, and each creature within 30 feet of it must make a DC 15 Dexterity saving throw, taking 5d6 bludgeoning damage on a failed save, or half as much damage on a successful one.
+81 2d4 cyclopes
+83 1 storm giant
+85 1d3 young blue dragons
+87 1 adult bronze dragon
+89 1 adult blue dragon
+91 1d3 rocs
+94 1 dragon turtle
+98 1 ancient bronze dragon
+100 1 ancient blue dragon

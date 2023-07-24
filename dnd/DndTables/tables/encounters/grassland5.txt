@@ -1,0 +1,41 @@
+100
+1 1d3 gorgons
+2 1d4 cyclopes
+3 1d3 gnoll fangs of Yeenoghu
+5 1 chimera
+7 1d4 + 1 veterans on riding horses
+10 A tornado that touches down 1d6 miles away, tearing up the land for 1 mile before it dissipates
+12 1d3 manticores
+14 2d4 ankhegs
+16 1d8 + 1 centaurs
+18 1d6 + 2 griffons
+20 1d6 elephants
+22 A stretch of land littered with rotting war machines, bones, and banners of forgotten armies
+25 1d8 + 1 bugbears
+29 1 gnoll pack lord with 1d4 + 1 giant hyenas
+33 2d4 scarecrows
+37 1d12 lions
+41 1d10 thri-kreen
+45 1 allosaurus
+47 1 tiger
+49 1d2 giant eagles or 1d2 giant vultures
+51 1 goblin boss with 2d4 goblins
+53 1d2 pegasi
+55 1 ankylosaurus
+59 1d2 couatls
+63 1 orc Eye of Gruumsh with 1d8 + 1 orcs
+67 2d4 hippogriffs
+71 1d4 + 1 rhinoceroses
+75 1 hobgoblin captain with 2d6 hobgoblins
+77 1d3 phase spiders
+79 1d6 + 2 giant boars
+81 2d4 giant elk
+83 1d4 ogres with 1d4 orogs
+85 A hot wind that carries the stench of rot
+88 1d3 weretigers
+91 1 bulette
+93 A tribe of 2d20 + 20 nomads (tribal warriors) on riding horses following a herd of antelope (deer). The nomads are willing to trade food, leather, and information for weapons.
+95 1d6 + 2 wereboars
+97 1 young gold dragon
+98 1d4 triceratopses
+100 1d3 tyrannosaurus rexes

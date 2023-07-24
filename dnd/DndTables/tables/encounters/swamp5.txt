@@ -1,0 +1,38 @@
+100
+1 1 green hag
+2 2d4 giant lizards or 2d4 giant poisonous snakes
+4 2d8 winged kobolds
+6 1d10 + 1 bullywugs with 1d8 + 1 giant frogs
+8 1 druid
+10 1d8 + 1 swarms of insects
+11 1d12 ghouls
+14 2d8 scouts
+17 2d10 orcs
+20 2d4 giant spiders
+23 Tainted water that exposes creatures that move through it to sight rot (see "Diseases" in chapter 8 of the Dungeon Master's Guide)
+25 1d6 + 2 giant toads
+28 3d6 lizardfolk
+31 1d8 + 1 yuan-ti purebloods
+34 1d4 + 1 swarms of poisonous snakes
+37 A bloated humanoid corpse floating facedown in the water
+39 1 shambling mound
+42 1d4 + 1 will-o'-wisps
+45 2d6 crocodiles
+48 1d4 + 1 giant constrictor snakes
+51 1 lizardfolk shaman with 1d3 swarms of poisonous snakes and 1d8 + 2 lizardfolk
+55 1d8 + 1 ogres
+59 2d4 ghasts
+63 An altar partially sunk into the mud, devoted to a god that is part human and part frog
+66 1 giant crocodile
+70 1 shambling mound
+74 1 orc Eye of Gruumsh with 1d3 ogres and 2d10 + 5 orcs
+78 A torrential rain that lasts 1d6 minutes and puts out all unprotected flames within 1 mile
+81 1 young black dragon
+83 1d4 green hags with 1d6 + 1 ogres
+85 1 yuan-ti abomination
+87 1d4 + 1 wights
+89 1d6 + 1 yuan-ti malisons: type 1, type 2, type 3
+91 1d4 + 1 trolls
+94 1d10 revenants
+97 1d8 + 1 water elementals
+100 1d3 hydras

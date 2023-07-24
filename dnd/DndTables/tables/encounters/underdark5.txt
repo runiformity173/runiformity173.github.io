@@ -1,0 +1,80 @@
+100
+1 3d6 swarms of bats
+2 1d4 giant spiders or 1d4 giant toads
+3 1 mimic
+4 2d4 grey oozes
+5 2d10 orcs or 3d6 troglodytes
+6 3d6 grimlocks
+7 1d6 + 2 magma mephits
+8 1 goblin boss with 2d4 goblins
+9 2d4 darkmantles
+10 2d8 + 1 drow
+11 2d10 piercers
+12 1d4 minotaur skeletons
+13 3d6 deep gnomes
+15 1 druid with 1 polar bear (cave bear)
+16 3d6 orcs
+18 1 bone naga
+19 2d6 bugbears
+21 Luminescent fungi growing on the walls of a moist cave, filling it with dim light
+26 2d4 specters
+27 1d12 + 4 shadows
+28 1d3 gibbering mouthers
+29 4d4 hobgoblins
+31 1d4 carrion crawlers
+33 1 black pudding
+35 1d4 ochre jellies
+36 A patch of mold that appears yellow when light is directed toward it
+41 1d4 nothics
+42 2d8 + 1 gas spores
+44 1d3 gelatinous cubes
+46 1 ghost
+47 1 flameskull
+49 2d8 duergar
+51 1 wraith
+52 1 umber hulk
+53 1 xorn
+54 1d6 + 2 dwarf hunters (veterans) searching for trolls
+55 1 hobgoblin captain with 3d10 hobgoblins
+56 1 roper
+57 1 kuo-toa monitor with 1d4 kuo-toa whips and 1d8 + 1 kuo-toa
+58 1d3 water weirds
+59 1d4 ghasts with 1d10 ghouls
+60 1 otyugh
+61 A merchant caravan consisting of 1 drow mage, 2 drow elite warriors, and 2d10 quaggoths
+63 1d4 wights
+64 1d4 doppelgangers
+65 2d8 fire snakes
+66 1d4 spectators
+67 1 orc Eye of Gruumsh with 1d4 orogs and 2d10 + 3 orcs
+68 1d3 vampire spawn
+69 1d4 hook horrors or 1d4 minotaurs
+70 3d6 quaggoth spore servants
+71 1d3 grells
+73 1d6 + 1 intellect devourers
+74 1d10 gargoyles
+75 1 beholder zombie
+76 1 quaggoth thonot with 2d4 quaggoths
+78 1d6 ettins or 1d4 trolls
+79 1d8 + 1 phase spiders
+80 1 fomorian or 1d3 cyclopes
+81 1d4 earth elementals
+82 3d6 ogres
+83 1d4 + 1 chuuls
+84 1d10 hell hounds
+85 1d3 drow elite warriors
+86 1d4 chimeras
+87 1d4 salamanders
+88 1 cloaker
+89 2d4 wights
+90 1d4 driders
+91 1 fire giant
+92 1 grick alpha with 2d4 gricks
+93 1 mind flayer arcanist
+94 1d4 drow mages
+95 1 spirit naga
+96 1d4 mind flayers
+97 1 behir
+98 1 aboleth
+99 1 dao or 1 stone giant
+100 1 beholder

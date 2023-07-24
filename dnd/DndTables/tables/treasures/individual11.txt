@@ -1,0 +1,5 @@
+100
+1 (100*roll('4d6'))+' silver pieces<br>'+(roll('1d6')*100)+' gold pieces'
+21 (100*roll('1d6'))+' electrum pieces<br>'+(roll('1d6')*100)+' gold pieces'
+36 (roll('2d6')*100)+' gold pieces<br>'+(roll('1d6')*10)+' platinum pieces'
+76 (roll('2d6')*100)+' gold pieces<br>'+(roll('2d6')*10)+' platinum pieces'

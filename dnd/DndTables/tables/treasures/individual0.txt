@@ -1,0 +1,6 @@
+100
+1 roll('5d6')+' copper pieces'
+31 roll('4d6')+' silver pieces'
+61 roll('3d6')+' electrum pieces'
+71 roll('3d6')+' gold pieces'
+96 roll('1d6')+' platinum pieces'

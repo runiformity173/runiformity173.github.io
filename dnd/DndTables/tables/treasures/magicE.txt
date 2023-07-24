@@ -1,0 +1,8 @@
+100
+01 Spell scroll (8th level)
+31 Potion of storm giant strength
+56 Potion of supreme healing
+71 Spell scroll (9th level)
+86 Universal solvent
+94 Arrow of slaying
+99 Sovereign glue

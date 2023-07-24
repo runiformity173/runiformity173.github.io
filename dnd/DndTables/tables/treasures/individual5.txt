@@ -1,0 +1,6 @@
+100
+1 (roll('4d6')*100)+' copper pieces<br>'+(roll('1d6')*10)+' electrum pieces'
+31 (10*roll('6d6'))+' silver pieces<br>'+(roll('2d6')*10)+' gold pieces'
+61 (10*roll('3d6'))+' electrum pieces<br>'+(roll('2d6')*10)+' gold pieces'
+71 (roll('4d6')*10)+' gold pieces'
+96 (roll('2d6')*10)+' gold pieces<br>'+roll('3d6')+' platinum pieces'

@@ -1,0 +1,52 @@
+100
+1 1d10 kenku
+3 2d6 giant centipedes
+5 2d8 skeletons
+7 1d6 swarms of bats and 1d6 swarms of rats
+9 3d6 winged kobolds
+11 2d4 specters
+14 1d4 wights
+17 4d4 acolytes on draft horses
+20 3d6 giant centipedes
+23 A talkative urchin, badgering passersby to serve as their guide through the community for a price of 1 sp
+26 1d10 spies
+29 3d6 crocodiles
+32 1d6 + 2 swarms of insects
+35 2d4 smoke mephits
+38 A noble shouts "Stop! Thief!" at a fleeing scoundrel (bandit)
+41 1 succubus or 1 incubus
+44 1d10 half-ogres
+47 2d10 giant wasps
+50 4d10 zombies
+52 1d4 knights on warhorses
+54 1d4 + 1 water weirds
+56 1d8 + 1 mimics
+58 2d8 giant spiders
+60 3d6 shadows
+62 An actor leans out from a second-story window to call to passersby, announcing a show
+66 1 bandit captain with 3d8 bandits
+68 1d10 will-o'-wisps
+70 2d4 priests
+72 3d6 yuan-ti purebloods
+75 2d10 thugs
+77 A fortune-teller reads cards for those who pay a price of 1 sp
+81 1d3 gladiators
+82 1d4 + 1 couatls
+83 1d8 ghosts
+84 2d4 doppelgangers
+85 1d6 + 2 phase spiders
+86 2d4 veterans
+87 1d8 ghasts with 2d6 ghouls
+88 3d6 gargoyles
+89 2d10 cult fanatics
+90 3d6 wererats
+91 1 assassin
+92 1d3 invisible stalkers
+93 1 gray slaad
+94 1 young silver dragon
+95 1d4 cambions or 1d4 revenants
+96 3d6 wights
+97 1 archmage
+98 2d4 vampire spawn or 1d4 oni
+99 1 mage with 1 shield guardian
+100 1 rakshasa or 1 vampire

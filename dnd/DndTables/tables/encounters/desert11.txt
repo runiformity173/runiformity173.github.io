@@ -1,0 +1,37 @@
+100
+1 1 young brass dragon
+2 4d6 gnolls
+6 3d10 giant hyenas
+11 1d8 + 1 lamias
+13 2d4 gnoll fangs of Yeenoghu
+15 1d6 + 2 giant scorpions
+18 2d4 phase spiders
+21 A desert caravan consisting of 1d6 merchants (nobles) with 2d6 guards
+26 1d6 + 1 couatls
+28 1d4 fire elementals
+31 1 hobgoblin captain with 3d10 + 10 hobgoblins
+33 2d4 wights
+36 1d6 square miles of desert glass
+41 1 young blue dragon
+43 1d6 + 2 weretigers
+46 1d4 air elementals
+49 1d6 + 1 yuan-ti malisons
+51 1d4 medusas
+56 1d4 revenants with 3d12 skeletons
+61 A plundered pyramid
+66 1d4 young brass dragons
+71 1d3 yuan-ti abominations
+76 1d6 + 2 cyclopes
+79 1 adult brass dragon
+83 1 purple worm
+86 1d2 young blue dragons
+87 1 mummy lord
+89 1d3 guardian nagas
+90 1 adult blue dragon
+91 1d2 gynosphinxes
+92 1d3 efreet
+94 1 androsphinx
+95 1d4 rocs
+96 1 adult blue dracolich
+98 1 ancient brass dragon
+100 1 ancient blue dragon

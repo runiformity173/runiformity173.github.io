@@ -1,0 +1,53 @@
+100
+1 Defender
+6 Hammer of thunderbolts
+11 Luck Blade
+16 Sword of answering
+21 Holy avenger
+24 Ring of djinni summoning
+27 Ring of invisibility
+30 Ring of spell turning
+36 Rod of lordly might
+39 Vorpal sword
+42 Belt of cloud giant strength
+44 Armor, +2 breastplate
+46 Armor, +3 chain mail
+48 Armor, +3 chain shirt
+50 Cloak of invisibility
+52 Crystal ball (legendary version)
+54 Armor, +1 half plate
+56 Iron flask
+58 Armor, +3 leather
+60 Armor, +1 plate
+62 Robe of the archmagi
+64 Rod of resurrection
+66 Armor, +1 scale mail
+68 Scarab of protection
+70 Armor, +2 splint
+72 Armor, +2 studded leather
+74 Well of many worlds
+76 Magic armor (roll d12: 1: Armor, +2 half plate, 3: Armor, +2 plate, 5: Armor, +3 studded leather, 7: Armor, +3 breastplate, 9: Armor, +3 splint, 11: Armor, +3 half plate, 12: Armor, +3 plate)
+77 Apparatus of Kwalish
+78 Armor of invulnerability
+79 Belt of storm giant strength
+80 Cubic gate
+81 Deck of many things
+82 Efreeti chain
+83 Armor of resistance (half plate)
+84 Horn of Valhalla (iron)
+85 Instrument of the bards (Ollamh harp)
+86 loun stone (greater absorption)
+87 loun stone (mastery)
+88 loun stone (regeneration)
+89 Plate armor of etherealness
+90 Plate armor of resistance
+91 Ring of air elemental command
+92 Ring of earth elemental command
+93 Ring of fire elemental command
+94 Ring of three wishes
+95 Ring of water elemental command
+96 Sphere of annihilation
+97 Talisman of pure good
+98 Talisman of the sphere
+99 Talisman of ultimate evil
+100 Tome of the stilled tongue

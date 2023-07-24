@@ -1,0 +1,26 @@
+100
+1 1d10 invisible stalkers
+6 1d10 revenants
+11 1d6 + 2 gladiators
+15 2d4 cambions
+19 2d6 succubi or 2d6 incubi
+23 A witch (archmage) who zooms overhead on a broom of flying
+26 1d4 gray slaadi
+31 2d8 couatls
+36 A distraught parent who rushes up to people, begging for help for a child who fell into the sewer
+41 1d3 young silver dragons
+46 3d6 ghosts
+51 1 adult silver dragon
+56 1d4 mages with 1d4 shield guardians
+61 An aggressive merchant who hawks wares to passersby, claiming to be the purveyor of the finest silks in all the land
+66 1 ancient silver dragon
+71 3d6 vampire spawn
+76 A patrol of 2d10 guards marching up the street, searching for someone or something
+81 1d10 assassins
+86 1d4 + 1 gray slaadi
+91 1d10 oni
+94 1 spellcaster vampire or 1 warrior vampire
+97 1d4 archmages
+98 1d3 rakshasas
+99 1d4 vampires
+100 1 tarrasque

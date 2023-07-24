@@ -1,0 +1,36 @@
+100
+1 Potion of greater healing
+16 Potion of fire breath
+23 Potion of resistance
+30 Ammunition, +1
+35 Potion of animal friendship
+40 Potion of hill giant strength
+45 Potion of growth
+50 Potion of water breathing
+55 Spell scroll (2nd level)
+60 Spell scroll (3rd level)
+65 Bag of holding
+68 Keoghtom's ointment
+71 Oil of slipperiness
+74 Dust of disappearance
+76 Dust of dryness
+78 Dust of sneezing and choking
+80 Elemental gem
+82 Philter of love
+84 Alchemy jug
+85 Cap of water breathing
+86 Cloak of the manta ray
+87 Driftglobe
+88 Goggles of night
+89 Helm of comprehending languages
+90 Immovable rod
+91 Lantern of revealing
+92 Mariner's armor
+93 Mithral armor
+94 Potion of poison
+95 Ring of swimming
+96 Robe of useful items
+97 Rope of climbing
+98 Saddle of the cavalier
+99 Wand of magic detection
+100 Wand of secrets

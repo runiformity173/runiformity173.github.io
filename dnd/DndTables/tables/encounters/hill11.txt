@@ -1,0 +1,29 @@
+100
+1 2d8 manticores or 2d8 phase spiders
+2 1d6 green hags with 1d6 wyverns
+5 1 hobgoblin captain with 1 hill giant and 4d10 hobgoblins
+8 2d6 + 3 werewolves
+11 1d6 + 2 ettins
+15 1d3 bulettes
+19 1d4 werebears
+23 A stream of smoke emerging from a small chimney in the hillside
+25 1d4 wyverns
+29 1d8 + 1 wereboars
+33 1d3 revenants
+37 A mild earthquake that shakes the region for 1d20 seconds
+39 1d3 chimeras
+43 1d4 gorgons
+47 1d6 + 2 gnoll fangs of Yeenoghu
+51 1d4 hill giants
+55 1 young red dragon
+59 1d3 + 1 galeb duhr
+63 2d10 dwarf miners (commoners), whistling as they march toward their mine
+66 1d3 young copper dragons
+70 1d4 trolls
+74 1d3 cyclopes
+78 1d3 nobles with 1d4 scouts prospecting for gold
+81 1 adult copper dragon
+86 2d4 stone giants
+91 1d4 rocs
+97 1 adult red dragon
+100 1 ancient copper dragon

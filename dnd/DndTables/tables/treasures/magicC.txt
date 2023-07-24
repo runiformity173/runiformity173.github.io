@@ -1,0 +1,29 @@
+100
+1 Potion of superior healing
+16 Spell scroll (4th level)
+23 Ammunition, +2
+28 Potion of clairvoyance
+33 Potion of diminution
+38 Potion of gaseous form
+43 Potion of frost giant strength
+48 Potion of stone giant strength
+53 Potion of heroism
+58 Potion of invulnerability
+63 Potion of mind reading
+68 Spell scroll (5th level)
+73 Elixir of health
+76 Oil of etherealness
+79 Potion of fire giant strength
+82 Quaal's feather token
+85 Scroll of protection
+88 Bag of beans
+90 Bead of force
+92 Chime of opening
+93 Decanter of endless water
+94 Eyes of minute seeing
+95 Folding boat
+96 Heward's handy haversack
+97 Horseshoes of speed
+98 Necklace of fireballs
+99 Periapt of health
+100 Sending Stones

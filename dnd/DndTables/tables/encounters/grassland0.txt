@@ -1,0 +1,43 @@
+100
+1 1 hobgoblin captain with 1d4 + 1 hobgoblins
+2 1 chimera
+3 1 gorgon
+4 1d2 couatls
+5 1 ankylosaurus
+6 1 weretiger
+7 1d3 allosauruses
+8 1d3 elephants
+10 A circle of standing stones within which the air is utterly still, no matter how hard the wind blows outside
+15 1 phase spider
+17 1 gnoll pack lord with 1d4 giant hyenas
+19 1 pegasus
+21 1 ankheg
+23 1d3 rhinoceroses
+25 1d3 cockatrices
+29 1d6 + 2 giant wasps or 1d4 + 3 swarms of insects
+33 1d4 jackalweres or 1d4 scouts
+37 1d8 giant goats or 1d8 worgs
+41 2d4 hobgoblins, 2d4 orcs, or 2d4 gnolls
+45 1d2 giant poisonous snakes
+47 1d6 + 2 elk or 1d6 + 2 riding horses
+49 2d4 goblins
+51 1d3 boars
+53 1 leopard (panther) 1 lion
+55 1d6 + 3 goblins riding wolves
+59 2d6 giant wolf spiders or 1 giant eagle
+63 1d8 + 4 pteranodons
+66 3d6 wolves
+70 2d4 + 2 axe beaks
+75 1 giant boar or 1d2 tigers
+77 1 ogre or 1d3 bugbears
+79 giant elk or 1 gnoll pack lord or 1d3 giant hyenas
+81 1d3 giant vultures or 1d3 hippogriffs
+83 1 goblin boss with 1d6 + 2 goblins and 1d4 + 3 wolves, or 1d3 thri-kreen
+85 1d3 druids patrolling the wilds
+90 1d6 scarecrows or 1 wereboar
+92 1d3 centaurs or 1d3 griffons
+94 1d3 gnoll fangs of Yeenoghu, or 1 orc Eye of Gruumsh with 2d4 + 1 orcs
+95 1 triceratops
+97 1 cyclops or 1 bulette
+98 1d4 manticores
+100 1 tyrannosaurus rex

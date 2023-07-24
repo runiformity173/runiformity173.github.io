@@ -1,0 +1,17 @@
+100
+1 1 abominable yeti
+2 1d6 revenants
+5 1d4 + 1 werebears
+11 1d3 young white dragons
+21 A blizzard that reduces visibility to 5 feet for 1d6 hours
+26 1 roc
+36 A herd of 3d20 + 60 caribu (deer) moving through the snow
+41 1d4 mammoths
+51 1d8 + 1 trolls
+61 A mile-wide frozen lake in which preserved corpses of strange creatures can be seen
+66 2d4 young remorhazes
+76 A crumbling ice castle littered with the frozen bodies of blue-skinned humanoids
+81 1 adult white dragon
+91 1d8 + 1 frost giants
+97 1d4 young remorhazes
+100 1 ancient white dragon

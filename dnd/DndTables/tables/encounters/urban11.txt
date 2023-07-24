@@ -1,0 +1,37 @@
+100
+1 1 mimic
+2 1 bandit captain with 5d10 bandits, all on riding horses
+6 1d10 knights on warhorses (one knight is a doppelganger)
+11 1d8 succubi or 1d8 incubi
+14 3d6 cult fanatics
+17 1d10 wights
+20 3d6 wererats
+23 A distant boom followed by a plume of smoke rising from the other side of the community
+26 1d8 + 1 ghosts
+29 2d10 gargoyles
+32 1d6 + 2 water weirds
+35 1d4 + 4 will-o'-wisps
+38 Street performers putting on a puppet show, involving two puppets beating each other with sticks to the amusement of the gathered crowd
+41 2d4 couatls
+44 2d8 ghasts
+47 1d8 + 1 veterans
+52 3d4 priests
+56 2d4 cambions
+59 1d10 revenants
+62 2d4 phase spiders
+66 A scruffy commoner that ducks into an alley to make a purchase from a suspicious looking figure
+70 1d8 invisible stalkers
+73 1d8 + 1 gladiators
+76 Two farmers trading blows over the price of potatoes (50% chance for one farmer to be a retired assassin)
+81 1d4 young silver dragons
+83 1d4 assassins
+85 1d8 oni
+87 1d4 mages with 1d4 shield guardians
+89 1d10 vampire spawn
+91 1 adult silver dragon
+93 1d4 gray slaadi
+95 1 spellcaster vampire or 1 warrior vampire
+97 1 rakshasa
+98 1 vampire
+99 1 ancient silver dragon
+100 1 archmage speeding down the street on a riding horse, blasting 1d4 guards with spells

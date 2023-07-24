@@ -1,0 +1,19 @@
+100
+1 3d6 wereboars
+6 2d10 gnoll fangs of Yeenoghu
+11 1d4 bulettes
+16 An old road of paved stones, partly reclaimed by wilderness, that travels for 1d8 miles in either direction before ending
+18 1d12 couatls
+28 A witch (mage) dwelling in a crude hut. She offers potions of healing, antitoxins, and other consumable items for sale in exchange for food and news.
+31 2d10 elephants
+41 2d4 weretigers
+47 1d8 + 1 cyclopes
+57 1d3 chimeras
+62 5 triceratopses
+67 A giant hole 50 feet across that descends nearly 500 feet before opening into an empty cave
+70 1d4 + 3 gorgons
+80 1d3 young gold dragons
+89 A circular section of grass nearly a quarter-mile across that appears to have been pressed down; 1d4 more such circles connected by lines can be seen from overhead.
+91 2d4 tyrannosaurus rexes
+97 1 adult gold dragon
+100 1 ancient gold dragon
