@@ -15,10 +15,11 @@
   <button onclick="display(true)" style="position:absolute;right:0px;cursor:pointer;top:30px;">Relax</button>
   <span style="position:absolute;right:0px;top:60px;">Auto-Relax: <input type="checkbox" checked onchange="AUTO_RELAX=this.checked;"></span>
   <span style="position:absolute;right:0px;top:90px;">Automatic Removing and Adding: <input type="checkbox" checked onchange="AUTOMATIC=this.checked;"></span>
-  <span style="position:absolute;right:0px;top:120px;">Points: <input id="point-n" type="number" value="50"></span>
-  <span style="position:absolute;right:0px;top:180px;"><p>Current Points: <span id="point-display"></span></p></span>
-  <span style="position:absolute;right:0px;top:210px;"><p>Average Area: <span id="average-area"></span></p></span>
-  <span style="position:absolute;right:0px;top:240px;width:200px;"><p>Standard Deviation Area: <span id="stdev-area"></span></p></span>
+  <span style="position:absolute;right:0px;top:120px;">Frames per Remove: <input id="your-mom" type="number" value="60" onchange="FRAMES_PER_REMOVE = Math.max(Number(this.value),1); this.value = Math.max(Number(this.value),1);"></span>
+  <span style="position:absolute;right:0px;top:150px;">Points: <input id="point-n" type="number" value="50"></span>
+  <span style="position:absolute;right:0px;top:210px;"><p>Current Points: <span id="point-display"></span></p></span>
+  <span style="position:absolute;right:0px;top:240px;"><p>Average Area: <span id="average-area"></span></p></span>
+  <span style="position:absolute;right:0px;top:270px;width:200px;"><p>Standard Deviation Area: <span id="stdev-area"></span></p></span>
   
   <span style="position:absolute;right:0px;bottom:0px;"><p>Left click to add a point.<br>Right click to remove the point you're hovering over.<br>With a small amount of points, the page can black out.</p></span>
   
