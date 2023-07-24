@@ -66,9 +66,9 @@ function saveSpell() {
   let l = [];
   for (let i = 0;i<localStorage.length;i++) {
     const val = localStorage.key(i);
-    if (!spellbookList[val].includes("_")) {
-      l.push("\""+spellbookList[val].split("=")[0].replace(" ",""));
-      books.push(spellbookList[val].split("=")[0].replace(" ",""));
+    if (!val.includes("_")) {
+      l.push("\""+val.replace(" ",""));
+      books.push(val.replace(" ",""));
     }
   }
   if (l.length==1) {

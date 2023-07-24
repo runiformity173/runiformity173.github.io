@@ -35,11 +35,11 @@ function load() {
   else {
     for (let i = 0;i<localStorage.length;i++) {
       let l = localStorage.key(i)
-      if (!l.includes("_") && l.includes("=")) {
+      if (!l.includes("_")) {
         if (document.getElementById("output").innerHTML == "You have no spellbooks yet.") {
           document.getElementById("output").innerHTML = "";
         }
-        document.getElementById("output").innerHTML += '<a href="?list='+(l.split("=")[0]).replace(" ","")+'">'+fromName(l.split("=")[0])+'</a>&emsp;<span class=\'remove no-select\' onclick=\'if (confirm(\"Are you sure you want to remove this spell list?\")){removeList("'+l.split("=")[0]+'");}\'><p>‾</p></span><br>';}
+        document.getElementById("output").innerHTML += '<a href="?list='+l.replace(" ","")+'">'+fromName(l)+'</a>&emsp;<span class=\'remove no-select\' onclick=\'if (confirm(\"Are you sure you want to remove this spell list?\")){removeList("'+l+'");}\'><p>‾</p></span><br>';}
     }
   }
 }
