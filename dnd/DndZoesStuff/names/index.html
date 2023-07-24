@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tables</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <script src="scripts.js" defer></script>
+    <script src="/bootstrap.bundle.min.js" defer></script>
+  </head>
+  <body class="text-light bg-dark">
+    Category: <select class="btn btn-outline-light" name="tableTable" id="tableTable">
+      <option name="male">Male</option>
+      <option name="female">Female</option>
+    </select><br>
+    <button class="btn btn-outline-light" onclick="document.getElementById('load').innerHTML='Rolling...';document.getElementById('output').innerHTML='';setTimeout(run,0);">Roll!</button>
+    <p id="load"><br></p>
+    <p id="output"></p>
+  </body>
+</html>

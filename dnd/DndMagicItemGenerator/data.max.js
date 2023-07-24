@@ -1,0 +1,4 @@
+let skyrimArmors = {};
+let skyrimWeapons = {};
+let skills = {"athletics":["Athletics"],"acrobatics":["Acrobatics"],"sleight of hand":["Sleight of Hand"],"stealth":["Stealth"],"arcana":["Arcana"],"history":["History"],"investigation":["Investigation"],"nature":["Nature"],"religion":["Religion"],"animal handling":["Animal Handling"],"insight":["Insight"],"medicine":["Medicine"],"perception":["Perception"],"survival":["Survival"],"deception":["Deception"],"intimidation":["Intimidation"],"performance":["Performance"],"persuasion":["Persuasion"]};
+let armors = ["Leather","Studded Leather","Padded","Hide","Ring Mail","Half Plate","Plate","Scale Mail","Chain Mail","Breastplate","Splint","Shield"]

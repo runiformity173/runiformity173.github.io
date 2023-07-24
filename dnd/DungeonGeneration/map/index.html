@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Dungeon Generator</title>
+  <link href="/style.css" rel="stylesheet" type="text/css" />
+  <link href="/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));load2()" class="bg-dark text-light no-select">
+  <script src="data.max.js" defer></script>
+  <script src="noise.max.js" defer></script>
+  <script src="display.max.js" defer></script>
+  <script src="script.max.js" defer></script>
+  <!-- <script src="script.min.js" defer></script> -->
+  <script src="/bootstrap.bundle.min.js" defer></script>
+  <a href="/">Dungeon</a>
+  <center><h3>Generation Settings</h3></center>
+  <center>Height: <input id="height" type="number" value="384" placeholder="">&emsp;Cities: <input id="cities" type="number" value="5" placeholder=""></center>
+  <center>Width: <input id="width" type="number" value="512" placeholder="">&emsp;Buildings: <input id="buildings" type="number" value="10" placeholder=""></center>
+  <center>Roughness: <input id="roughness" type="number" value="25" placeholder="">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<select id="size"><option>Local</option><option selected>Regional</option><option>Continental</option></select></center>
+  <center>Biome Number: <input id="biomes" type="number" value="25" placeholder=""></center>
+  
+  <br><center><h3>Display Settings</h3></center>
+  <!-- <center><label for="largest">Display Colors and Room Descriptions:&nbsp;</label><input checked id="descriptions" type="checkbox" onchange="DESCRIPTIONS = this.checked;"></center> -->
+  <center>Deep Ocean: <input id="deep_ocean" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Shallow Ocean: <input id="shallow_ocean" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Coast: <input id="coast" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Plains: <input id="plains" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Forest: <input id="forests" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Deserts: <input id="deserts" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Hills: <input id="hills" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Arctic: <input id="arctic" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  <center>Mountains: <input id="mountains" type="color" value="#212529" placeholder="" onchange="COLORS[this.id] = this.value;"></center>
+  
+
+  <center><button class="btn btn-outline-light" onclick="resetColors(DEFAULT_COLORS)">Reset to Default</button></center>
+  
+  <center><button id="render" class="btn btn-outline-light" onclick="display(BOARD)">Apply Display Settings</button></center>
+  <br>
+  <center><button onclick='start()' id="run" class="btn btn-outline-light">Generate Map</button></center>
+  <br><center><img id="output"><center><p style="height:120px" id="extraOutput"></p></center></center>
+  <!-- <center><p id="key"></p></center><br><center><p id="keyOutput"></p></center> -->
+  <!-- <center><img id="output"></center> -->
+  <!-- <center id="container-container"><div id="board-container"></div></center> -->
+  
+</body>
+
+</html>

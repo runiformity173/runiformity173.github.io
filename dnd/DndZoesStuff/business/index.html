@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tables</title>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <script src="scripts.js" defer></script>
+    <script src="/bootstrap.bundle.min.js" defer></script>
+  </head>
+  <body class="text-light bg-dark">
+     Category: <select class="btn btn-outline-light" name="tableTable" id="tableTable">
+      <option selected>Shop</option>
+      <option>Abbey</option>
+      <option>Farm</option>
+      <option>Town or city guildhall</option>
+      <option>Rural roadside inn</option>
+      <option>Town or city inn</option>
+      <option>Keep or small castle</option>
+      <option>Hunting lodge</option>
+      <option>Noble estate</option>
+      <option>Outpost or fort</option>
+      <option>Palace or large castle</option>
+      <option>Large temple</option>
+      <option>Small temple</option>
+      <option>Fortified tower</option>
+      <option>Trading post</option>
+    </select>&emsp;Days: <input type="number" placeholder="Days" value="10" id="days"><br>
+    <button class="btn btn-outline-light" onclick="document.getElementById('load').innerHTML='Rolling...';document.getElementById('output').innerHTML='';setTimeout(run,0);">Roll!</button>
+    <p id="load"><br></p>
+    <p id="output"></p>
+  </body>
+</html>

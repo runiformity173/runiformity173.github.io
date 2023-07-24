@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Settlement Generator</title>
+  <link href="/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
+  <script src="data.js" defer></script>
+  <script src="script.js" defer></script>
+  <!-- <script src="script.min.js" defer></script> -->
+  <script src="/bootstrap.bundle.min.js" defer></script>
+  <a href="/">Dungeon</a>
+  <center><select id="choice" class="btn btn-outline-light"><option>Settlement</option><option>Building</option><option>Residence</option><option>Religious</option><option>Tavern</option><option>Warehouse</option><option>Shop</option></select><button class="btn btn-outline-light" onclick="start()">Generate</button></center>
+  <center><p id="output"></p></center>
+</body>
+
+</html>

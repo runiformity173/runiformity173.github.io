@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Dungeon Generator</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));load2()" class="bg-dark text-light no-select">
+  <script src="data.max.js" defer></script>
+  <script src="display.max.js" defer></script>
+  <script src="script.max.js" defer></script>
+  <!-- <script src="script.min.js" defer></script> -->
+  <script src="bootstrap.bundle.min.js" defer></script>
+  <span style="display:inline;"><a href="/settlement/">Settlement</a>&emsp;<a href="/map/">Map</a><p id="myG" style="" tabindex="0">&emsp;&emsp;</p></span>
+  <center><h3>Generation Settings</h3></center>
+  <center>Height: <input id="height" type="number" value="128" placeholder=""></center>
+  <center>Width: <input id="width" type="number" value="128" placeholder=""></center>
+  <center><label for="dungeon-type">Dungeon Type:&emsp;</label><select id="dungeonType">
+    <option selected>Random</option>
+    <option>General</option>
+    <option>Death Trap</option>
+    <option>Lair</option>
+    <option>Maze</option>
+    <option>Mine</option>
+    <option>Planar Gate</option>
+    <option>Stronghold</option>
+    <option>Temple or Shrine</option>
+    <option>Tomb</option>
+    <option>Treasure Vault</option>
+  </select></center>
+  
+  <!-- <center>Room Size: &emsp;<input id="small" name="sample-range" type="radio" value="Small" onchange="SAMPLE_RANGE = Math.round((HEIGHT+WIDTH)/2)/64;"><label for="small">Small</label>&emsp;<input id="medium" name="sample-range" type="radio" value="Medium" onchange="SAMPLE_RANGE = Math.round((HEIGHT+WIDTH)/2)/32;" checked><label for="medium">Medium</label>&emsp;<input id="large" name="sample-range" type="radio" value="Large" onchange="SAMPLE_RANGE = Math.round((HEIGHT+WIDTH)/2)/16;"><label for="large">Large</label></center> -->
+  
+  <!-- <center>Blur Amount: <input id="mult" type="number" value="3" placeholder="" onchange="MULT = Math.pow(this.value,2);"></center> -->
+  <br><center><h3>Display Settings</h3></center>
+  <!-- <center><label for="largest">Display Colors and Room Descriptions:&nbsp;</label><input checked id="descriptions" type="checkbox" onchange="DESCRIPTIONS = this.checked;"></center> -->
+  <center><label for="largest">Remove Dead Ends:&nbsp;</label><input checked id="no-dead-ends" type="checkbox" onchange="NO_DEAD_ENDS = this.checked;"></center>
+  <center>Wall Color: <input id="wall" type="color" value="#212529" placeholder="" onchange="WALL = this.value;"><button class="btn btn-outline-light" onclick="document.getElementById('wall').value='#212529';WALL = '#212529'">Reset</button></center>
+  <center>Floor Color: <input id="floor" type="color" value="#bbbbbb" placeholder="" onchange="FLOOR = this.value;"><button class="btn btn-outline-light" onclick="document.getElementById('floor').value='#bbbbbb';FLOOR = '#bbbbbb';">Reset</button></center>
+  <center><button id="render" class="btn btn-outline-light">Apply Display Settings</button></center>
+  <center>
+    <select id="extras" class="btn btn-outline-light" onchange="extrasChange(this.value)">
+      <option>Trap</option>
+      <option>Trick</option>
+      <option>Obstacle</option>
+      <option>Hazard</option>
+      <option>Dressings</option>
+      <option>Furnishings</option>
+    </select>
+    <select id="furnishings" class="btn btn-outline-light" style="display:none;">
+      <option>General Features</option>
+      <option>General Furnishings</option>
+      <option>Religious</option>
+      <option>Mage</option>
+      <option>Personal Items</option>
+      <option>Container Contents</option>
+      <option>Book</option>
+    </select>
+    <select id="dressings" class="btn btn-outline-light" style="display:none;">
+      <option selected>All</option>
+      <option>Chamber State</option>
+      <option>Noise</option>
+      <option>Air</option>
+      <option>Odor</option>
+    </select>
+    <button onclick="document.getElementById('extraOutput').innerHTML = getThing(document.getElementById('extras').value)" class="btn btn-outline-light">Generate</button>
+  </center>
+  <center><p id="extraOutput"></p></center>
+  <br>
+  <center><button onclick='regenerate()' id="rerun" class="btn btn-outline-light">Clear</button>&emsp;<button onclick='start()' id="run" class="btn btn-outline-light">Generate Dungeon</button></center>
+  <center><p id="dungeonInfo"></p></center>
+  <br><center><img id="output"><div id="hey"><div id="key"><p id="keyOutput"></p></div></div></center>
+  <!-- <center><p id="key"></p></center><br><center><p id="keyOutput"></p></center> -->
+  <!-- <center><img id="output"></center> -->
+  <!-- <center id="container-container"><div id="board-container"></div></center> -->
+  
+</body>
+
+</html>

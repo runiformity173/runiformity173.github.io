@@ -1,0 +1,24 @@
+#add {
+  border-radius:2px;
+  cursor:pointer;
+  position:relative;
+  top:0px;
+  display:inline-block;
+  background-color:lime;
+  width:19px;
+  height:19px;
+  text-align:center;
+  transition:0.075s ease-out;
+  transform:translateY(3px) translateX(-5px);
+}
+#add:hover {
+  background-color:green;
+}
+#add:hover p{
+  color:lime;
+}
+#add p {
+  color:green;
+  transition:0.075s ease-out;
+  transform:translateY(-4px);
+}

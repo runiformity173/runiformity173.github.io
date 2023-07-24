@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Backstory Generator</title>
+  <link href="/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <style>
+    td:nth-child(1) {
+      border-right:1px solid #eeeeee;
+    }
+  </style>
+</head>
+
+<body
+  onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))"
+  class="bg-dark text-light no-select">
+  <script src="data.js"></script>
+  <script src="script.js" defer></script>
+  <!-- <script src="script.min.js" defer></script> -->
+  <script src="/bootstrap.bundle.min.js" defer></script>
+  <a href="/npc/">NPC</a>
+  <!-- <center> -->
+    <br>Race: <select id="race" class="btn btn-outline-light">
+      <option selected>Random</option>
+      <option>Human</option>
+      <option>Dwarf</option>
+      <option>Elf</option>
+      <option>Halfling</option>
+      <option>Dragonborn</option>
+      <option>Gnome</option>
+      <option>Half-elf</option>
+      <option>Half-orc</option>
+      <option>Tiefling</option>
+      <option>Other</option>
+    </select><br>
+  Background: <select id="background" class="btn btn-outline-light">
+      <option selected>Random</option>
+      <option>Acolyte</option>
+      <option>Charlatan</option>
+      <option>Criminal</option>
+      <option>Entertainer</option>
+      <option>Folk Hero</option>
+      <option>Guild Artisan</option>
+      <option>Hermit</option>
+      <option>Noble</option>
+      <option>Outlander</option>
+      <option>Sage</option>
+      <option>Sailor</option>
+      <option>Soldier</option>
+      <option>Urchin</option>
+      <option>Other</option>
+    </select><br>
+  Class: <select id="class" class="btn btn-outline-light">
+      <option selected>Random</option>
+      <option>Barbarian</option>
+      <option>Bard</option>
+      <option>Cleric</option>
+      <option>Druid</option>
+      <option>Fighter</option>
+      <option>Monk</option>
+      <option>Paladin</option>
+      <option>Ranger</option>
+      <option>Rogue</option>
+      <option>Sorcerer</option>
+      <option>Warlock</option>
+      <option>Wizard</option>
+      <option>Other</option>
+    </select><br>
+  Charisma Mod: <select id="chaMod" class="btn btn-outline-light">
+      <option selected>Random</option>
+      <option>-1</option>
+      <option>+0</option>
+      <option>+1</option>
+      <option>+2</option>
+      <option>+3</option>
+      <option>+4</option>
+      <option>+5</option>
+    </select><br>
+  <button class="btn btn-outline-light" onclick="start()">Generate</button>
+  <!-- </center> -->
+  <!-- <center> -->
+    <p id="output"></p>
+  <!-- </center> -->
+</body>
+
+</html>
