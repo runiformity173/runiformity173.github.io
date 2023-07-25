@@ -5,35 +5,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Eli's Nerd Websites</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="bootstrap.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <style>
+    .column {
+      float: left;
+      width: 50%;
+    }
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  </style>
 </head>
 
-<body class="bg-dark text-light" onload="load2()">
+<body class="bg-dark text-light">
   
   <script src="bootstrap.js"></script>
-  <script src="script.js"></script>
 
-  <p id="output"></p>
-
-<br><a href="https://dndspellsearch.ezhgamer173.repl.co">Spell Search & Spellbook</a><br>
-  <a href="https://dndadvantagechance.ezhgamer173.repl.co">Advantage and Downtime Probabilities</a><br>
-  <a href="https://dndfeatsearch.ezhgamer173.repl.co">Feat Search</a><br>
-  <!-- <a href="https://dndmonstersearch.ezhgamer173.repl.co">Monster Search</a><br> -->
-  <a href="https://dungeongeneration.ezhgamer173.repl.co">Dungeon, Settlement, and Map Generation</a><br>
-  <a href="https://cavegeneration.ezhgamer173.repl.co">Cave Generation</a><br>
-  <a href="https://dndencounterbalancer.ezhgamer173.repl.co">Encounter Balancer</a><br>
-  <a href="https://dndtables.ezhgamer173.repl.co">Treasure and Encounter Tables</a><br>
-  <a href="https://dnd-weapon-generator.ezhgamer173.repl.co/">Enchanted Weapon Generator</a><br>
-  <!-- <a href="https://randomgen.ezhgamer173.repl.co/?gen=loot.txt&amount=7">Loot Generator</a><br> -->
-  <!-- <a href="https://nested.ezhgamer173.repl.co">Weapon and Party Generator</a><br> -->
-  <!-- <a href="https://dndbattlesimulator.ezhgamer173.repl.co">Battle Simulator</a><br> -->
-  <a href="https://dndnametables.ezhgamer173.repl.co">Name Generator</a><br>
-  <a href="https://dungeongeneration.ezhgamer173.repl.co/npc/">NPC/Backstory Generator</a><br>
-  <br><br>
-  <a href="/configs/">Configs</a><br><br><button class="btn btn-outline-light" onclick="window.open('https://autoclose.ezhgamer173.repl.co');window.open('https://autoclose.ezhgamer173.repl.co')">Popup Test</button>
-  
+  <div class="row">
+    <div class="column">
+      <h2>
+        Players
+      </h2>
+      <a href="SpellSearch/">Spell Search & Spellbook</a><br>
+      <a href="AdvantageChance/">Advantage Chance</a><br>
+      <a href="DungeonGeneration/backstory/">Backstory Generator</a><br>
+      <a href="AdvantageChance/downtime/">Downtime Rolls</a><br>
+      <a href="FeatSearch/">Feat Search</a><br>
+    </div>
+    <div class="column">
+      <h2>
+        DMs
+      </h2>
+      <a href="CaveGeneration/">Cave Generation</a><br>
+      <a href="DungeonGeneration/">Dungeon Generator</a><br>
+      <a href="DungeonGeneration/map/">Map Generator</a><br>
+      <a href="DungeonGeneration/settlement/">Settlement/Building Generator</a><br>
+      <a href="DungeonGeneration/npc/">NPC Generator</a><br>
+      <a href="EncounterBalancer/">Encounter Balancer</a><br>
+      <a href="Tables/">Encounter and Treasure Tables</a><br>
+      <a href="WeaponGenerator/">Enchanted Weapon Generator</a><br>
+    </div>
+  </div>
 </body>
 
 </html>
