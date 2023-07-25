@@ -1,13 +1,13 @@
 /* * {
   font-family:verdana;
-}
+} */
 body {
   text-align:center;
   line-height: 25px;
   color:#eeeeee;
   background-color:#323232;
 }
-p {
+/* p {
   color:#eeeeee;
 }
 h1 {
