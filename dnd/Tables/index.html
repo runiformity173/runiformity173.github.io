@@ -2,20 +2,22 @@
 <html>
   <head>
     <title>Tables</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <script src="data.js"></script>
     <script src="scripts.js"></script>
     <script src="monsters.js"></script>
     <script src="treasure.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
   </head>
-  <body onload="reevaluate();">
-    Filter: <select name="tableType" id="tableType" onchange="reevaluate()">
+  <body onload="reevaluate();" class="bg-dark text-light">
+    Filter: <select name="tableType" id="tableType" class="btn btn-outline-light" onchange="reevaluate()">
       <option name="all">All</option>
       <option name="treasure">Treasure</option>
       <option name="monsters">Encounters</option>
     </select><br><br>
-    Category: <select name="tableTable" id="tableTable" onchange="reevaluate()">
+    Category: <select name="tableTable" id="tableTable" class="btn btn-outline-light" onchange="reevaluate()">
       <option name="hoard">Hoard</option>
       <option name="individual">Individual</option>
       <option name="dragon">Dragon Hoard</option>
@@ -31,7 +33,7 @@
       <option name="swamp">Underwater</option>
       <option name="swamp">Urban</option>
     </select><br><br>
-    Challenge Rating: <select name="tableChallenge" id="tableChallenge">
+    Challenge Rating: <select name="tableChallenge" id="tableChallenge" class="btn btn-outline-light">
       <option name="0">0-4</option>
       <option name="5">5-10</option>
       <option name="11">11-16</option>
@@ -41,7 +43,7 @@
       <option name="adult">Adult</option>
       <option name="ancient">Ancient</option>
     </select><br><br>
-    <button onclick="document.getElementById('load').innerHTML='Rolling...';document.getElementById('output').innerHTML='';setTimeout(run,10)">Roll!</button>
+    <button class="btn btn-outline-light" onclick="document.getElementById('load').innerHTML='Rolling...';document.getElementById('output').innerHTML='';setTimeout(run,10)">Roll!</button>
     <p id="load"><br></p>
     <p id="output"></p>
   </body>
