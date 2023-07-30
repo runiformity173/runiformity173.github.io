@@ -67,7 +67,7 @@ function start() {
     const node = document.createElement("a");
 const textnode = document.createTextNode(f["name"]+"");
 node.appendChild(textnode);
-    node.href = "https://dndmonstersearch.ezhgamer173.repl.co/display/?monster="+f["name"].toLowerCase().replaceAll("-","--").replaceAll(" ","-");
+    node.href = "display/?monster="+f["name"].toLowerCase().replaceAll("-","--").replaceAll(" ","-");
     node.target = "_blank";
 document.getElementById("output").appendChild(node);
     document.getElementById("output").appendChild(document.createElement("br"));
