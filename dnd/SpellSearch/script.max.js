@@ -27,7 +27,7 @@ function checkAll(arg,c) {
 }
 function start() {
   spells = JSON.parse(JSON.stringify(spells2));
-  FILTERS = {"level":[],"book":["Player's"],"class":[],"ritual":[],"school":[]};
+  FILTERS = {"level":[],"book":[],"class":[],"ritual":[],"school":[]};
   levels = ["level0","level1","level2","level3","level4","level5","level6","level7","level8","level9"];
   for (i in levels) {
     if (document.getElementById(levels[i]).checked){
@@ -51,8 +51,19 @@ function start() {
   if (document.getElementById("ritual").checked) {
       FILTERS["ritual"].push(true);
     }
-  if (document.getElementById("books").checked) {
-    ["Xanathar's","Tasha's","Fizban's","Guildmaster's"].forEach(l=>{FILTERS["book"].push(l);})
+  if (true) {
+    if (document.getElementById("bookPHB").checked) {
+      FILTERS["book"].push("Player's");
+    }
+    if (document.getElementById("bookXGE").checked) {
+      FILTERS["book"].push("Xanathar's");
+    }
+    if (document.getElementById("bookTCE").checked) {
+      FILTERS["book"].push("Tasha's");
+    }
+    if (document.getElementById("bookPHB").checked) {
+      FILTERS["book"].push("Fizban's");
+    }
   }
   console.log(FILTERS);
   console.log(spells.length);
