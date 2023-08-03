@@ -61,7 +61,7 @@ function start() {
     if (document.getElementById("bookTCE").checked) {
       FILTERS["book"].push("Tasha's");
     }
-    if (document.getElementById("bookPHB").checked) {
+    if (document.getElementById("bookFTD").checked) {
       FILTERS["book"].push("Fizban's");
     }
   }
