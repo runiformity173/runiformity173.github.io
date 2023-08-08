@@ -54,7 +54,7 @@ function start() {
   WIDTH = Number(document.getElementById("width").value);
   CITY_N = Number(document.getElementById("cities").value);
   BIOME_N = Number(document.getElementById("biomes").value);
-  BIOMES = (shatter(WIDTH, HEIGHT, BIOME_N),Math.round(WIDTH/128)+1);
+  BIOMES = (shatter(WIDTH, HEIGHT, BIOME_N));
   BUILDING_N = Number(document.getElementById("buildings").value);
   ROUGHNESS = Number(document.getElementById("roughness").value)/1000;
   MAP_SIZE = Math.round({"Local":4,"Regional":8,"Continental":16}[document.getElementById("size").value]);
