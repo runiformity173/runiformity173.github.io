@@ -4,7 +4,7 @@ let MAP_SIZE = 16;
 let ROUGHNESS = 0.01;
 function distance(a,b) {return Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[1]-b[1],2))}
 function load2() {
-  // resetColors(DEFAULT_COLORS);
+  // resetColors(DEFAULT_COLORS); 
 }
 function resetColors(colorset) {
   for (const i in colorset) {
