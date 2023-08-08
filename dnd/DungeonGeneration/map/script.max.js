@@ -112,27 +112,36 @@ function start() {
 }
 let BIOMES = [];
 const noiseStrength = 5;
+// function shatter(width, height, numShards) {
+//   const sections = Array.from({ length: height }, () => Array(width).fill(0));
+//   const seeds = [];
+//   for (let i = 0; i < numShards; i++) {const seed = {x: Math.floor(Math.random() * width),y: Math.floor(Math.random() * height)};seeds.push(seed);}
+//   for (let y = 0; y < height; y++) {
+//     for (let x = 0; x < width; x++) {
+//       let minDist = Infinity;
+//       let sectionIndex = 0;
+//       let nx = x + Math.round(Math.cos(Math.PI*2-y*0.1)*noiseStrength);
+//       let ny = y + Math.round(Math.sin(x*0.1)*noiseStrength);
+      
+//       for (let i = 0; i < numShards; i++) {
+//         const seed = seeds[i];
+//         const dist = ((seed.x - nx) ** 2 + (seed.y - ny) ** 2);
+//         if (dist < minDist) {minDist = dist;sectionIndex = i+1;}
+//       }
+//       sections[y][x] = sectionIndex;
+//     }
+//   } return sections;
+// }
+function ramp(val) {return Math.round((val+1)*2);}
 function shatter(width, height, numShards) {
+  noise.seed(Math.random());
   const sections = Array.from({ length: height }, () => Array(width).fill(0));
-  const seeds = [];
-  for (let i = 0; i < numShards; i++) {const seed = {x: Math.floor(Math.random() * width),y: Math.floor(Math.random() * height)};seeds.push(seed);}
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      let minDist = Infinity;
-      let sectionIndex = 0;
-      let nx = x + Math.round(Math.cos(Math.PI*2-y*0.1)*noiseStrength);
-      let ny = y + Math.round(Math.sin(x*0.1)*noiseStrength);
-      
-      for (let i = 0; i < numShards; i++) {
-        const seed = seeds[i];
-        const dist = ((seed.x - nx) ** 2 + (seed.y - ny) ** 2);
-        if (dist < minDist) {minDist = dist;sectionIndex = i+1;}
-      }
-      sections[y][x] = sectionIndex;
+      sections[y][x] = wetness_and_temp_map[ramp(noise.perlin2(x,y))][ramp(noise.perlin2(x+WIDTH,y+HEIGHT))];
     }
   } return sections;
 }
-
 function roughen(board, range) {
   const roughenedBoard = [];
   for (let i = 0; i < board.length; i++) {
@@ -160,5 +169,5 @@ function getBiome(y,x) {
   if (BOARD[y][x] <= SEA_LEVEL) return "Ocean";
   if (BOARD[y][x] <= 0.1) return "Coast";
   if (BOARD[y][x] > 0.8) return "Mountain";
-  return ["Plains","Forest","Hills","Arctic","Desert"][BIOMES[y][x]%5]
+  return biome_map[BIOMES[y][x]]
 }

@@ -1,6 +1,22 @@
-let SEA_LEVEL = 0.0;let COLORS = {};COLORS["coast"] = "#99dd22";COLORS["deep_ocean"] = "#171779";COLORS["shallow_ocean"] = "#0079d9";COLORS["plains"] = "#00ab48";COLORS["forests"] = "#0f5319";COLORS["deserts"] = "#dad978";COLORS["hills"] = "#633f38";COLORS["mountains"] = "#b3b3b3";COLORS["arctic"] = "#eeeeee";
+let SEA_LEVEL = 0.0;
+let COLORS = {
+  "Plains":"#b5db88",
+  "Desert":"#ffbc40",
+  "Forest":"#056621",
+  "Jungle":"#537b09",
+  "Taiga":"#0b6659",
+  "Birch forest":"#307444",
+  "Dark forest":"#40511a",
+  "Savannah":"#bdb25f",
+  "Flower field":"#b5db88",
+  "Snowy plains":"#faf0c0",
+  "Snowy tundra":"#b4dcdc",
+  "Snowy taiga":"#31554a"
+};
+COLORS["coast"] = "#99dd22";COLORS["deep_ocean"] = "#171779";COLORS["shallow_ocean"] = "#0079d9";COLORS["plains"] = "#00ab48";COLORS["forests"] = "#0f5319";COLORS["deserts"] = "#dad978";COLORS["hills"] = "#633f38";COLORS["mountains"] = "#b3b3b3";COLORS["arctic"] = "#eeeeee";
 const DEFAULT_COLORS = structuredClone(COLORS);
-const biomeMap = {0:"plains",2:"hills",1:"forests",3:"arctic",4:"deserts"};
+const biomeMap = biome_map;
+// const biomeMap = {0:"plains",2:"hills",1:"forests",3:"arctic",4:"deserts"};
 let CITY_N = 5;
 function createPNG(a) {
 	const n = document.createElement("canvas");
