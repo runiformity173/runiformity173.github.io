@@ -47,12 +47,12 @@ let BUILDINGS = {};
 let DIST = 0;
 function start() {
   let used_positions = [];
-  document.getElementById("render").style.display = "inline";
+  // document.getElementById("render").style.display = "inline";
   HEIGHT = Number(document.getElementById("height").value);
   WIDTH = Number(document.getElementById("width").value);
   CITY_N = Number(document.getElementById("cities").value);
   BIOME_N = Number(document.getElementById("biomes").value);
-  BIOMES = roughen(shatter(WIDTH, HEIGHT, BIOME_N),Math.round(WIDTH/128)+1);
+  BIOMES = (shatter(WIDTH, HEIGHT, BIOME_N),Math.round(WIDTH/128)+1);
   BUILDING_N = Number(document.getElementById("buildings").value);
   ROUGHNESS = Number(document.getElementById("roughness").value)/1000;
   MAP_SIZE = Math.round({"Local":4,"Regional":8,"Continental":16}[document.getElementById("size").value]);
