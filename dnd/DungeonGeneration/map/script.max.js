@@ -140,7 +140,7 @@ function shatter(width, height, numShards) {
   const sections = Array.from({ length: height }, () => Array(width).fill(0));
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      sections[y][x] = wetness_and_temp_map[ramp(noise.perlin2(x/WIDTH,y/HEIGHT))][ramp(noise.perlin2(1-(x/WIDTH),1-(y/HEIGHT)))];
+      sections[y][x] = wetness_and_temp_map[ramp(perlin(x,y))][ramp(perlin(x+WIDTH,y+HEIGHT))];
     }
   } return sections;
 }
