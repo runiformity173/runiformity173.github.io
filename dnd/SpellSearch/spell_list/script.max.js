@@ -36,7 +36,7 @@ function load() {
         console.log(spell,this);
         CURRENT_LIST[spell].enabled = !(CURRENT_LIST[spell].enabled);
         setCookie(window.location.href.split('?list=')[1],JSON.stringify(CURRENT_LIST));
-        this.parentElement.firstElementChild.classList.toggle('disabled');
+        this.previousElementSibling.previousElementSibling.classList.toggle('disabled');
       });
     }
   }
