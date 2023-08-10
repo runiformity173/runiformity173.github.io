@@ -84,17 +84,18 @@ function saveSpell() {
   if (!validURL(list)) {
     alert("Please use only letters, digits, and hyphens.");return "";
   }
-  console.log(JSON.stringify({"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level}));
+  console.log(JSON.stringify({"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true}));
   if (books.includes(list)) {
     let fff = get2(list);
-    let c = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level};
-    if (!fff.includes(c)) {
+    let c2 = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":false};
+    let c = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true};
+    if (!fff.includes(c) && !fff.includes(c2)) {
       fff.push(c);
     }
     set2(list,fff);
   }
   else {
-    set2(list,[{"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level}]);
+    set2(list,[{"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true}]);
   }
   console.log(books,list);
 }
