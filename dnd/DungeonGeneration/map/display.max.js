@@ -8,7 +8,7 @@ let COLORS = {
   "Birch forest":"#307444",
   "Dark forest":"#40511a",
   "Savannah":"#bdb25f",
-  "Flower field":"#b5db88",
+  "Flower field":"#d5db38",
   "Snowy plains":"#faf0c0",
   "Snowy tundra":"#b4dcdc",
   "Snowy taiga":"#31554a"
@@ -23,12 +23,13 @@ function createPNG(a) {
 	n.width = a[0].length, n.height = a.length;
 	const t = n.getContext("2d"),
 		g = t.createImageData(n.width, n.height);
-	for(let e = 0; e < a.length; e++)
+	for(let e = 0; e < a.length; e++) {
 		for(let t = 0; t < a[e].length; t++) {
 			var r = hexToRgb(a[e][t]),
 				h = 4 * (e * n.width + t);
 			g.data[h] = r.r, g.data[1 + h] = r.g, g.data[2 + h] = r.b, g.data[3 + h] = 255
 		}
+}
   t.putImageData(g, 0, 0)
   t.fillStyle = 'hsl(180,100%,100%)';
   for (const i in CITIES) {
@@ -50,13 +51,13 @@ function createPNG(a) {
 function hexToRgb(t){return{r:parseInt(t.substring(1,3),16),g:parseInt(t.substring(3,5),16),b:parseInt(t.substring(5,7),16)}}
 function getColor(c,biome) {
   if (c <= SEA_LEVEL) return blendHex(COLORS["shallow_ocean"],COLORS["deep_ocean"],(c+SEA_LEVEL+1))
-  if (c <= 0.2) {
-    return blendHex(COLORS[biomeMap[biome]],COLORS["coast"],(c-SEA_LEVEL)*5)
+  if (c <= 0.1) {
+    return blendHex(COLORS[biomeMap[biome]],COLORS["coast"],(c-SEA_LEVEL)*10);
   }
   if (c <= 0.8) {
-    return blendHex(blendHex(COLORS[biomeMap[biome]],COLORS["mountains"],0.5),COLORS[biomeMap[biome]],(c-SEA_LEVEL-0.2))
+    return COLORS[biomeMap[biome]];
   }
-  return blendHex(COLORS["mountains"],blendHex(COLORS[biomeMap[biome]],COLORS["mountains"],0.5),(c-SEA_LEVEL-0.2))
+  return COLORS["mountains"];
 }
 
 function blendHex(hex1, hex2, weight) {
@@ -87,7 +88,7 @@ function getMousePos(event) {
 
 function display(board1) {
   let b = JSON.parse(JSON.stringify(board1));
-  let board2 = b.map(function(a,y){return a.map(function(c,x){return getColor(c,Math.round(BIOMES[y][x])%5)})})
+  let board2 = b.map(function(a,y){return a.map(function(c,x){return getColor(c,Math.round(BIOMES[y][x]))})})
   document.getElementById("output").src = createPNG(board2);
   document.getElementById("output").style.cursor = "default";
   document.getElementById("output").addEventListener("click", (event) => {
@@ -102,6 +103,7 @@ function display(board1) {
       document.getElementById("extraOutput").innerHTML = CITIES[i];return;
     }
   }
+    if (y < HEIGHT && y > 0 && x < WIDTH && x > 0) {document.getElementById("extraOutput").innerHTML = "<table><tr><td>Biome&emsp;</td><td>"+getBiome(Math.floor(y),Math.floor(x))+"</td></tr></table>";}
 });
 document.getElementById("output").addEventListener("mousemove", (event) => {
   const [y, x] = getMousePos(event);

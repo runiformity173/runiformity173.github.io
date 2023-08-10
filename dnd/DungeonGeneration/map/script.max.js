@@ -6,6 +6,8 @@ function distance(a,b) {return Math.sqrt(Math.pow(a[0]-b[0],2)+Math.pow(a[1]-b[1
 function load2() {
   // resetColors(DEFAULT_COLORS); 
 }
+function mode(arr){return arr.sort((a,b) => (arr.filter(v => v===a).length-arr.filter(v => v===b).length)).pop();}
+const clamp = (o,m1,m2)=>(Math.min(Math.max(o,m1),m2));
 function resetColors(colorset) {
   for (const i in colorset) {
     COLORS[i] = colorset[i];
@@ -58,7 +60,7 @@ function start() {
   BUILDING_N = Number(document.getElementById("buildings").value);
   ROUGHNESS = Number(document.getElementById("roughness").value)/1000;
   MAP_SIZE = Math.round({"Local":4,"Regional":8,"Continental":16}[document.getElementById("size").value]);
-  
+  NOISE_CONSTANT = WIDTH/(32/MAP_SIZE);
   DIST = Math.sqrt(HEIGHT*WIDTH)/128+1;
   BOARD = generateMap();
   CITIES = {};for (let i = 0;i<CITY_N;i++) {
@@ -134,15 +136,17 @@ const noiseStrength = 5;
 //     }
 //   } return sections;
 // }
-function ramp(val) {return Math.round((val+1)*2);}
+function ramp(val) {return Math.round((val)*4);}
 function shatter(width, height, numShards) {
-  noise.seed(Math.random());
+  temperatureNoise.seed();
+  humidityNoise.seed();
   const sections = Array.from({ length: height }, () => Array(width).fill(0));
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
-      sections[y][x] = wetness_and_temp_map[ramp(perlin(x,y))][ramp(perlin(x+WIDTH,y+HEIGHT))];
+      sections[y][x] = wetness_and_temp_map[ramp(getTemperatureNoise(x,y))][ramp(getHumidityNoise(x,y))];
     }
   } return sections;
+  return roughen(sections,2);
 }
 function roughen(board, range) {
   const roughenedBoard = [];
@@ -169,7 +173,7 @@ function roughen(board, range) {
 }
 function getBiome(y,x) {
   if (BOARD[y][x] <= SEA_LEVEL) return "Ocean";
-  if (BOARD[y][x] <= 0.1) return "Coast";
+  if (BOARD[y][x] <= 0.05) return "Coast";
   if (BOARD[y][x] > 0.8) return "Mountain";
   return biome_map[BIOMES[y][x]]
 }
