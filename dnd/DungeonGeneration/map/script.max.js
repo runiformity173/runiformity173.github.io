@@ -60,7 +60,7 @@ function start() {
   BUILDING_N = Number(document.getElementById("buildings").value);
   ROUGHNESS = Number(document.getElementById("roughness").value)/1000;
   MAP_SIZE = Math.round({"Local":4,"Regional":8,"Continental":16}[document.getElementById("size").value]);
-  NOISE_CONSTANT = WIDTH/(32/MAP_SIZE);
+  NOISE_CONSTANT = WIDTH/(MAP_SIZE/4);
   DIST = Math.sqrt(HEIGHT*WIDTH)/128+1;
   BOARD = generateMap();
   CITIES = {};for (let i = 0;i<CITY_N;i++) {
