@@ -55,7 +55,7 @@ function start() {
   HEIGHT = Number(document.getElementById("height").value);
   WIDTH = Number(document.getElementById("width").value);
   CITY_N = Number(document.getElementById("cities").value);
-  BIOME_N = Number(document.getElementById("biomes").value);
+  // BIOME_N = Number(document.getElementById("biomes").value);
   BIOMES = shatter(WIDTH, HEIGHT, BIOME_N);
   BUILDING_N = Number(document.getElementById("buildings").value);
   ROUGHNESS = Number(document.getElementById("roughness").value)/1000;
