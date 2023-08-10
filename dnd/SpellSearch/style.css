@@ -135,17 +135,18 @@ padding-top:9px;
   position:relative;
   top:5px;
   display:inline-block;
-  background-color:lime;
+  background-color:yellow;
   width:19px;
   height:19px;
   text-align:center;
   transition:0.075s ease-out;
 }
 .toggle:hover {
-  background-color:green;
+  background-color:orange;
 }
 .toggle p {
-  transform:translateY(2px);
+  color:#212529;
+  transform:translateY(-3px);
 }
 #toFilters {
   position:absolute;
