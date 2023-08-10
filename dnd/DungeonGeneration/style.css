@@ -90,6 +90,7 @@ input[type="checkbox"] {
   width:45%;
   height:100%;
 }
+}
 @media only screen and (min-width: 1200px) {
 #nall {
   position:absolute;
@@ -202,7 +203,4 @@ label {
   width:50%;
   height:50vw;
   transform:translateX(25vw);
-}
-p {
-  content: ;
 }
