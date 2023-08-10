@@ -33,6 +33,7 @@ function load() {
       if (!levels.includes(vv[spell]["level"])) {levels.push(vv[spell]["level"]);document.getElementById("output").innerHTML += ("<br>"+{"0":"Cantrips","1":"1st-level","2":"2nd-level","3":"3rd-level","4":"4th-level","5":"5th-level","6":"6th-level","7":"7th-level","8":"8th-level","9":"9th-level"}[String(vv[spell]["level"])]+"<br>")}
       document.getElementById("output").innerHTML += "<a "+(vv[spell].enabled?"":"class=\'disabled\'")+"target='_blank' href='"+vv[spell]["linkd"]+"'>"+vv[spell]["name"]+"</a>&emsp;<span class='remove no-select' onclick='if (confirm(\"Are you sure you want to remove this spell?\")){removeSpell(\""+vv[spell]["linkd"]+"\");}'><p>‾</p></span>&emsp;<span class='toggle no-select'><p>+</p></span><br>";
       document.getElementById("output").lastElementChild.previousElementSibling.addEventListener("click",function(){
+        console.log(spell,this);
         CURRENT_LIST[spell].enabled = !(CURRENT_LIST[spell].enabled);
         setCookie(window.location.href.split('?list=')[1],JSON.stringify(CURRENT_LIST));
         this.parentElement.firstElementChild.classList.toggle('disabled');
