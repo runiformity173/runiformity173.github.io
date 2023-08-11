@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Wild Shape Search</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="../bootstrap.js"></script>
+  <center>
+  <div id="filters">
+    <label for="swim">Has swim speed: </label>
+    <select id="swim">
+      <option>No</option>
+      <option selected>Optional</option>
+      <option>Yes</option>
+    </select><br>
+    <label for="fly">Has fly speed: </label>
+    <select id="fly">
+      <option>No</option>
+      <option selected>Optional</option>
+      <option>Yes</option>
+    </select><br>
+    <label for="climb">Has climb speed: </label>
+    <select id="climb">
+      <option selected>Optional</option>
+      <option>Yes</option>
+    </select><br>
+    <label for="cr">Challenge rating: </label>
+    <select id="cr">
+      <option>&lt;= 1/4</option>
+      <option>&lt;= 1/2</option>
+      <option>&lt;= 1</option>
+    </select>
+  </div></center>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <center><button onclick='start()' class="btn btn-outline-light">Filter</button></center>
+ <p id="output" class="text-light search"></p>
+  
+</body>
+
+</html>
