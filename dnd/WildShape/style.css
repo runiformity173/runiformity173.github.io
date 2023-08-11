@@ -1,3 +1,14 @@
 #output {
-    columns:4;
-  }
+  position:absolute;
+  left:0;
+  top:140px;
+  columns:4;
+  width: 50%;
+}
+#frame {
+  position:fixed;
+  top:0;
+  right:0;
+  width:40%;
+  height:100%;
+}

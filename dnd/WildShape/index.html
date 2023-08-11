@@ -10,6 +10,7 @@
   <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 <body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
+  <iframe id="frame"></iframe>
   <script src="data.js"></script>
   <script src="script.js"></script>
   <script src="../bootstrap.js"></script>
@@ -39,7 +40,6 @@
       <option>&lt;= 1</option>
     </select>
   </div></center>
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <center><button onclick='start()' class="btn btn-outline-light">Filter</button></center>
  <p id="output" class="text-light search"></p>
   
