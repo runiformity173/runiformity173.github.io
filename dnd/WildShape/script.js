@@ -11,5 +11,5 @@ function start() {
     else {optionalSwim = true;}
     const t = document.getElementById("cr").value;const cr = t=="<= 1/4"?0.25:t=="<= 1/2"?0.5:1;
     const climb = document.getElementById("climb").value=="Optional";
-    document.getElementById("output").innerHTML = (animals.filter((o)=>(optionalFly||o.speeds.includes("fly")==canFly)).filter((o)=>(optionalSwim||o.speeds.includes("swim")==canSwim)).filter((o)=>(o.cr <= cr)).filter((o)=>(climb||o.speeds.includes("climb")))).sort((a,b)=>((a.cr*8+a.name)<(b.cr*8+b.name)?-1:1)).map((o)=>(o.name)).join("<br>");
+    document.getElementById("output").innerHTML = (animals.filter((o)=>(optionalFly||o.speeds.includes("fly")==canFly)).filter((o)=>(optionalSwim||o.speeds.includes("swim")==canSwim)).filter((o)=>(o.cr <= cr)).filter((o)=>(climb||o.speeds.includes("climb")))).sort((a,b)=>((a.cr*8+a.name)<(b.cr*8+b.name)?-1:1)).map((o)=>(o.name+": "+{0:"0",0.125:"1/8",0.25:"1/4",0.5:"1/2",1:"1"}[o.cr])).join("<br>");
   }
