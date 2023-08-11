@@ -1,0 +1,31 @@
+html {
+    height: 100%;
+    width: 100%;
+  }
+  body {
+    margin:0;
+    background-color: darkgray;
+    overflow:hidden;
+  }
+  button {
+      cursor:pointer;
+  }
+  #output {
+    height:100%;
+    width:100%;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+    cursor:pointer;
+  }
+  #fps {
+    position:absolute;
+    right:10px;
+    top:10px;
+  }
+  #nav {
+    position:absolute;
+    top:10px;
+    left:10px;
+  }
