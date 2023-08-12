@@ -1,6 +1,6 @@
 function display() {
   if (window.location.hash) {
-    document.getElementById("frame").src = "https://ezhgamer173.github.io/dnd/MonsterSearch/display/?monster="+window.location.hash.substring(1);
+    document.getElementById("frame").contentWindow.location.replace("https://ezhgamer173.github.io/dnd/MonsterSearch/display/?monster="+window.location.hash.substring(1));
   }
 }
 display();
