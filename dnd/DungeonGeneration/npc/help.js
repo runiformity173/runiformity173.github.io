@@ -1,0 +1,1 @@
+const helpText = `Select or leave the NPC's alignment as random, and it will give you randomly generated info.`;

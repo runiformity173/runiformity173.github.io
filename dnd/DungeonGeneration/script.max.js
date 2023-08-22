@@ -45,13 +45,6 @@ function getThing(thing) {
   }
 }
 function extrasChange(val) {document.getElementById("furnishings").style.display="none";document.getElementById("dressings").style.display="none";if (val=="Dressings"){document.getElementById("dressings").style.display="inline"} if (val=="Furnishings"){document.getElementById("furnishings").style.display="inline"}}
-document.getElementById('myG').addEventListener("keydown", (event) => {
-  if (event.keyCode === 71 && event.altKey) {
-  document.getElementById('extraOutput').innerHTML = getThing('Room (kinda weird)');
-    return;
-      }
-  // do something
-});
 function generateDungeon() {
   let extraData = {};
   let isAChamber = false;
