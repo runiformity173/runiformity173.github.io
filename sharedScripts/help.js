@@ -28,7 +28,6 @@ document.onkeyup = function(e) {
       setTimeout(function(){overlay.style.display = "none";},200);
     }
     helpIsDisplayed = !helpIsDisplayed;
-    console.log("hi");
   }
 };
 overlay.addEventListener("click",function(){
@@ -53,4 +52,4 @@ help.innerHTML = '<img src="/images/help.png" style="width:100%;height:100%;opac
 //   helpIsDisplayed = true;
 // })
 // document.body.appendChild(help);
-document.body.appendChild(overlay);
+window.addEventListener("load",function(){document.body.appendChild(overlay)});
