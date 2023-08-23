@@ -13,7 +13,7 @@ overlay.style.position = "absolute";
 overlay.style.top = "0";
 overlay.style.left = "0";
 overlay.style.zIndex = 100000000;
-overlay.innerHTML = "<p style='font-family:verdana;'>"+helpText.replaceAll("\n","<br>")+"</p>"
+overlay.innerHTML = "<p style='font-family:verdana;font-size:16px;line-height: normal;'>"+helpText.replaceAll("\n","<br>")+"</p>"
 // overlay.firstElementChild.style.opacity = "1.0";
 let helpIsDisplayed = false;
 document.onkeyup = function(e) {
