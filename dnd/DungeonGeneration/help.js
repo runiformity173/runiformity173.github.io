@@ -1,6 +1,8 @@
 const helpText = `"Height" and "Width" determine how big the dungeon can get, as well as the resolution.
 "Dungeon Type" is used for theming the rooms.
 "Remove Dead Ends" removes corriders that lead to nowhere when checked.
+"Floor Color" and "Wall Color" let you change the color of the corridors and the background, respectively.
+"Apply Display Changes" keeps the current dungeon layout, but applies the "Remove Dead Ends" and color settings.
 "Generate" generates whatever is selected. 'Furnishings' and 'Dressings' both have setting selection within them.
 "Generate Dungeon" will generate a dungeon with the current settings.
 
