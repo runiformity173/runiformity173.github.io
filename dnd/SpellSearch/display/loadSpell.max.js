@@ -89,7 +89,7 @@ function saveSpell(multi=false) {
     let fff = get2(list);
     if (multi) {
       for (const w of spells) {
-        let c2 = {"name":w.name,"linkd":"https://ezhgamer173.github.io/display/?spell="+w.name.toLowerCase().replaceAll("-","--").replaceAll(" ","-"),"level":w.level,"enabled":false};
+        let c2 = {"name":w.name,"linkd":"https://ezhgamer173.github.io/dnd/SpellSearch/display/?spell="+w.name.toLowerCase().replaceAll("-","--").replaceAll(" ","-"),"level":w.level,"enabled":false};
         let c = {"name":w.name,"linkd":c2.linkd,"level":w.level,"enabled":false};
         if (!fff.includes(c) && !fff.includes(c2)) {
           fff.push(c2);
@@ -109,7 +109,7 @@ function saveSpell(multi=false) {
     if (multi) {
       const fff = [];
       for (const w of spells) {
-        let c2 = {"name":w.name,"linkd":"https://ezhgamer173.github.io/display/?spell="+w.name.toLowerCase().replaceAll("-","--").replaceAll(" ","-"),"level":w.level,"enabled":false};
+        let c2 = {"name":w.name,"linkd":"https://ezhgamer173.github.io/dnd/SpellSearch/display/?spell="+w.name.toLowerCase().replaceAll("-","--").replaceAll(" ","-"),"level":w.level,"enabled":false};
         let c = {"name":w.name,"linkd":c2.linkd,"level":w.level,"enabled":false};
         if (!fff.includes(c) && !fff.includes(c2)) {
           fff.push(c2);
