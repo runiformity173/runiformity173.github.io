@@ -1,4 +1,8 @@
-
+window.addEventListener("keydown",function(e){
+  if (e.altKey && e.key.toLowerCase()==="a") {
+    saveSpell(true);
+  }
+});
 
 let FILTERS = {
   "level":[],

@@ -93,7 +93,7 @@ function saveSpell(multi=false) {
         let c2 = {"name":w.innerHTML,"linkd":w.href,"level":level,"enabled":false};
         let c = {"name":w.innerHTML,"linkd":w.href,"level":level,"enabled":true};
         if (!fff.includes(c) && !fff.includes(c2)) {
-          fff.push(c);
+          fff.push(c2);
         }
       }
     }
@@ -107,7 +107,19 @@ function saveSpell(multi=false) {
     set2(list,fff);
   }
   else {
-    set2(list,[{"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true}]);
+    if (multi) {
+      const fff = [];
+      for (const w of document.querySelectorAll("a")) {
+        if (w.href.includes("spell_list")) {continue;}
+        let c2 = {"name":w.innerHTML,"linkd":w.href,"level":level,"enabled":false};
+        let c = {"name":w.innerHTML,"linkd":w.href,"level":level,"enabled":true};
+        if (!fff.includes(c) && !fff.includes(c2)) {
+          fff.push(c2);
+        }
+      }
+      set2(list,fff);
+    }
+    else {set2(list,[{"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true}]);}
   }
   console.log(books,list);
 }
