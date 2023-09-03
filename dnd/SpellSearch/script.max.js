@@ -1,5 +1,5 @@
 window.addEventListener("keydown",function(e){
-  if (e.altKey && e.key.toLowerCase()==="a") {
+  if (e.altKey && e.keyCode===65) {
     saveSpell(true);
   }
 });
