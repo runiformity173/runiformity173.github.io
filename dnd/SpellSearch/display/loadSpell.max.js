@@ -1,4 +1,11 @@
 let level = 0;
+Array.prototype.includes7 = function(a){for (element of this) {
+  let t = true;
+    for (c in element) {
+      if (element[c] != a[c]) {t = false;}
+    }
+  if (t) {return true;}
+  } return false;}
 function validURL(a) {
   for (const v of a.toLowerCase().split("")) {
     if (!("abcdefghijklmnopqrstuvwxyz0123456789-.".includes(v))) {
@@ -91,7 +98,7 @@ function saveSpell(multi=false) {
       for (const w of spells) {
         let c2 = {"name":w.name,"linkd":"https://ezhgamer173.github.io/dnd/SpellSearch/display/?spell="+w.name.toLowerCase().replaceAll("-","--").replaceAll(" ","-"),"level":w.level,"enabled":false};
         let c = {"name":w.name,"linkd":c2.linkd,"level":w.level,"enabled":true};
-        if (!fff.includes(c) && !fff.includes(c2)) {
+        if (!fff.includes7(c) && !fff.includes7(c2)) {
           fff.push(c2);
         }
       }
@@ -99,7 +106,7 @@ function saveSpell(multi=false) {
     else {
       let c2 = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":false};
       let c = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true};
-      if (!fff.includes(c) && !fff.includes(c2)) {
+      if (!fff.includes7(c) && !fff.includes7(c2)) {
         fff.push(c);
       }
     }
@@ -111,7 +118,7 @@ function saveSpell(multi=false) {
       for (const w of spells) {
         let c2 = {"name":w.name,"linkd":"https://ezhgamer173.github.io/dnd/SpellSearch/display/?spell="+w.name.toLowerCase().replaceAll("-","--").replaceAll(" ","-"),"level":w.level,"enabled":false};
         let c = {"name":w.name,"linkd":c2.linkd,"level":w.level,"enabled":true};
-        if (!fff.includes(c) && !fff.includes(c2)) {
+        if (!fff.includes7(c) && !fff.includes7(c2)) {
           fff.push(c2);
         }
       }
