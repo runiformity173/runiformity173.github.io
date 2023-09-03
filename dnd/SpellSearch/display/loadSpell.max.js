@@ -61,7 +61,7 @@ if (window.location.href.includes("?")) {
   document.getElementById("output").innerHTML += "<strong>Source: </strong>"+ff["source"]+"<br>";
 }}
 
-function saveSpell() {
+function saveSpell(multi=false) {
   let books = [];
   let l = [];
   for (let i = 0;i<localStorage.length;i++) {
@@ -84,13 +84,25 @@ function saveSpell() {
   if (!validURL(list)) {
     alert("Please use only letters, digits, and hyphens.");return "";
   }
-  console.log(JSON.stringify({"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true}));
   if (books.includes(list)) {
+
     let fff = get2(list);
-    let c2 = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":false};
-    let c = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true};
-    if (!fff.includes(c) && !fff.includes(c2)) {
-      fff.push(c);
+    if (multi) {
+      for (const w of document.querySelectorAll("a")) {
+        if (w.href.includes("spell_list")) {continue;}
+        let c2 = {"name":w.innerHTML,"linkd":w.href,"level":level,"enabled":false};
+        let c = {"name":w.innerHTML,"linkd":w.href,"level":level,"enabled":true};
+        if (!fff.includes(c) && !fff.includes(c2)) {
+          fff.push(c);
+        }
+      }
+    }
+    else {
+      let c2 = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":false};
+      let c = {"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true};
+      if (!fff.includes(c) && !fff.includes(c2)) {
+        fff.push(c);
+      }
     }
     set2(list,fff);
   }
