@@ -1,0 +1,60 @@
+html {
+    height: 100%;
+    width: 100%;
+  }
+  body {
+    margin:0;
+    background-color: darkgray;
+    overflow:hidden;
+  }
+  button {
+      cursor:pointer;
+  }
+  #output {
+    height:100%;
+    width:100vh;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+  }
+  #fps {
+    position:absolute;
+    right:10px;
+    top:10px;
+  }
+  #sidebar {
+    position:absolute;
+    right:10px;
+    top:60px;
+    width:30%;
+    text-align:right;
+  }
+  @keyframes eagleFly {
+    from {
+      transform: translateX(calc(100vw + 200px));
+    }
+    to {
+      transform: translateX(-200px);
+    }
+  }
+  #freedom {
+    visibility:hidden;
+    position:fixed;
+    top:0px;
+    left:-200px;
+    width:200px;
+    height:200px;
+  }
+  .flyingFreedom {
+    visibility:visible !important;
+    animation-name:eagleFly;
+    animation-duration:5s;
+    animation-iteration-count: 1;
+  }
+  #devWarning {
+    position:absolute;
+    top:10px;
+    right:100px;
+    width:200px;
+  }
