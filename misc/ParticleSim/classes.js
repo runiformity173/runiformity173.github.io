@@ -1,3 +1,4 @@
+"use strict";
 // Add falling velocity
 // Only let sand go sideways diagonally if it's currently falling, set when falling or an adjacent object is falling (with a chance of inertia val)
 

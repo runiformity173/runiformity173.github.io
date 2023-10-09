@@ -1,3 +1,4 @@
+"use strict";
 // Only draw particles that have changed
 
 
