@@ -1,4 +1,28 @@
-//    1
+//    2
+
+function spellIndex(list,spell) {
+  for (let i = 0;i<list.length;i++) {
+    if (list[i].name.replaceAll(" ","").toLowerCase().includes(spell)) {
+      return i;
+    }
+  }
+  return -1;
+}
+window.addEventListener("keydown",function(e){
+  if (e.altKey && e.keyCode === 80) {
+    const i = spellIndex(CURRENT_LIST,prompt("Which spell?").replaceAll(" ","").toLowerCase());
+    changeSpellColor(i);
+  }
+});
+function changeSpellColor(spell) {
+  if (!(spell in CURRENT_LIST)) {
+    return;
+  }
+  CURRENT_LIST[spell].color = CURRENT_LIST[spell].color?undefined:prompt("Which color would you like " + CURRENT_LIST[spell].name + " to be?");
+  setCookie(window.location.href.split('?list=')[1],JSON.stringify(CURRENT_LIST));
+  // this.previousElementSibling.previousElementSibling.style.color = color;
+}
+
 function nameSort(a,b) {
   let final = ((a["level"]||0) + a["name"]);
   let final2 = ((b["level"]||0) + b["name"]);
@@ -32,7 +56,7 @@ function load() {
     for (const spell in vv) {
       // CURRENT_LIST["+spell+"].enabled = !(CURRENT_LIST["+spell+"].enabled);setCookie(window.location.href.split(\'?list=\')[1],JSON.stringify(CURRENT_LIST));this.parentElement.firstElementChild.classList.toggle(\'disabled\')
       if (!levels.includes(vv[spell]["level"])) {levels.push(vv[spell]["level"]);document.getElementById("output").insertAdjacentHTML("beforeend",("<br>"+{"0":"Cantrips","1":"1st-level","2":"2nd-level","3":"3rd-level","4":"4th-level","5":"5th-level","6":"6th-level","7":"7th-level","8":"8th-level","9":"9th-level"}[String(vv[spell]["level"])]+"<br>"))}
-      document.getElementById("output").insertAdjacentHTML("beforeend","<a "+(vv[spell].enabled?"":"class=\'disabled\'")+"target='_blank' href='"+vv[spell]["linkd"]+"'>"+vv[spell]["name"]+"</a>&emsp;<span class='remove no-select' onclick='if (confirm(\"Are you sure you want to remove this spell?\")){removeSpell(\""+vv[spell]["linkd"]+"\");}'><p>‾</p></span>&emsp;<span class='toggle no-select'><p>~</p></span><br>");
+      document.getElementById("output").insertAdjacentHTML("beforeend","<a "+(vv[spell].enabled?"":"class=\'disabled\'")+"target='_blank' href='"+vv[spell]["linkd"]+"' "+(vv[spell].color?("style='color:"+vv[spell].color+"'"):"")+">"+vv[spell]["name"]+"</a>&emsp;<span class='remove no-select' onclick='if (confirm(\"Are you sure you want to remove this spell?\")){removeSpell(\""+vv[spell]["linkd"]+"\");}'><p>‾</p></span>&emsp;<span class='toggle no-select'><p>~</p></span><br>");
       document.getElementById("output").lastElementChild.previousElementSibling.addEventListener("click",function(){
         CURRENT_LIST[spell].enabled = !(CURRENT_LIST[spell].enabled);
         setCookie(window.location.href.split('?list=')[1],JSON.stringify(CURRENT_LIST));
@@ -64,7 +88,7 @@ function removeSpell(spell2) {
       } else {
         final.push(vv[spell]);
       }
-      
+
     }
   setCookie(window.location.href.split("?list=")[1],JSON.stringify(final))
 location.reload();
@@ -73,12 +97,12 @@ function removeList(spell2) {
   eraseCookie(spell2);
   // let final = [];
   //   for (const spell in vv) {
-      
+
   //     if (vv[spell]["linkd"] != spelll) {
   //       console.log(vv[spell]["linkd"],spelll);
   //       final.push(vv[spell]);
   //     }
-      
+
   //     console.log(vv[spell]);
   //   }
   // setCookie(window.location.href.split("?list=")[1],JSON.stringify(final))
