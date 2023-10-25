@@ -135,6 +135,7 @@ function saveSpell(multi=false) {
 
 
 function load2() {
+  try {
   return fetch(`https://SpellAPI.ezhgamer173.repl.co/api/spells/${encodeURIComponent(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"))}`)
     .then(response => {
       if (!response.ok) {
@@ -152,4 +153,7 @@ function load2() {
     .catch(error => {
       console.error('There has been a problem with your fetch operation:', error);
     });
+  } catch {
+    load2();
+  }
 }
