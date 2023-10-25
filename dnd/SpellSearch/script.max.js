@@ -107,6 +107,10 @@ function start() {
       if (!FILTERS[filtern]) {
         spells = spells.filter(o=>(!o.duration.includes(",")));
       }
+    } else if (filtern.includes("ritual")) {
+      if (FILTERS[filtern][0]) {
+        spells = spells.filter(o=>(o.ritual));
+      }
     }
     else if (!filtern.includes("book") && FILTERS[filtern].length > 0) {
       filterttt = filtern;
