@@ -40,13 +40,16 @@ ordinal = {
   "7":"7th-level ",
   "8":"8th-level ",
   "9":"9th-level "};
-function load() {
+function load(ff) {
 if (window.location.href.includes("?")) {
-  let ff = getByName(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"));
+  // let ff = getByName(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"));
+
+  document.getElementById("all").style.opacity = 1;
+
   document.getElementById("output2").innerHTML = ff["name"];
 
   document.getElementById("output").innerHTML += "<i>";
-  
+
   level = ff["level"];
   if (ff["level"] > 0) {
     document.getElementById("output").innerHTML += (ordinal[String(ff["level"])] + ff["school"]).italics();
@@ -127,4 +130,26 @@ function saveSpell(multi=false) {
     else {set2(list,[{"name":document.getElementById("output2").innerHTML,"linkd":window.location.href,"level":level,"enabled":true}]);}
   }
   console.log(books,list);
+}
+
+
+
+function load2() {
+  return fetch(`https://SpellAPI.ezhgamer173.repl.co/api/spells/${encodeURIComponent(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"))}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.success) {
+        load(data.data);
+      } else {
+        console.error('Spell not found');
+      }
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
+    });
 }

@@ -9,7 +9,9 @@ let FILTERS = {
   "book":["Player's"],
   "class":[],
   "ritual":[],
-  "school":[]
+  "school":[],
+  "components":["V","S","M"],
+  "concentration":true
 };
 let filterttt = "";
 let spells = JSON.parse(JSON.stringify(spells2));
@@ -20,8 +22,8 @@ function checkAll(arg,c) {
   if (c.checked) {
     let l = document.getElementsByClassName(arg);
     for (const c of l) {
-	   c.checked = true;
-	}
+     c.checked = true;
+  }
     return
   }
   let l = document.getElementsByClassName(arg);
@@ -31,7 +33,7 @@ function checkAll(arg,c) {
 }
 function start() {
   spells = JSON.parse(JSON.stringify(spells2));
-  FILTERS = {"level":[],"book":[],"class":[],"ritual":[],"school":[]};
+  FILTERS = {"level":[],"book":[],"class":[],"ritual":[],"school":[],"components":[],"duration":true};
   levels = ["level0","level1","level2","level3","level4","level5","level6","level7","level8","level9"];
   for (i in levels) {
     if (document.getElementById(levels[i]).checked){
@@ -52,9 +54,22 @@ function start() {
       FILTERS["school"].push(schools[i].toLowerCase());
     }
   }
+
   if (document.getElementById("ritual").checked) {
       FILTERS["ritual"].push(true);
-    }
+  }
+  if (document.getElementById("verbal").checked) {
+      FILTERS["components"].push("V");
+  }
+  if (document.getElementById("somatic").checked) {
+      FILTERS["components"].push("S");
+  }
+  if (document.getElementById("material").checked) {
+      FILTERS["components"].push("M");
+  }
+  if (!document.getElementById("concentration").checked) {
+      FILTERS["concentration"] = false;
+  }
   if (true) {
     if (document.getElementById("bookPHB").checked) {
       FILTERS["book"].push("Player's");
@@ -72,18 +87,31 @@ function start() {
   console.log(FILTERS);
   console.log(spells.length);
   spells = spells.filter(filterFunction);
-  console.log(spells.length)
+  const notComponents = ["V","S","M"].filter(o=>(!FILTERS["components"].includes(o)));
+  console.log(spells.length);
   for (filtern in FILTERS) {
     if (filtern.includes("class") && FILTERS[filtern].length > 0) {
       spells = spells.filter(filterClasses);
     }
     else if (filtern.includes("level")){
       spells = spells.filter(filterLevels);
+    } else if (filtern.includes("components")) {
+      spells = spells.filter(function(o){
+        let t = true;
+        for (i of notComponents) {
+          o.components.includes(i)&&(t=false);
+        }
+        return t;
+      });
+    } else if (filtern.includes("concentration")){
+      if (!FILTERS[filtern]) {
+        spells = spells.filter(o=>(!o.duration.includes(",")));
+      }
     }
     else if (!filtern.includes("book") && FILTERS[filtern].length > 0) {
       filterttt = filtern;
       spells = spells.filter(filterMisc);
-    }
+    } 
     console.log(spells.length,filtern)
   }
   document.getElementById("output").innerHTML = "";

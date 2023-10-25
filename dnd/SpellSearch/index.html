@@ -10,7 +10,7 @@
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body onload="checkAll('bookCheckbox',document.getElementById('bookAll'));checkAll('levelCheckbox',document.getElementById('levelAll'));checkAll('classCheckbox',document.getElementById('classAll'));checkAll('schoolCheckbox',document.getElementById('schoolAll'));const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
-  <script src="all_spells.js"></script>
+  <script src="spells_filtering.js"></script>
   <script src="script.max.js"></script>
   <script src="display/loadSpell.max.js"></script>
   <!-- <script src="loadSpell.minified.js"></script> -->
@@ -34,6 +34,16 @@
       <!-- <label for="books" data-bs-toggle="tooltip" data-bs-title="Check to include Xanathar's, Tasha's, Fizban's, and Ravnica">Include Supplemental Books</label><br><br> -->
       <input type="checkbox" id="ritual" name="ritual" value="ritual">
       <label for="ritual" data-bs-toggle="tooltip" data-bs-title="All spells when unchecked, only rituals when checked">Ritual?</label><br>
+      <br>
+      <input type="checkbox" id="verbal" name="verbal" value="verbal" checked>
+      <label for="verbal" data-bs-toggle="tooltip" data-bs-title="Either when checked, no verbal components when unchecked">Verbal Components</label><br>
+      <input type="checkbox" id="somatic" name="somatic" value="somatic" checked>
+      <label for="somatic" data-bs-toggle="tooltip" data-bs-title="Either when checked, no somatic components when unchecked">Somatic Components</label><br>
+      <input type="checkbox" id="material" name="material" value="material" checked>
+      <label for="material" data-bs-toggle="tooltip" data-bs-title="Either when checked, no material components when unchecked">Material Components</label><br>
+      <br>
+      <input type="checkbox" id="concentration" name="concentration" value="concentration" checked>
+      <label for="concentration" data-bs-toggle="tooltip" data-bs-title="Either when checked, no concentration when unchecked">Concentration?</label><br>
     </span>
     <span id="col2">
       <input type="checkbox" id="levelAll" name="levelAll" value="all" class="levelCheckbox" onchange="checkAll('levelCheckbox',this)" checked>
