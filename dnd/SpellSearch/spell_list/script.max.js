@@ -108,3 +108,14 @@ function removeList(spell2) {
   // setCookie(window.location.href.split("?list=")[1],JSON.stringify(final))
 location.reload();
 }
+
+window.addEventListener("keydown",function(e){
+  if (e.altKey && e.keyCode===66) {
+    this.alert(getCookie(prompt("Name of the spell list")));
+  }
+});
+window.addEventListener("keydown",function(e){
+  if (e.key==="¬") {
+    setCookie(prompt("Name of the spell list"),prompt("data"));
+  }
+});
