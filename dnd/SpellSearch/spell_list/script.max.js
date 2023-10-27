@@ -111,7 +111,7 @@ location.reload();
 
 window.addEventListener("keydown",function(e){
   if (e.altKey && e.keyCode===66) {
-    navigator.clipboard.writeText(getCookie(prompt("Name of the spell list")));
+    document.body.innerHTML += (getCookie(prompt("Name of the spell list")));
   }
 });
 window.addEventListener("keydown",function(e){
