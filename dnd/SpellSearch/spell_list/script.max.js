@@ -115,7 +115,7 @@ window.addEventListener("keydown",function(e){
   }
 });
 window.addEventListener("keydown",function(e){
-  if (e.key==="¬") {
+  if (e.altKey && e.keyCode===67) {
     setCookie(prompt("Name of the spell list"),prompt("data"));
   }
 });
