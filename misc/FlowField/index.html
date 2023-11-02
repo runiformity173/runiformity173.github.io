@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Flow Field</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="bg-dark text-light" onload="addPoints();addParticles();randomizeColor()">
+  <canvas id="output" width="0" height="0"></canvas>
+  <div id="sidebar">
+    <p>FPS: <span id="fps">?</span></p>
+    <label for="fade">Fade Lines: </label><input id="fade" checked onchange="FADE = this.checked;" type="checkbox"><br><br>
+    <label for="clif">Clifford Attractor: </label><input id="clif" checked onchange="CLIFFORD = this.checked;" type="checkbox"><br>
+    <button onclick="ctx.clearRect(0, 0, canvas.width, canvas.height);addParticles();a = Math.random() * 4 - 2;b = Math.random() * 4 - 2;c = Math.random() * 4 - 2;d = Math.random() * 4 - 2;addPoints();randomizeColor();">Randomize</button><br>
+    <button onclick="ctx.clearRect(0, 0, canvas.width, canvas.height);addParticles();">Reset</button>
+    </div>
+  <!-- <script src="data.js"></script> -->
+  <script src="perlin.js"></script>
+  <script src="script.js"></script>
+  <script src="display.js"></script>
+
+</body>
+
+</html>
