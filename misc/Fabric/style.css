@@ -1,0 +1,23 @@
+html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+  #output {
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100vh;
+    height:100%;
+  }
+  #sidebar {
+    position:absolute;
+    top:20px;
+    right:0px;
+    text-align: right;
+  }
+  #fps {
+    position:absolute;
+    top:0px;
+    right:0px;
+  }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Fabric Sim</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="bg-dark text-light">
+  <canvas id="output" width="0" height="0"></canvas>
+  <!-- <script src="data.js"></script> -->
+  <script src="convex_hull.js"></script>
+  <script src="verlet.js"></script>
+  <script src="script.js"></script>
+  <div id="sidebar">
+    Wind Speed Rightwards: <input type="range" min="0" max="100" value="50" onchange="WIND_SPEED.x = Number(this.value)/100;" onload="WIND_SPEED.x = Number(this.value)/100;"><br>
+    Wind Speed Upwards: <input type="range" min="0" max="100" value="0" onchange="WIND_SPEED.y = Number(this.value)/-100;" onload="WIND_SPEED.y = Number(this.value)/-100;"><br>
+    Wind Speed Variation<input type="range" min="0" max="20" value="10" onchange="WIND_SPEED.variation = Number(this.value)/100;" onload="WIND_SPEED.variation = Number(this.value)/100;"><br>
+    <button onclick="PAUSED = !PAUSED;this.innerHTML = PAUSED?'Unpause':'Pause';">Pause</button>
+  </div>
+<p id="fps">FPS: 60</p>
+</body>
+
+</html>
