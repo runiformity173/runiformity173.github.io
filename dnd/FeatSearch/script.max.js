@@ -11,7 +11,7 @@ function start() {
     const node = document.createElement("a");
 const textnode = document.createTextNode(f["name"]+"");
 node.appendChild(textnode);
-    node.href = "https://dnd5e.wikidot.com/feat:"+f["name"].toLowerCase().replaceAll(" ","-");
+    node.href = "display/?feat="+f["name"].toLowerCase().replaceAll(" ","-");
     node.target = "_blank";
 document.getElementById("output").appendChild(node);
     document.getElementById("output").appendChild(document.createElement("br"));
