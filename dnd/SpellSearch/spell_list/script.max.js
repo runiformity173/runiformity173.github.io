@@ -38,7 +38,7 @@ function set2(name,value) {
 }
 
 function setCookie(name,value) {
-  const prev = JSON.parse(localStorage.getItem("spellSearch"));
+  const prev = JSON.parse(localStorage.getItem("spellSearch") || "{}");
   prev[name] = value;
   localStorage.setItem("spellSearch", JSON.stringify(prev));
 }
