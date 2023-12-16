@@ -69,8 +69,10 @@ function load() {
     }
   }
   else {
-    for (let i = 0;i<localStorage.length;i++) {
-      let l = localStorage.key(i)
+    const store = JSON.parse(localStorage.getItem("spellSearch"));
+    const keys = Object.keys(store);
+    for (let i = 0;i<keys.length;i++) {
+      let l = keys[i];
       if (!l.includes("_")) {
         if (document.getElementById("output").innerHTML == "You have no spellbooks yet.") {
           document.getElementById("output").innerHTML = "";
