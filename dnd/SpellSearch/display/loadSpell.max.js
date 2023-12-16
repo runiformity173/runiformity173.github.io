@@ -21,15 +21,18 @@ function get2(name) {
   return JSON.parse(getCookie(name))
 }
 function setCookie(name,value) {
-  localStorage.setItem(name, value);
+  const prev = JSON.parse(localStorage.getItem("spellSearch"));
+  prev[name] = value;
+  localStorage.setItem("spellSearch", JSON.stringify(prev));
 }
 function getCookie(name) {
-  return localStorage.getItem(name);
+  return JSON.parse(localStorage.getItem("spellSearch"))[name];
 }
 function eraseCookie(name) {   
-  localStorage.removeItem(name);
+  const prev = JSON.parse(localStorage.getItem("spellSearch"));
+  delete prev[name];
+  localStorage.setItem("spellSearch", JSON.stringify(prev));
 }
-
 ordinal = {
   "1":"1st-level ",
   "2":"2nd-level ",
