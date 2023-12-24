@@ -77,11 +77,11 @@ if (window.location.href.includes("?")) {
 function saveSpell(multi=false) {
   let books = [];
   let l = [];
-  for (let i = 0;i<localStorage.length;i++) {
-    const val = localStorage.key(i);
+  const books = Object.keys(JSON.parse(localStorage.getItem("spellSearch")));
+  for (let i = 0;i<books.length;i++) {
+    const val = books[i];
     if (!val.includes("_")) {
       l.push("\""+val.replace(" ",""));
-      books.push(val.replace(" ",""));
     }
   }
   if (l.length==1) {
