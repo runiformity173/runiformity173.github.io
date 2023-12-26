@@ -76,7 +76,7 @@ if (window.location.href.includes("?")) {
 
 function saveSpell(multi=false) {
   let l = [];
-  const books = Object.keys(JSON.parse(localStorage.getItem("spellSearch")));
+  const books = Object.keys(JSON.parse(localStorage.getItem("spellSearch") || "{}"));
   for (let i = 0;i<books.length;i++) {
     const val = books[i];
     if (!val.includes("_")) {
