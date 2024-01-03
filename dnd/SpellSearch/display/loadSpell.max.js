@@ -43,9 +43,9 @@ ordinal = {
   "7":"7th-level ",
   "8":"8th-level ",
   "9":"9th-level "};
-function load(ff) {
+function load() {
 if (window.location.href.includes("?")) {
-  // let ff = getByName(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"));
+  let ff = getByName(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"));
 
   document.getElementById("all").style.opacity = 1;
 
@@ -133,9 +133,21 @@ function saveSpell(multi=false) {
   }
   console.log(books,list);
 }
+function getByName(name) {
+  for (const spell of spells2) {
+    if (spell["name"].toLowerCase() == (name.toLowerCase())) {
+      return spell;
+    }
+  }
+  for (const spell of spells2) {
+    if (spell["name"].toLowerCase().includes(name.toLowerCase())) {
+      return spell;
+    }
+  }
+  console.log("No Spell Matching \""+name+"\"");
+}
 
-
-
+/*
 function load2() {
   try {
   return fetch(`https://SpellAPI.ezhgamer173.repl.co/api/spells/${encodeURIComponent(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"))}`)
@@ -159,3 +171,4 @@ function load2() {
     load2();
   }
 }
+*/
