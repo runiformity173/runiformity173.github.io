@@ -34,6 +34,7 @@ const D_BAIL = 1000000;
 const D_BAIL2 = D_BAIL**2;
 const BOX_SIZE = 6;
 function display() {
+  document.getElementById("size").innerHTML = Math.round(Math.sqrt((3*2.5)/((X_MAX-X_MIN)*(Y_MAX-Y_MIN))));
   var imgData = ctx.createImageData(WIDTH, HEIGHT);
   var data = imgData.data;
   for (var i = 0;i<HEIGHT;i++) {
