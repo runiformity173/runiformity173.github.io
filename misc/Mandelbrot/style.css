@@ -24,11 +24,26 @@ body {
   border: 2px blue solid;
   display:none;
 }
+@keyframes co {
+  0% {
+    color:white;
+  }
+  50% {
+    color:black;
+  }
+  100% {
+    color:white
+  }
+}
 #loading {
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  color:grey;
+  /* color:grey; */
   z-index: 100;
+  animation-name:co;
+  animation-duration:1s;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
 }
