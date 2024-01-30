@@ -47,3 +47,10 @@ body {
   animation-delay: 0s;
   animation-iteration-count: infinite;
 }
+#sizeDisplay {
+  position:absolute;
+  right:10px;
+  top:10px;
+  color:white;
+  z-index:50;
+}
