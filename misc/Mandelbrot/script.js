@@ -134,7 +134,6 @@ window.addEventListener("mousemove",function(e) {
   // alert("Should've set");
 });
 window.addEventListener("mouseup",function(e) {
-  setTimeout(function(){document.getElementById("loading").style.display = "block";},1);
   document.getElementById("zoomBox").style.display = "none";
   const endX = e.clientX/document.body.clientWidth*X_ZOOM + X_MIN;
   const endY = e.clientY/document.body.clientHeight*Y_ZOOM + Y_MIN;
@@ -152,11 +151,11 @@ window.addEventListener("mouseup",function(e) {
 
   // alert("displaying");
   document.getElementById("loading").style.display = "block";
-  setTimeout(display,1);
+  setTimeout(display,10);
   
   // alert("displayed");
 });
 window.addEventListener("keydown",function(e) {
   document.getElementById("loading").style.display = "block";
-  setTimeout(resetZoom,1);
+  setTimeout(resetZoom,10);
 });
