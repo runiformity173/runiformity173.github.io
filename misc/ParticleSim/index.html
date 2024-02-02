@@ -11,13 +11,31 @@
 <body>
   <!-- <audio src="freedom.mp3" type="audio/mpeg" id="soundOfFreedom" controls style="position:absolute;right:0px;bottom:0px;"></audio> -->
   <img id="freedom" src="freedom.png">
-  <canvas height="0" width="0" id="output"></canvas><div id="sidebar"><p>Current: <span id="current">Sand</span></p><br><button onclick="setBrush(0);">Erase</button><br><button onclick="setBrush(1);">Sand</button><br><button onclick="setBrush(2);">Water</button><br><button onclick="setBrush(3);">Oil</button><br><button onclick="setBrush(4);">Stone</button><br><button onclick="setBrush(5);">Wood</button><br><button onclick="setBrush(6);">Steam</button><br><button onclick="setBrush(7);">Fire</button><br><button onclick="setBrush(11);">Plasma</button><br><button onclick="setBrush(12);">Fuse</button><br><button onclick="setBrush(14);">Gunpowder</button><br><button onclick="setBrush(17);">Methane</button><br>
+  <canvas height="0" width="0" id="output"></canvas><div id="sidebar"><p>Current: <span id="current">Sand</span></p><br><button onclick="PAUSED = !PAUSED">Pause/Unpause</button><br><br><button onclick="setBrush(0);">Erase</button><br>
+    <!-- <button onclick="setBrush(1);">Sand</button><br><button onclick="setBrush(2);">Water</button><br><button onclick="setBrush(3);">Oil</button><br><button onclick="setBrush(4);">Stone</button><br><button onclick="setBrush(5);">Wood</button><br><button onclick="setBrush(6);">Steam</button><br><button onclick="setBrush(7);">Fire</button><br><button onclick="setBrush(11);">Plasma</button><br><button onclick="setBrush(12);">Fuse</button><br><button onclick="setBrush(14);">Gunpowder</button><br><button onclick="setBrush(17);">Methane</button><br> -->
+    <select id="brushSelect">
+      <optgroup label="Solids" id="4Options">
+      </optgroup>
+      <optgroup label="Powders" id="3Options">
+      </optgroup>
+      <optgroup label="Liquids" id="2Options">
+      </optgroup>
+      <optgroup label="Gasses" id="1Options">
+      </optgroup>
+      <optgroup label="Hidden" id="hiddenBrushes" style="display:none;">
+        
+      </optgroup>
+    </select><br>
 <br><button onclick="setBrush(-1);">Heat Gun</button><br>
 <br><button onclick="const oldBrush = BRUSH;BRUSH = 0;fill();BRUSH = oldBrush;">Clear</button><br><button onclick="const oldBrush2 = BRUSH;BRUSH = 0;fill(false,oldBrush2);BRUSH = oldBrush2;">Clear Current Brush</button><br><button onclick="fill()">Fill All with Current Brush</button><br><button onclick="fill(true)">Fill Air with Current Brush</button><br></div><p id="fps">FPS: 0</p>
-  
+  <script src="data.js"></script>
+
   <script src="classes.js"></script>
   <script src="script.js"></script>
 
+
+
+  <!-- <p id="devWarning">This is the development version of the website. If you want a stable version, go <a href="https://runiformity173.github.io/misc/ParticleSim">here</a></p> -->
 </body>
 
 </html>

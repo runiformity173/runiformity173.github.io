@@ -4,14 +4,38 @@
 
 const WIDTH = 256;
 const HEIGHT = 256;
+const CHUNK_AMOUNT = Math.floor(WIDTH/CHUNK_SIZE);
 const overallLength = WIDTH*HEIGHT;
+// const wind
 let PAUSED = false;
-const reds = [255,222,3,149,128,161,180,161,106,235,230,200,215,53,72,0,75,190,155]
-const greens = [255,192,8,62,128,102,190,102,108,230,230,200,215,58,71,0,230,190,118]
-const blues = [255,96,252,0,128,47,210,47,109,225,230,255,205,252,83,0,75,200,83]
+let FASTER = false;
+
+
+let lastTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>true);
+let thisTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>false);
+// const reds = [255,222,3,149,128,161,180,161,106,235,230,200,215,53,72,0,75,190,155]
+// const greens = [255,192,8,62,128,102,190,102,108,230,230,200,215,58,71,0,230,190,118]
+// const blues = [255,96,252,0,128,47,210,47,109,225,230,255,205,252,83,0,75,200,83]
 const burnColors = {16:[161,102,47]};
+
 const board = new Board(WIDTH,HEIGHT);
 const plantMap = Array.from({ length: HEIGHT },() => Array.from({ length: WIDTH }, a=>(0)));
+function hslToRgb(t,a,r){console.log(t,a,r);var o=t/60,t=(1-Math.abs(2*r-1))*a,a=t*(1-Math.abs(o%2-1)),r=r-t/2;let n,d,h;return[n,d,h]=0<=o&&o<1?[t,a,0]:1<=o&&o<2?[a,t,0]:2<=o&&o<3?[0,t,a]:3<=o&&o<4?[0,a,t]:4<=o&&o<5?[a,0,t]:[t,0,a],[Math.round(255*(n+r)),Math.round(255*(d+r)),Math.round(255*(h+r))]}
+function rgbToHsl(a,c,e){a/=255,c/=255,e/=255;const f=Math.max(a,c,e),i=Math.min(a,c,e);let j,k,m=(f+i)/2;if(f===i)j=k=0;else{const b=f-i;k=.5<m?b/(2-f-i):b/(f+i);f===a?j=(c-e)/b+(c<e?6:0):f===c?j=(e-a)/b+2:f===e?j=(a-c)/b+4:void 0;j/=6}return{h:Math.round(360*j),s:Math.round(100*k),l:Math.round(100*m)}}
+const randomColorBoard = Array.from({ length: WIDTH*HEIGHT }, function() {
+  const everything = Math.floor(Math.random()*21) - 10;
+  const final = [everything,everything,everything];
+  // let left = 15 - Math.abs(everything)*3;
+  // const rDif = Math.floor(Math.random()*left);
+  // left -= rDif;
+  // const gDif = Math.floor(Math.random()*left);
+  // left -= gDif;
+  // final[0] += rDif*((Math.random() > 0.5)?-1:1);
+  // final[1] += gDif*((Math.random() > 0.5)?-1:1);
+  // final[2] += left*((Math.random() > 0.5)?-1:1);
+
+  return final
+});
 const enemyMap = []
 let BRUSH = 1;
 let THICKNESS = 3;
@@ -30,6 +54,9 @@ function setBrush(val) {
   BRUSH = val;
   document.getElementById("current").innerHTML = val!=-1?NAMES[val]:"Heat Gun";
 }
+document.getElementById("brushSelect").addEventListener("click",function(){setBrush(NAMES.indexOf(this.value));})
+document.getElementById("brushSelect").addEventListener("change",function(){setBrush(NAMES.indexOf(this.value));})
+
 function freedom() {
   const theFreedom = document.getElementById("freedom");
   theFreedom.classList.add("flyingFreedom");
@@ -70,6 +97,7 @@ function draw(startX, startY, endX, endY) {
     for (const offsetX of offsets) {
       for (const offsetY of offsets) {
         try {
+          
           if (BRUSH > -1) {
         board.board[startY + offsetY][startX + offsetX].become(BRUSH);
           board.board[startY + offsetY][startX + offsetX].heat = HEATS[BRUSH];
@@ -82,6 +110,7 @@ function draw(startX, startY, endX, endY) {
           board.board[startY + offsetY][startX + offsetX].nextHeat = HEAT_GUN_HEAT;
           board.board[startY + offsetY][startX + offsetX].lastHeat = HEAT_GUN_HEAT;
           }
+          updateChunk(startY + offsetY,startX + offsetX);
         } catch {}
       }
     }
@@ -137,7 +166,7 @@ function draw2() {
 }
 window.addEventListener("keydown",function(e) {
   if (e.altKey && e.keyCode == 78) {
-    setBrush(NAMES.indexOf(prompt("what to change to",NAMES[NAMES.length-1])));
+    document.getElementById("hiddenBrushes").style.display = "block";
   }
 })
 canvas.addEventListener("mouseup", (event) => {
@@ -166,16 +195,18 @@ function addHeat(rgb, heat, isFire) {
   const clampedBlue = Math.min(Math.max(newBlue, 0), 255);
   return [clampedRed, clampedGreen, clampedBlue];
 }
-
 function loop() {
   if (t && !PAUSED) {
   board.update();
+    if (FASTER) {
+      board.update();
+    }
   } else {t = true}
   var imgData = ctx.createImageData(WIDTH, HEIGHT);
   var data = imgData.data;
   for (var i = 0;i<HEIGHT;i++) {
     for (var j = 0;j<WIDTH;j++) {
-      
+
       const t = 4*(j+(i*WIDTH));
       const b = board.board[i][j];
       let theColor = null;
@@ -187,18 +218,29 @@ function loop() {
       } else {
         theColor = [reds[b.type],greens[b.type],blues[b.type]];}
       theColor = addHeat(theColor,b.heat,b.type==7);
-      data[t] = theColor[0];data[t+1] = theColor[1];data[t+2] = theColor[2];data[t+3] = 255;
-      
+      const shading = randomColorBoard[b.id];
+      data[t] = theColor[0]+shading[0];data[t+1] = theColor[1]+shading[1];data[t+2] = theColor[2]+shading[2];data[t+3] = 255;
+    
       if (b.type == 11) {
-        data[t] = reds[11];
-        data[t+1] = greens[11];
-        data[t+2] = blues[11];
+        data[t] = reds[11]+shading[0];
+        data[t+1] = greens[11]+shading[1];
+        data[t+2] = blues[11]+shading[2];
       }
-      if (b.type == 0) {
-        data[t] = 255;
-        data[t+1] = 255-b.heat;
-        data[t+2] = 255-b.heat;
+      else if (b.state < 2 && b.type != 7) {
+        data[t] = reds[b.type];
+        data[t+1] = greens[b.type]-b.heat;
+        data[t+2] = blues[b.type]-b.heat;
       }
+      if (!lastTurnChunks[getChunk(i,j)]) {
+        data[t] += 25;
+        data[t+1] -= 25;
+        data[t+2] -= 25;
+      }
+      // else if (b.isFalling) {
+      //   data[t] = 255;
+      //   data[t+1] = 0;
+      //   data[t+2] = 0;
+      // }
     }
   }
   ctx.putImageData(imgData, 0, 0);
