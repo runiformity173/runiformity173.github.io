@@ -11,8 +11,6 @@ let PAUSED = false;
 let FASTER = false;
 
 
-let lastTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>true);
-let thisTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>false);
 // const reds = [255,222,3,149,128,161,180,161,106,235,230,200,215,53,72,0,75,190,155]
 // const greens = [255,192,8,62,128,102,190,102,108,230,230,200,215,58,71,0,230,190,118]
 // const blues = [255,96,252,0,128,47,210,47,109,225,230,255,205,252,83,0,75,200,83]
@@ -110,7 +108,6 @@ function draw(startX, startY, endX, endY) {
           board.board[startY + offsetY][startX + offsetX].nextHeat = HEAT_GUN_HEAT;
           board.board[startY + offsetY][startX + offsetX].lastHeat = HEAT_GUN_HEAT;
           }
-          updateChunk(startY + offsetY,startX + offsetX);
         } catch {}
       }
     }
@@ -230,11 +227,6 @@ function loop() {
         data[t] = reds[b.type];
         data[t+1] = greens[b.type]-b.heat;
         data[t+2] = blues[b.type]-b.heat;
-      }
-      if (!lastTurnChunks[getChunk(i,j)]) {
-        data[t] += 25;
-        data[t+1] -= 25;
-        data[t+2] -= 25;
       }
       // else if (b.isFalling) {
       //   data[t] = 255;
