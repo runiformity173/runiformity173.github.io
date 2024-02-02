@@ -448,10 +448,8 @@ class Board {
         const col = t[i];
         if (this.board[row][col].turn == this.turn) {
           const k = getChunk(row,col);
-          if (lastTurnChunks[k] && this.board[row][col].update(this.board,row,col,this.height,this.width,this.turn)) {
+          if (this.board[row][col].update(this.board,row,col,this.height,this.width,this.turn)) {
             this.board[row][col].moved = true;
-            const [y,x]= getChunkPos(row,col);
-            updateChunk(row,col);
           }
         }
       }
@@ -465,8 +463,6 @@ class Board {
     } else {BURNED_OIL_FRAMES_CONSECUTIVE = 0;}
     // alert("about to swap");
 
-    lastTurnChunks = thisTurnChunks;
-    thisTurnChunks = Array.from({length:Math.floor(CHUNK_AMOUNT*CHUNK_AMOUNT)},()=>false);
     // alert("ending update");
   }
 
