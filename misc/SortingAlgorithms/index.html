@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Sorting Algorithm Visualizer</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="bg-dark text-light">
+  <div id="sidebar">
+    <select class="btn btn-outline-light" id="sortMethod">
+      <option>Quick Sort</option>
+      <option>Anytime Quick Sort</option>
+      <option>Merge Sort</option>
+      <option>Heap Sort</option>
+      <option>Bubble Sort</option>
+      <option>Cocktail Shaker Sort</option>
+      <option>Comb Sort</option>
+      <!-- <option>Odd Even Sort</option> -->
+      <option>Circle Sort</option>
+      <option>Bitonic Sort</option>
+
+    </select><br>
+    <button onclick="shuffle(arr)" class="btn btn-outline-light">Shuffle</button>
+    <button onclick="start()" class="btn btn-outline-light">Sort</button>
+    <br>
+    <select class="btn btn-outline-light" onchange="changeView({'Color Mode':'color','Bar Mode':'bar'}[this.value]);">
+      <option>Color Mode</option> 
+      <option>Bar Mode</option>
+    </select>
+    <br>
+    <template id="template">
+      <span class="colorField">
+        <p class="colorInput">
+          <input onchange="evaluateColors();" class="allTheColorInputs" type="color" value="#ffffff">
+          &emsp;
+        </p>
+        <span class='remove' onclick='if (document.getElementsByClassName("allTheColorInputs").length > 2) {this.parentElement.remove();evaluateColors();} else {alert("You need at least 2 colors for a gradient")}'>
+          <p>‾</p>
+        </span>
+        <br>
+      </span>
+    </template>
+    <div id="colorStuff">
+      Vertical: <input id="vertical" type="checkbox" onchange="if (document.getElementById('output').classList.contains('vertical') != this.checked) {document.getElementById('output').classList.toggle('vertical')}">
+      <div id="colorInputs"></div><button class="btn btn-outline-light" onclick="addColor('#ffffff');">Add Color</button>
+      <br>
+      
+    </div>
+    <input type="range" min=3 max=10 value=7 step=1 onchange="changeSize(2**Number(this.value))"><p>Sorting <span id="size">128</span> items</p>
+  </div>
+  
+  <canvas id="output" class="unpixelated">
+
+  </canvas>
+
+  <script src="../bootstrap.js"></script>
+  <script src="libs.js"></script>
+  <script src="sortingAlgorithms.js"></script>
+  <script src="script.js"></script>
+  <script>
+    function addColor(arg="#ffffff") {const t = document.getElementById("template").content.cloneNode(true);t.firstElementChild.firstElementChild.firstElementChild.value 
+  = arg;document.getElementById("colorInputs").appendChild(t);evaluateColors();}
+    addColor("#440154");
+    // addColor("#3b528b");
+    addColor("#21918c");
+    // addColor("#5ec962");
+    addColor("#fde725");
+
+  </script>
+</body>
+
+</html>
