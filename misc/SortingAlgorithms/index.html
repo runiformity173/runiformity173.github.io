@@ -22,13 +22,15 @@
       <!-- <option>Odd Even Sort</option> -->
       <option>Circle Sort</option>
       <option>Bitonic Sort</option>
+      <!-- <option>My Sort</option> -->
 
     </select><br>
     <button onclick="start()" class="btn btn-outline-light">Sort</button>
     <br>
-    <select class="btn btn-outline-light" onchange="changeView({'Color Mode':'color','Bar Mode':'bar'}[this.value]);">
+    <select class="btn btn-outline-light" onchange="changeView({'Color Mode':'color','Bar Mode':'bar', 'Colored Bars':'both'}[this.value]);">
       <option>Color Mode</option> 
       <option>Bar Mode</option>
+      <option>Colored Bars</option>
     </select>
     <br>
     <template id="template">
@@ -44,7 +46,8 @@
       </span>
     </template>
     <div id="colorStuff">
-      Vertical: <input id="vertical" type="checkbox" onchange="if (document.getElementById('output').classList.contains('vertical') != this.checked) {document.getElementById('output').classList.toggle('vertical')}">
+      <div id="verticalWrapper">
+      Vertical: <input id="vertical" type="checkbox" onchange="if (document.getElementById('output').classList.contains('vertical') != this.checked) {document.getElementById('output').classList.toggle('vertical')}"></div>
       <div id="colorInputs"></div><button class="btn btn-outline-light" onclick="addColor('#ffffff');">Add Color</button>
       <br>
       
@@ -58,6 +61,7 @@
 
   <script src="../bootstrap.js"></script>
   <script src="libs.js"></script>
+  <script src="sound.js"></script>
   <script src="sortingAlgorithms.js"></script>
   <script src="script.js"></script>
   <script>

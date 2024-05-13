@@ -7,13 +7,13 @@ let VIEW = "color";
 let colorMap = ['#ff0000', '#ffffff', '#0000ff'];
 let swaps = [];
 Array.prototype.swap = function(i,j) {
-  swaps.unshift([i,j]);
+  swaps.unshift([i,j,Math.min(this[i],this[j])]);
   const temp = this[i];
   this[i] = this[j];
   this[j] = temp;
 }
 Array.prototype.shiftDown = function(i,j) {
-  swaps.unshift([i,j,j-i]);
+  swaps.unshift([i,j,this[j],j+i]);
   const temp = this[j];
   for (let k = j;k>i;k--) {
     this[k] = this[k-1];
@@ -117,20 +117,19 @@ function rgbToHex(rgb) {
 
 function changeView(view) {
   VIEW=view;
-  if (view == 'color') {
+  if (view == 'color' || view == 'both') {
     // canvas.classList.remove("unpixelated");
     if (document.getElementById('vertical').checked) canvas.classList.add("vertical");
     document.getElementById('colorStuff').style.display = "block";
-  } else if (view == 'bar') {
+  } else if (view == 'bar' || view == 'both') {
     // canvas.classList.add("unpixelated");
-    canvas.classList.remove("vertical");
-    document.getElementById('colorStuff').style.display = "none";
+    
+    if (view == 'bar') {document.getElementById('colorStuff').style.display = "none";canvas.classList.remove("vertical");}
 
   }
   if (copy.length) display();
 }
-
-
+let opTime = 0;
 function start() {
   const sortMethod = document.getElementById("sortMethod").value;
   if (SIZE > 256 && badMethods.includes(sortMethod)) {alert("Choose a smaller size (256 or below) for sorts this inefficient");return;}
@@ -139,14 +138,21 @@ function start() {
   // COLORS = arr.map((i)=>hslToRgb((i/SIZE+2)/3,1,0.5));
   COLORS = arr.map((i)=>interpolateColor((i)/SIZE));
   copy = arr.map(o=>o+1);
+  if (noteInterval !== -1) {clearInterval(noteInterval);noteInterval=-1;oscillator.stop()}
   display();
   sortingAlgorithms[sortMethod](arr);
-  console.log(swaps.length);
+  console.log(swaps.length)
+  opTime = Math.min(Math.ceil(10000/swaps.length),333);
+  setTimeout(function(){playSort();},opTime-1);
   swapInterval = setInterval(function(){
-    if (swaps.length==0) {clearInterval(swapInterval);swapInterval=-1;return;}
+    if (swaps.length==0) {
+      clearInterval(swapInterval);playFinal();
+      if (VIEW == 'bar') playFinalAnimation();
+      swapInterval=-1;return;
+    }
     const s = swaps.pop();
-    if (s.length == 2) {
-      const [i,j] = s;
+    if (s.length == 3) {
+      const [i,j,_] = s;
       [COLORS[i],COLORS[j]] = [COLORS[j],COLORS[i]];
       [copy[i],copy[j]] = [copy[j],copy[i]];
       const c = COLORS[i];
@@ -156,16 +162,16 @@ function start() {
         ctx.fillRect(i,0,1,HEIGHT);
         ctx.fillStyle = "rgb("+d.map(String).join(",")+")";
         ctx.fillRect(j,0,1,HEIGHT);
-      } else if (VIEW == 'bar') {
+      } else if (VIEW == 'bar' || VIEW == 'both') {
         ctx.clearRect(i,0,1,HEIGHT-copy[i]);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = (VIEW=='bar'?"white":"rgb("+c.map(String).join(",")+")");
         ctx.fillRect(i,HEIGHT-copy[i],1,copy[i]);
         ctx.clearRect(j,0,1,HEIGHT-copy[j]);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = (VIEW=='bar'?"white":"rgb("+d.map(String).join(",")+")");
         ctx.fillRect(j,HEIGHT-copy[j],1,copy[j]);
       }
-    } else {
-      const [i,j,_] = s;
+    } else if (s.length == 4) {
+      const [i,j,_,_2] = s;
       const temp = COLORS[j];
       const temp2 = copy[j];
       for (let k = j;k>i;k--) {
@@ -174,9 +180,9 @@ function start() {
         if (VIEW == 'color') {
           ctx.fillStyle = "rgb("+COLORS[k].map(String).join(",")+")";
           ctx.fillRect(k,0,1,HEIGHT);
-        } else if (VIEW == 'bar') {
+        } else if (VIEW == 'bar' || VIEW == 'both') {
           ctx.clearRect(k,0,1,HEIGHT-copy[k]);
-          ctx.fillStyle = "white";
+          ctx.fillStyle = (VIEW=='bar'?"white":"rgb("+COLORS[k].map(String).join(",")+")");
           ctx.fillRect(k,HEIGHT-copy[k],1,copy[k]);
         }
       }
@@ -185,13 +191,13 @@ function start() {
       if (VIEW == 'color') {
         ctx.fillStyle = "rgb("+temp.map(String).join(",")+")";
         ctx.fillRect(i,0,1,HEIGHT);
-      } else if (VIEW == 'bar') {
+      } else if (VIEW == 'bar' || VIEW == 'both') {
         ctx.clearRect(i,0,1,HEIGHT-temp2);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = (VIEW == 'bar'?"white":"rgb("+temp.map(String).join(",")+")");
         ctx.fillRect(i,HEIGHT-temp2,1,temp2);
       }
     }
-  },Math.min(Math.ceil(10000/swaps.length),333));
+  },opTime);
 }
 function display() {
   ctx.clearRect(0,0,SIZE,HEIGHT);
@@ -201,8 +207,23 @@ function display() {
       ctx.fillRect(i,0,1,HEIGHT);
     } else {
       ctx.clearRect(i,0,1,HEIGHT-copy[i]);
-      ctx.fillStyle = "white";
+      ctx.fillStyle = (VIEW=='bar'?"white":"rgb("+COLORS[i].map(String).join(",")+")");
       ctx.fillRect(i,HEIGHT-copy[i],1,copy[i]);
     }
   }
+}
+function playSweep(i) {
+  ctx.fillStyle = "lime";
+  ctx.fillRect(i,HEIGHT-copy[i],1,copy[i]);
+  setTimeout(function(){
+    ctx.fillStyle = "white";
+    ctx.fillRect(i,HEIGHT-copy[i],1,copy[i]);
+  },4/7*SIZE*Math.ceil(700/SIZE));
+  setTimeout(function(){
+    if (i == SIZE) {return;}
+    playSweep(i+1);
+  },Math.ceil(700/SIZE));
+}
+function playFinalAnimation() {
+  playSweep(0);
 }

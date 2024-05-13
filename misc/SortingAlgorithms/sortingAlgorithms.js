@@ -1,4 +1,3 @@
-// Circle Sort
 // Smooth Sort
 
 function bubbleSort(arr) {
@@ -208,10 +207,11 @@ function circleSort(a) {
     c+=1
   }
 }
+
 function heapify(arr, n, i) {
   let largest = i;
-  const left = 2 * i + 2; // Changing the calculation for left child
-  const right = 2 * i + 1; // Changing the calculation for right child
+  const left = 2 * i + 1;
+  const right = 2 * i + 2;
   if (left < n && arr[left] > arr[largest]) {
     largest = left;
   }
@@ -223,14 +223,12 @@ function heapify(arr, n, i) {
     heapify(arr, n, largest);
   }
 }
-
 function buildMaxHeap(arr) {
   const n = arr.length;
   for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
     heapify(arr, n, i);
   }
 }
-
 function heapSort(arr) {
   buildMaxHeap(arr);
   for (let i = arr.length - 1; i > 0; i--) {
@@ -240,6 +238,36 @@ function heapSort(arr) {
   return arr;
 }
 
+function mySort(arr,oglow=0,oghigh=-1,flag=2) {
+  if (oghigh == -1) oghigh=arr.length-1;
+  let high=oghigh, low=oglow;
+  while (high-low > 0){
+    mid = Math.floor((oghigh-oglow)/2) + oglow;
+    if (flag) {
+      mySort(arr,mid+1,oghigh,flag-1);
+      mid = Math.floor((oghigh-oglow)/2) + oglow;
+      mySort(arr,oglow,mid,flag-1);
+    } else {
+      mySort(arr,oglow,mid,2);
+      mid = Math.floor((oghigh-oglow)/2) + oglow;
+      mySort(arr,mid+1,oghigh,2);
+    }
+    mid = Math.floor((oghigh-oglow)/2) + oglow;
+    start2 = mid + 1;
+    if (arr[mid] <= arr[start2]) {break;}
+    while (low <= mid && start2 <= high) {
+      if (arr[low] <= arr[start2]) low += 1;
+      else {
+        arr.shiftDown(low,start2);
+        low += 1;
+        mid += 1;
+        start2 += 1;
+      }
+    }
+    break;
+  }
+  return arr;
+}
 const sortingAlgorithms = {
   "Bubble Sort":bubbleSort,
   "Quick Sort":quickSort,
@@ -251,6 +279,6 @@ const sortingAlgorithms = {
   "Bitonic Sort":bitonicSort,
   "Circle Sort":circleSort,
   "Heap Sort":heapSort,
-
+  "My Sort":mySort,
 }
 const badMethods = ["Bubble Sort","Cocktail Shaker Sort","Odd Even Sort"];
