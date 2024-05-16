@@ -3,7 +3,7 @@
 //  Bar view *
 let SIZE = 128;
 let HEIGHT = 128;
-let VIEW = "color";
+let VIEW = "both";
 let colorMap = ['#ff0000', '#ffffff', '#0000ff'];
 let swaps = [];
 Array.prototype.swap = function(i,j) {
