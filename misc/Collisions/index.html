@@ -13,7 +13,15 @@
   <canvas id="output" width="0" height="0"></canvas>
   <div id="sidebar">
     <p>FPS: <span id="fps">?</span></p>
-    <input type="file" accept="image/png" id="imageInput">
+    <button onclick="PAUSED=!PAUSED;this.innerHTML={'Pause':'Unpause','Unpause':'Pause'}[this.innerHTML];" id="pauseButton">Pause</button><br>
+    <button onclick="DISPENSING=!DISPENSING;this.innerHTML={'Dispense':'Stop Dispensing','Stop Dispensing':'Dispense'}[this.innerHTML];">Dispense</button><br>
+    <button onclick="MODE=3;stopDragging();">Drag Mode</button><br>
+    <button onclick="MODE=0;stopDragging();">Add Mode</button><br>
+    <button onclick="MODE=1;stopDragging();">Static Mode</button><br>
+    <button onclick="MODE=2;stopDragging();">Link Mode</button><input type="range" value="1" min="1" max="10" step="1" onchange="LINK_DISTANCE = ((this.nextElementSibling.checked)?-1:(this.value*32));"><input type="checkbox" onchange="LINK_DISTANCE=((this.checked)?-1:(this.previousElementSibling.value*32));"><br>
+
+
+    <!-- <input type="file" accept="image/png" id="imageInput"> -->
     </div>
   <script src="data.js"></script>
   <script src="script2.js"></script>
