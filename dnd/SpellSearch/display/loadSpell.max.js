@@ -45,8 +45,10 @@ ordinal = {
   "9":"9th-level "};
 function load() {
 if (window.location.href.includes("?")) {
-  let ff = getByName(window.location.href.split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"));
-
+  let ff = getByName(window.location.href.split("&savebutton")[0].split("?spell=")[1].replaceAll("--","ayo what is this?").replaceAll("-"," ").replaceAll("%27","'").replaceAll("ayo what is this?","-"));
+  if (window.location.href.includes("&savebutton=false")) {
+    document.getElementById("save").remove();
+  }
   document.getElementById("all").style.opacity = 1;
 
   document.getElementById("output2").innerHTML = ff["name"];
