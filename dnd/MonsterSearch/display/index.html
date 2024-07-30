@@ -96,33 +96,32 @@
       display:block;
       float:left;
     }
-    #lactions, #reactions {
+    #lactions, #reactions, #bactions {
       font-size:100% !important;
     }
-    #actions p em, #lactions p em, #reactions p em, #actions ul li em{
+    #actions p em, #lactions p em, #bactions p em, #reactions p em, #actions ul li em{
       font-size:100%;
     }
-    #abilities p, #actions p, #actions ul li,#lactions p,#reactions p{
+    #abilities p, #actions p, #actions ul li,#lactions p,#bactions p,#reactions p{
       line-height:75%;
       color:#000000;
     }
     #actions ul li {
       font-size:100%;
     }
-    #abilities strong {
-      font-size:80%;
+    #abilities em, #abilities em strong {
+      font-size:100%;
     }
-    #actions p em strong, #lactions p em strong,#reactions p em strong{
+    
+    #actions p em strong, #lactions p em strong, #bactions p em strong, #reactions p em strong{
       font-size:96% !important;
     }
-    #hiddenla {
-      display:none;
-    }
-    #hiddenr {
+    #hiddenla, #hiddenr, #hiddenba {
       display:none;
     }
     a {
       color:#920000;
+      font-size:100%;
     }
     a:hover {
       color:#4e2820;
@@ -141,11 +140,11 @@
     }
   </style>
 </head>
-<body onload="load()" class="text-light bg-dnd">
+<body onload="load(window.location.href.split(`?monster=`)[1].replaceAll(`--`,`ayo what is this?`).replaceAll(`-`,` `).replaceAll(`%27`,`'`).replaceAll(`ayo what is this?`,`-`))" class="text-light bg-dnd">
   <script src="../monsters.js"></script>
   <script src="../bootstrap.bundle.min.js"></script>
   <script src="../script.max.js"></script>
-  <script src="loadSpell.max.js"></script>
+  <script src="loadMonster.max.js"></script>
 <!--   <svg viewBox="0 0 200 200" xmlns='http://www.w3.org/2000/svg'>
   <filter id='noiseFilter'>
     <feTurbulence 
@@ -175,19 +174,24 @@
     <br><br><br><br><br><br><br><br><hr class="solid">
     <div id="skills2"><p id="skills"></p></div>
     <hr class="solid">
-    <p id="abilities"></p>
+    <div id="abilities"></div>
     <h2 class="actions-header">Actions</h2>
     <hr class="action-divider">
-    <p id="actions"></p>
+    <div id="actions"></div>
     <div id="hiddenla">
     <h2 class="actions-header">Legendary Actions</h2>
     <hr class="action-divider">
-    <p id="lactions"></p>
+    <div id="lactions"></div>
+    </div>
+    <div id="hiddenba">
+    <h2 class="actions-header">Bonus Actions</h2>
+    <hr class="action-divider">
+    <div id="bactions"></div>
     </div>
     <div id="hiddenr">
     <h2 class="actions-header">Reactions</h2>
     <hr class="action-divider">
-    <p id="reactions"></p>
+    <div id="reactions"></div>
     </div>
 <!--     <hr class="big"> -->
   </div>
