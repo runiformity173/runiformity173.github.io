@@ -5,15 +5,179 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>DM Screen</title>
+  <link href="/bootstrap.css" rel="stylesheet" type="text/css" />
   <link href="style.css" rel="stylesheet" type="text/css" />
-  <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
-<body class="bg-dark text-light no-select">
-  <script src="bootstrap.bundle.min.js"></script>
-  <script>const choose=o=>o[Math.floor(Math.random()*o.length)];</script>
-  <center><button class="btn btn-outline-light" onclick='this.innerHTML = choose(["","","","","a","be","de","el","fa","jo","ki","la","ma","na","o","pa","re","se","si","ta"])+choose(["bar","ched","dell","far","gran","hal","jen","kel","lim","mor","net","penn","quil","rond","sark","shen","tur","vash","yor","zen"])+choose(["","a","ac","ai","al","am","an","ar","ea","el","er","ess","ett","ic","id","il","in","is","or","us"]);this.innerHTML =  "Random Name: "+ this.innerHTML[0].toUpperCase()+this.innerHTML.slice(1);'>Random Name</button></center>
-  <center><button class="btn btn-outline-light" onclick='this.innerHTML = "Something Happens: " + choose(["A door opens.","A fire starts.","A meteor shoots across the sky.","A monster appears.","A screech pierces the air.","A storm begins.","A strange star appears in the sky.","A strong gust of wind blows through.","A tremor shakes the ground.","Someone experiences déjà vu.","Someone gets angry.","Someone glimpses the future.","Someone has a sense of foreboding.","Someone has to go to the bathroom.","Something spills or falls to the ground.","Something is not where it is supposed to be.","The lights go out.","The sun comes out.","There is a foul smell in the air.","Unexplained magic occurs."]);'>Something Happens</button></center>
+
+<body class="bg-dark text-light" onload="load()">
+  <template id="monsterTemplate">
+    <div class="identifier d-none" id="monster"></div>
+    <iframe></iframe>
+  </template>
+  <template id="spellTemplate">
+    <div class="identifier d-none" id="spell"></div>
+    <iframe></iframe>
+  </template>
+  <template id="tableTemplate">
+    <div class="identifier d-none" id="table"></div>
+    <table>
+      <tr>
+        <th class="tableName" colspan="6"></th>
+        <tr>
+          <td colspan="6">
+            <table class="w-100 stripe-odd-table">
+              <!-- <caption class="tableCaption"></caption> -->
+              <thead>
+                <tr class="tableLabels">
+                  
+                </tr>
+              </thead>
+              <tbody class="tableBody">
+                
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tr>
+    </table>
+  </template>
+  <template id="initiative">
+    <div class="initiativeRow row">
+      <div class="col">
+        <p contenteditable="true" oninput="save(this.closest('.box'));">Click to Edit</p>
+      </div>
+      <div class="col align-self-center">
+        <input type="number" style="width:1.75em;" onchange="sortInitiative(this.closest('.box .wrapper'));save(this.closest('.box'));">
+        <button class="btn btn-danger" onclick="
+          if (confirm('Are you sure you want to delete this row?')) {
+            const box = this.closest('.box')
+            this.parentElement.parentElement.remove();
+            save(box);
+          }
+          ">-</button>
+      </div>
+    </div>
+  </template>
+  <template id="health">
+    <div class="healthRow row">
+      <div class="col">
+        <p contenteditable="true" oninput="save(this.closest('.box'));">Click to Edit</p>
+      </div>
+      <div class="col">
+        <input type="number" style="width:2.5em;" onchange="save(this.closest('.box'));">
+        <button class="btn btn-danger" onclick="
+          if (confirm('Are you sure you want to delete this row?')) {
+            const box = this.closest('.box')
+            this.parentElement.parentElement.remove();
+            save(box);
+          }
+          ">-</button>
+      </div>
+    </div>
+  </template>
+  <template id="initiativeTrackerTemplate">
+    <div class="identifier d-none" id="initiativeTracker"></div>
+    <div class="row">
+      <div class="col"><strong>Name</strong></div>
+      <div class="col"><strong>Roll</strong></div>
+
+    </div>
+    <div class="wrapper"></div>
+    <div class="bottomRow">
+      <button class="btn btn-outline-light" onclick="this.parentElement.previousElementSibling.appendChild(document.getElementById('initiative').content.cloneNode(true));save(this.closest('.box'));">Add Entry</button>
+      <button class="btn btn-outline-light" onclick="if (confirm('Are you sure you want these names to be the default?')) saveInitiative(this.parentElement.previousElementSibling);">Save to Default</button>
+      <button class="btn btn-outline-light" onclick="if (confirm('Are you sure you want to reset to the default?')) addModule('initiativeTracker',this.closest('.box'))">Reset to Default</button>
+    </div>
+  </template>
+  <template id="healthTrackerTemplate">
+    <div class="identifier d-none" id="healthTracker"></div>
+    <div class="row">
+      <div class="col"><strong>Name</strong></div>
+      <div class="col"><strong>Health</strong></div>
+    </div>
+    <div class="wrapper"></div>
+    <div class="bottomRow">
+      <button class="btn btn-outline-light" onclick="this.parentElement.previousElementSibling.appendChild(document.getElementById('health').content.cloneNode(true));save(this.closest('.box'));">Add Entry</button>
+    </div>
+    
+  </template>
+  <template id="notesTemplate">
+    <div class="identifier d-none" id="notes"></div>
+    <textarea class="notesArea" oninput="save(this.parentElement);"></textarea>
+  </template>
+  <template id="tableSelectTemplate">
+    <div class="addTableContainer">
+      <input type="text" list="tablesDatalist">
+      <button class="btn btn-outline-light" onclick="addModule('Table',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="spellSelectTemplate">
+    <div class="addSpellContainer">
+      <input type="text" list="spellsDatalist">
+      <button class="btn btn-outline-light" onclick="addModule('spell',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="monsterSelectTemplate">
+    <div class="addMonsterContainer">
+      <input type="text" list="monstersDatalist">
+      <button class="btn btn-outline-light" onclick="addModule('monster',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="closeButtonTemplate">
+    <div class="closeModuleContainer">
+      <button class="closeButton" onclick="const i 
+= this.parentElement.parentElement;i.innerHTML = '';save(i);i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))">
+        ×
+      </button>
+    </div>
+  </template>
+  <template id="plusButtonTemplate">
+    <div class="addModuleContainer">
+      <select class="btn btn-outline-light">
+        <option disabled selected>--Select What to Add--</option>
+        <option>Initiative Tracker</option>
+        <option>Health Tracker</option>
+        <option>Spell Select</option>
+        <option>Monster Select</option>
+        <option>Table Select</option>
+        <option>Notes</option>
+      </select>
+      <button class="btn btn-outline-light" onclick="addModule(this.previousElementSibling.value,this.closest('.box'))">
+        +
+      </button>
+    </div>
+  </template>
+  <datalist id="tablesDatalist"></datalist>
+  <datalist id="spellsDatalist"></datalist>
+  <datalist id="monstersDatalist"></datalist>
+  <div id="container" class="container-fluid p-0">
+    <div class="box" id="box-1"></div>
+    <div class="box" id="box-2"></div>
+    <div class="box" id="box-3"></div>
+    <div class="box" id="box-4"></div>
+    <div class="box" id="box-5"></div>
+    <div class="box" id="box-6"></div>
+    <div class="box" id="box-7"></div>
+    <div class="box" id="box-8"></div>
+    <div class="box" id="box-9"></div>
+    <div class="box" id="box-10"></div>
+    <div class="box" id="box-11"></div>
+    <div class="box" id="box-12"></div>
+  </div>
+  
+  <script src="data.js"></script>
+  <script src="tables.js"></script>
+  <script src="spells.js"></script>
+  <script src="monsters.js"></script>
+  <script src="names.js"></script>
+  <script src="script.js"></script>
+
 </body>
 
 </html>

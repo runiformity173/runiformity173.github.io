@@ -1,0 +1,136 @@
+html {
+    width: 100%;
+    height: 100%;
+    /* overflow: hidden; */
+  }
+  #container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  * {
+    color:#dddddd;
+  }
+  *[contenteditable="true"], *[contenteditable="true"] + p {
+    font-size:24px;
+  }
+  .btn-outline-light {
+    border-color:#bbbbbb;
+    color:#bbbbbb;
+  }
+  .btn-outline-light:hover,.btn-outline-light:focus {
+    border-color:#bbbbbb;
+    color:#212529;
+    background-color: #bbbbbb;
+  }
+  .box {
+    border: 1px #bbbbbb solid;
+    /* display: block; */
+    height: 50vh;
+    width: 25vw;
+    position:relative;
+    box-sizing: border-box;
+    overflow-y:auto;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (max-width: 980px) {
+    .box {
+      height: 50vh;
+      width: 33.33vw;
+    }
+  }
+  @media (max-width: 740px) {
+    .box {
+      height: 50vh;
+      width: 50vw;
+    }
+  }
+  @media (max-width: 490px) {
+    .box {
+      height: 50vh;
+      width: 100vh;
+    }
+  }
+  .addModuleContainer {
+    position: absolute;
+    top:50%;
+    width:100%;
+    transform: translateY(-50%);
+    text-align: center;
+  }
+  .addModuleContainer select{
+    padding-left:6px;
+    padding-right:6px;
+  }
+  .initiativeRow p, .healthRow p {
+    display: inline;
+  }
+  .initiativeRow .col, .healthRow .col {
+    padding-right:0;
+  }
+  .initiativeRow .col + .col, .healthRow .col + .col{
+    padding-left:0;
+  }
+  .box .wrapper {
+    overflow:auto;
+  }
+  * > .bottomRow {
+    position: relative;
+  }
+  .bottomRow {
+    text-align:center;
+    width:100%;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Firefox */
+  input {
+    /* background-color: #bbbbbb;*/
+    background-color: #212529;
+    border: 2px solid #bbbbbb;
+    border-radius: 4px;
+    color:#bbbbbb;
+    -moz-appearance: textfield;
+  }
+  .notesArea {
+    font-size:24px;
+    width:100%;
+    height:100%;
+    background-color:#212529;
+    border:0;
+    cursor:text;
+  }
+  .stripe-odd-table>tbody>tr:nth-child(odd), div.wrapper>.row:nth-child(odd) {
+    background-color:rgba(78,78,78,0.5);
+  }
+  div.indentation {
+    width:1em;
+    display:inline-block;
+  }
+  .closeButton {
+    z-index:100;
+    position:absolute;
+    top:0;
+    right:0;
+    border:none;
+    background:none;
+    color:red;
+    border-radius: 30px;
+    /* background-color: #212529; */
+  }
+  .rollLink {
+    color: #614dff;
+    cursor: pointer;
+  }
+  .selectedRow {
+    background-color: yellow !important;
+    color:black;
+  }
+  .box iframe {
+    width: 100%;
+    height: 100%;
+  }
