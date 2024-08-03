@@ -1,3 +1,5 @@
+
+
 let level = 0;
 function validURL(a) {
   for (const v of a.toLowerCase().split("")) {
@@ -42,8 +44,11 @@ const sizeMap = {
   "H":"huge",
   "G":"gargantuan"
 }
+window.addEventListener("hashchange",function(e) {
+  load(window.location.href.split(`#`)[1].replaceAll(`--`,`ayo what is this?`).replaceAll(`-`,` `).replaceAll(`%27`,`'`).replaceAll(`ayo what is this?`,`-`))
+})
 function load(mName) {
-  if (!window.location.href.includes("?")) {return;}
+  if (!window.location.href.includes("#")) {return;}
   let ff = getByName(mName);
   document.getElementById("hiddenla").style.display = "none";
   document.getElementById("hiddenr").style.display = "none";
@@ -151,15 +156,19 @@ function load(mName) {
     }
     document.getElementById("skills").innerHTML += `<strong>Condition Immunities</strong> ${immunities.slice(2)}<br>`;
   }
-  let senses = "";
+  let senses = [];
   if (ff.senses) {
-    senses = ff.senses.map(o=>o+", ");
+    senses = ff.senses;
   }
-  senses += `passive Perception ${ff.passive}`;
-  document.getElementById("skills").innerHTML += `<strong>Senses</strong> ${senses}<br>`;
-  document.getElementById("skills").innerHTML += `<strong>Languages</strong> ${ff.languages?ff.languages.join(", "):"---"}<br>`;
+  senses.push(`passive Perception ${ff.passive}`);
+  document.getElementById("skills").innerHTML += `<strong>Senses</strong> ${senses.join(", ")}<br>`;
+  document.getElementById("skills").innerHTML += `<strong>Languages</strong> ${ff.languages?ff.languages.join(", "):"&horbar;"}<br>`;
   if (ff.cr) {
-    document.getElementById("skills").innerHTML += `<strong>Challenge</strong> ${ff.cr}<br>`;
+    if (ff.cr.cr) {
+      document.getElementById("skills").innerHTML += `<strong>Challenge</strong> ${ff.cr.cr} (${ff.cr.lair} when in lair)<br>`;
+    } else {
+      document.getElementById("skills").innerHTML += `<strong>Challenge</strong> ${ff.cr}<br>`;
+    }
   }
   
   if (ff.trait) {
@@ -220,7 +229,7 @@ function load(mName) {
     }
     document.getElementById("bactions").innerHTML = `${bactionString}`;
   }
-  // document.getElementById("nall").src=ff["img_url"];
+  document.getElementById("nall").src=`https://5e.tools/img/bestiary/tokens/${ff.source}/${ff.name}.webp`;
   document.getElementById("all").innerHTML = parseStrings(document.getElementById("all").innerHTML);
 }
 function recolorImage(img, oldRed, oldGreen, oldBlue, newRed, newGreen, newBlue) {
@@ -353,20 +362,30 @@ function parseStrings(str) {
         const spell = match.slice(8,-1);
         return `<a href="https://runiformity173.github.io/dnd/SpellSearch/display/?spell=${spell.replaceAll(" ","-")}" target="_blank">${spell}</a>`;
       }
+      if (match.split(" ")[0] === "{@creature") {
+        const creature = match.slice(11,-1);
+        return `<a href="#${creature.replaceAll(" ","-")}" target="_blank">${creature}</a>`;
+      }
       let final = item.trim();
       const splat = match.split("|");
       if (splat.length == 3) {
         final = splat[splat.length-1].replace(/[{}]/g,"").trim();
       }
       return final;
-    });
+    }).replaceAll("–","-").replaceAll("—","&horbar;").replaceAll("−","-");
   } else if (typeof str === 'object' && !Array.isArray(str) && str !== null) {
     return str.roll.exact;
   }
   return str;
 }
 function entryJoin(entries) {
-  return entries.join("<br><span class='tab'></span>")
+  return entries.map(multiEntry).join("<br><span class='tab'></span>")
 }
-// Beholder, Brass Dragon Wyrmling
-// List attacks
+function multiEntry(i) {
+  if (!i.items) return i;
+  let final = "";
+  for (const entry of i.items) {
+    final += `<br><span class='tab'></span><em>${entry.name}.</em> ${entry.entries?entryJoin(entry.entries):entry.entry}`;
+  }
+  return final;
+}

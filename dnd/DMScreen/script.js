@@ -130,7 +130,7 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   } else if (module == "monster") {
     if (addDefault) {
-      box.children[1].src = "https://runiformity173.github.io/dnd/MonsterSearch/display/?monster="+extraData.name.toLowerCase().replace(" ","-");
+      box.children[1].src = "https://runiformity173.github.io/dnd/MonsterSearch/display/#"+extraData.name.toLowerCase().replace(" ","-");
     }
   }
   if (addDefault) save(box);

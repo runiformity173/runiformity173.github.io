@@ -7,129 +7,150 @@
   <title>Monster Search</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.css" integrity="sha512-MKxcSu/LDtbIYHBNAWUQwfB3iVoG9xeMCm32QV5hZ/9lFaQZJVaXfz9aFa0IZExWzCpm7OWvp9zq9gVip/nLMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
-<body onload="checkAll('levelCheckbox',document.getElementById('levelAll'));checkAll('schoolCheckbox',document.getElementById('schoolAll'));const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
+<body onload="loadMainPage()" class="bg-dark text-light no-select">
   <script src="monsters.js"></script>
   <script src="script.max.js"></script>
   <script src="bootstrap.bundle.min.js"></script>
   <div id="header"></div>
-  <div id="filters">
-    <span id="col1">
-      <input type="checkbox" id="levelAll" name="levelAll" value="all" class="levelCheckbox" onchange="checkAll('levelCheckbox',this)" checked>
-      <label for="levelAll">Select All</label><br>
-      <input type="checkbox" id="level0" name="level0" value="0" class="levelCheckbox">
-      <label for="level0">0</label><br>
-            <input type="checkbox" id="level1/8" name="level1/8" value="1" class="levelCheckbox">
-      <label for="level1/8">1/8</label><br>
-            <input type="checkbox" id="level1/4" name="level1/4" value="1" class="levelCheckbox">
-      <label for="level1/4">1/4</label><br>
-            <input type="checkbox" id="level1/2" name="level1/2" value="1" class="levelCheckbox">
-      <label for="level1/2">1/2</label><br>
-      <input type="checkbox" id="level1" name="level1" value="1" class="levelCheckbox">
-      <label for="level1">1</label><br>
-      <input type="checkbox" id="level2" name="level2" value="2" class="levelCheckbox">
-      <label for="level2">2</label><br>
-      <input type="checkbox" id="level3" name="level3" value="3" class="levelCheckbox">
-      <label for="level3">3</label><br>
-      <input type="checkbox" id="level4" name="level4" value="4" class="levelCheckbox">
-      <label for="level4">4</label><br>
-      <input type="checkbox" id="level5" name="level5" value="5" class="levelCheckbox">
-      <label for="level5">5</label><br>
-      <input type="checkbox" id="level6" name="level6" value="6" class="levelCheckbox">
-      <label for="level6">6</label><br>
-      <input type="checkbox" id="level7" name="level7" value="7" class="levelCheckbox">
-      <label for="level7">7</label><br>
+  
+      <div id="slider"></div>
       
-<!--     <input type="checkbox" id="books" name="books" value="0" class="bookC">
-      <label for="books" data-bs-toggle="tooltip" data-bs-title="Check to include Xanathar's, Tasha's, Fizban's, and Ravnica">Include Supplemental Books</label><br><br>
-      <input type="checkbox" id="ritual" name="ritual" value="ritual">
-      <label for="ritual" data-bs-toggle="tooltip" data-bs-title="All spells when unchecked, only rituals when checked">Ritual?</label><br> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js"></script>
+        <script>
+            const snapValues = ['0','1/8','1/4','1/2','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'];
+            const slider = document.getElementById('slider');
+            const output = document.getElementById('sliderValue');
+            const valueFormat = {
+                      to: function(value) {
+                              // Math.round and -1, so 1.00 => 0, 2.00 => 2, etc.
+                              return snapValues[snapValues.map(eval).indexOf(value)];
+                      },
+                      from: Number
+                  };
+            noUiSlider.create(slider, {
+                start: [0, 100],
+                snap: true,
+                tooltips:[valueFormat,valueFormat],
+                connect:true,
+                range: {
+                    'min': 0,
+                    '3%': 1/8,
+                    '6%': 1/4,
+                    '9%': 1/2,
+                    '12%': 1,
+                    '15%': 2,
+                    '18%': 3,
+                    '21%': 4,
+                    '24%': 5,
+                    '27%': 6,
+                    '30%': 7,
+                    '33%': 8,
+                    '36%': 9,
+                    '39%': 10,
+                    '42%': 11,
+                    '45%': 12,
+                    '48%': 13,
+                    '51%': 14,
+                    '54%': 15,
+                    '57%': 16,
+                    '60%': 17,
+                    '63%': 18,
+                    '66%': 19,
+                    '69%': 20,
+                    '72%': 21,
+                    '75%': 22,
+                    '78%': 23,
+                    '81%': 24,
+                    '84%': 25,
+                    '87%': 26,
+                    '90%': 27,
+                    '93%': 28,
+                    '96%': 29,
+                    'max': 30
+                },
+            });
+        </script>
+    <div id="filters">
+    <span id="col1">
+        <h3>Alignment</h3>
+        <input type="checkbox" id="alignmentGood" name="alignmentGood" class="alignmentCheckbox triCheckbox">
+        <label for="alignmentGood">Good</label><br>
+        <input type="checkbox" id="alignmentNeutralY" name="alignmentNeutralY" class="alignmentCheckbox triCheckbox">
+        <label for="alignmentNeutralY">Neutral</label><br>
+        <input type="checkbox" id="alignmentEvil" name="alignmentEvil" class="alignmentCheckbox triCheckbox">
+        <label for="alignmentEvil">Evil</label><br>
+        <br>
+        <input type="checkbox" id="alignmentLawful" name="alignmentLawful" class="alignmentCheckbox triCheckbox">
+        <label for="alignmentLawful">Lawful</label><br>
+        <input type="checkbox" id="alignmentNeutralX" name="alignmentNeutralX" class="alignmentCheckbox triCheckbox">
+        <label for="alignmentNeutralX">Neutral</label><br>
+        <input type="checkbox" id="alignmentChaotic" name="alignmentChaotic" class="alignmentCheckbox triCheckbox">
+        <label for="alignmentChaotic">Chaotic</label><br>
     </span>
     <span id="col2">
-      <input type="checkbox" id="level8" name="level8" value="8" class="levelCheckbox">
-      <label for="level8">8</label><br>
-      <input type="checkbox" id="level9" name="level9" value="9" class="levelCheckbox">
-      <label for="level9">9</label><br>
-      <input type="checkbox" id="level10" name="level10" value="10" class="levelCheckbox">
-<label for="level10">10</label><br>
-      <input type="checkbox" id="level11" name="level11" value="11" class="levelCheckbox">
-<label for="level11">11</label><br>
-      <input type="checkbox" id="level12" name="level12" value="12" class="levelCheckbox">
-<label for="level12">12</label><br>
-      <input type="checkbox" id="level13" name="level11" value="11" class="levelCheckbox">
-<label for="level13">13</label><br>
-      <input type="checkbox" id="level14" name="level11" value="11" class="levelCheckbox">
-<label for="level14">14</label><br>
-      <input type="checkbox" id="level15" name="level11" value="11" class="levelCheckbox">
-<label for="level15">15</label><br>
-      <input type="checkbox" id="level16" name="level11" value="11" class="levelCheckbox">
-<label for="level16">16</label><br>
-      <input type="checkbox" id="level17" name="level11" value="11" class="levelCheckbox">
-<label for="level17">17</label><br>
-      <input type="checkbox" id="level18" name="level11" value="11" class="levelCheckbox">
-<label for="level18">18</label><br>
-      <input type="checkbox" id="level19" name="level11" value="11" class="levelCheckbox">
-<label for="level19">19</label><br>
+        <h3>Speed Type</h3>
+        <input type="checkbox" id="speedAll" name="speedAll" value="all" class="triCheckbox" onchange="checkAll('speedCheckbox',this)">
+        <label for="speedAll">Select All</label><br>
+        <input type="checkbox" id="speedSwim" name="speedSwim" class="speedCheckbox triCheckbox">
+        <label for="speedSwim">Swim</label><br>
+        <input type="checkbox" id="speedFly" name="speedFly" class="speedCheckbox triCheckbox">
+        <label for="speedFly">Fly</label><br>
+        <input type="checkbox" id="speedClimb" name="speedClimb" class="speedCheckbox triCheckbox">
+        <label for="speedClimb">Climb</label><br>
+        <input type="checkbox" id="speedBurrow" name="speedBurrow" class="speedCheckbox triCheckbox">
+        <label for="speedBurrow">Burrow</label><br>
     </span>
     <span id="col3">
-      <input type="checkbox" id="level20" name="level11" value="11" class="levelCheckbox">
-<label for="level20">20</label><br>
-      <input type="checkbox" id="level21" name="level11" value="11" class="levelCheckbox">
-<label for="level21">21</label><br>
-      <input type="checkbox" id="level22" name="level11" value="11" class="levelCheckbox">
-<label for="level22">22</label><br>
-      <input type="checkbox" id="level23" name="level11" value="11" class="levelCheckbox">
-<label for="level23">23</label><br>
-      <input type="checkbox" id="level24" name="level11" value="11" class="levelCheckbox">
-<label for="level24">24</label><br>
-      <input type="checkbox" id="level25" name="level11" value="11" class="levelCheckbox">
-<label for="level25">25</label><br>
-      <input type="checkbox" id="level26" name="level11" value="11" class="levelCheckbox">
-<label for="level26">26</label><br>
-      <input type="checkbox" id="level27" name="level11" value="11" class="levelCheckbox">
-<label for="level27">27</label><br>
-      <input type="checkbox" id="level28" name="level11" value="11" class="levelCheckbox">
-<label for="level28">28</label><br>
-      <input type="checkbox" id="level29" name="level11" value="11" class="levelCheckbox">
-<label for="level29">29</label><br>
-      <input type="checkbox" id="level30" name="level11" value="11" class="levelCheckbox">
-<label for="level30">30</label><br>
+        <h3>Sense Type</h3>
+        <input type="checkbox" id="senseAll" name="senseAll" value="all" class="triCheckbox" onchange="checkAll('senseCheckbox',this)">
+        <label for="senseAll">Select All</label><br>
+        <input type="checkbox" id="senseDarkvision" name="senseDarkvision" class="senseCheckbox triCheckbox">
+        <label for="senseDarkvision">Darkvision</label><br>
+        <input type="checkbox" id="senseTruesight" name="senseTruesight" class="senseCheckbox triCheckbox">
+        <label for="senseTruesight">Truesight</label><br>
+        <input type="checkbox" id="senseBlindsight" name="senseBlindsight" class="senseCheckbox triCheckbox">
+        <label for="senseBlindsight">Blindsight</label><br>
+        <input type="checkbox" id="senseTremorsense" name="senseTremorsense" class="senseCheckbox triCheckbox">
+        <label for="senseTremorsense">Tremorsense</label><br>
     </span>
     <span id="col4">
-      <input type="checkbox" id="schoolAll" name="schoolAll" value="all" class="schoolCheckbox" onchange="checkAll('schoolCheckbox',this)" checked>
-      <label for="schoolAll">Select All</label><br>
-      <input type="checkbox" id="schoolAberration" name="schoolAbjuration" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolAberration">Aberration</label><br>
-      <input type="checkbox" id="schoolBeast" name="schoolConjuration" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolBeast">Beast</label><br>
-      <input type="checkbox" id="schoolCelestial" name="schoolDivination" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolCelestial">Celestial</label><br>
-      <input type="checkbox" id="schoolConstruct" name="schoolEnchantment" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolConstruct">Construct</label><br>
-      <input type="checkbox" id="schoolDragon" name="schoolEvocation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolDragon">Dragon</label><br>
-      <input type="checkbox" id="schoolElemental" name="schoolIllusion" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolElemental">Elemental</label><br>
-      <input type="checkbox" id="schoolFey" name="schoolNecromancy" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolFey">Fey</label><br>
-      <input type="checkbox" id="schoolFiend" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolFiend">Fiend</label><br>
-      <input type="checkbox" id="schoolGiant" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolGiant">Giant</label><br>
-      <input type="checkbox" id="schoolHumanoid" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolHumanoid">Humanoid</label><br>
-      <input type="checkbox" id="schoolMonstrosity" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolMonstrosity">Monstrosity</label><br>
-      <input type="checkbox" id="schoolOoze" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolOoze">Ooze</label><br>
-      <input type="checkbox" id="schoolPlant" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolPlant">Plant</label><br>
-      <input type="checkbox" id="schoolUndead" name="schoolTransmutation" value="conjuration" class="schoolCheckbox" checked>
-      <label for="schoolUndead">Undead</label><br>
+      <h3>Monster Type</h3>
+      <input type="checkbox" id="typeAll" name="typeAll" value="all" class="typeCheckbox" onchange="checkAll('typeCheckbox',this)" checked>
+      <label for="typeAll">Select All</label><br>
+      <input type="checkbox" id="typeAberration" name="typeAbjuration" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeAberration">Aberration</label><br>
+      <input type="checkbox" id="typeBeast" name="typeConjuration" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeBeast">Beast</label><br>
+      <input type="checkbox" id="typeCelestial" name="typeDivination" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeCelestial">Celestial</label><br>
+      <input type="checkbox" id="typeConstruct" name="typeEnchantment" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeConstruct">Construct</label><br>
+      <input type="checkbox" id="typeDragon" name="typeEvocation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeDragon">Dragon</label><br>
+      <input type="checkbox" id="typeElemental" name="typeIllusion" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeElemental">Elemental</label><br>
+      <input type="checkbox" id="typeFey" name="typeNecromancy" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeFey">Fey</label><br>
+      <input type="checkbox" id="typeFiend" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeFiend">Fiend</label><br>
+      <input type="checkbox" id="typeGiant" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeGiant">Giant</label><br>
+      <input type="checkbox" id="typeHumanoid" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeHumanoid">Humanoid</label><br>
+      <input type="checkbox" id="typeMonstrosity" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeMonstrosity">Monstrosity</label><br>
+      <input type="checkbox" id="typeOoze" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeOoze">Ooze</label><br>
+      <input type="checkbox" id="typePlant" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typePlant">Plant</label><br>
+      <input type="checkbox" id="typeUndead" name="typeTransmutation" value="conjuration" class="typeCheckbox" checked>
+      <label for="typeUndead">Undead</label><br>
     </span>
   </div>
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <center><button onclick='start()' class="btn btn-outline-light">Filter</button></center>
  <p id="output" class="text-light search"></p>
   
