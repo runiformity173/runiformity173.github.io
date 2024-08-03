@@ -6,7 +6,7 @@ html {
 body {
   background-color:#323232;
   color:#eeeeee;
-    
+
 }
 #filters {
   height:80%;
@@ -51,7 +51,7 @@ body {
   height:25%;
 }
 #col1,#col2,#col3,#col4 {
-  top:10%;
+  top:75px;
 }
 #output.search {
   z-index:100;
@@ -79,6 +79,7 @@ input[type="checkbox"] {
   left:5%;
   width:45%;
   height:100%;
+}
 }
 @media only screen and (min-width: 1200px) {
 #nall {
@@ -147,4 +148,14 @@ padding-top:9px;
 }
 br {
   user-select:none;
+}
+.tab {
+  width:1em;
+  display:inline-block;
+}
+#slider {
+  margin: 50px 25px 0;
+}
+div.noUi-handle {
+  cursor: pointer;
 }
