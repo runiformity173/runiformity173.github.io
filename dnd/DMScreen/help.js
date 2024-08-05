@@ -12,8 +12,8 @@ Press the red "-" button to remove an entry from the initiative tracker.
 Click the name of an entry in the tracker to edit it.
 You can also edit the health in the box.
 Press the red "-" button to remove an entry from the health tracker.
-<h3>Spell, Monster, and Table Select</h3>
-Start typing the name of the spell, monster, or table you want to load.
+<h3>Condition, Spell, Monster, and Table Select</h3>
+Start typing the name of the condition, spell, monster, or table you want to load.
 Click on the name you want in the dropdown. Without editing it further, press the plus button.
 <h5>Table Select</h5>
 If the table is rollable, you can click on the blue die expression on the top left of the table to roll on the table.

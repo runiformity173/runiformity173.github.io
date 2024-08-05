@@ -11,6 +11,11 @@
 </head>
 
 <body class="bg-dark text-light" onload="load()">
+  <template id="conditionTemplate">
+    <div class="identifier d-none" id="condition"></div>
+    <h2 class="title"></h2>
+    <p class="content"></p>
+  </template>
   <template id="monsterTemplate">
     <div class="identifier d-none" id="monster"></div>
     <iframe></iframe>
@@ -106,6 +111,14 @@
     <div class="identifier d-none" id="notes"></div>
     <textarea class="notesArea" oninput="save(this.parentElement);"></textarea>
   </template>
+  <template id="conditionSelectTemplate">
+    <div class="addConditionContainer">
+      <input type="text" list="conditionsDatalist">
+      <button class="btn btn-outline-light" onclick="addModule('Condition',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
   <template id="tableSelectTemplate">
     <div class="addTableContainer">
       <input type="text" list="tablesDatalist">
@@ -144,6 +157,7 @@
         <option disabled selected>--Select What to Add--</option>
         <option>Initiative Tracker</option>
         <option>Health Tracker</option>
+        <option>Condition Select</option>
         <option>Spell Select</option>
         <option>Monster Select</option>
         <option>Table Select</option>
@@ -157,6 +171,7 @@
   <datalist id="tablesDatalist"></datalist>
   <datalist id="spellsDatalist"></datalist>
   <datalist id="monstersDatalist"></datalist>
+  <datalist id="conditionsDatalist"></datalist>
   <div id="container" class="container-fluid p-0">
     <div class="box" id="box-1"></div>
     <div class="box" id="box-2"></div>
@@ -176,6 +191,7 @@
   <script src="tables.js"></script>
   <script src="spells.js"></script>
   <script src="monsters.js"></script>
+  <script src="conditions.js"></script>
   <script src="names.js"></script>
   <script src="script.js"></script>
   <script src="help.js"></script>

@@ -1,6 +1,3 @@
-// Table Test
-// Spells
-// Maybe monsters and such
 // Name generator
 function setCookie(name,value) {
   const prev = JSON.parse(localStorage.getItem("DMScreen") || "{}");
@@ -55,6 +52,8 @@ function load() {
         document.querySelector(`#${i.id} .notesArea`).value = data.text;
       } else if (entry.type == "table") {
         loadTable(i,data.name);
+      } else if (entry.type == "condition") {
+        loadCondition(i,data.name);
       } else if (entry.type == "spell") {
         i.children[1].src = data.link;
       } else if (entry.type == "monster") {
@@ -82,7 +81,11 @@ const moduleMap = {
   "Monster Select":"monsterSelect",
   "monsterSelect":"monsterSelect",
   "Monster":"monster",
-  "monster":"monster"
+  "monster":"monster",
+  "Condition Select":"conditionSelect",
+  "conditionSelect":"conditionSelect",
+  "Condition":"condition",
+  "condition":"condition"
 }
 function addModule(addedModule,box,addDefault=true,extraData={}) {
   if (!(addedModule in moduleMap)) {
@@ -124,6 +127,11 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
       if (!(extraData.name in data)) {alert("Table does not exist");return;}
       loadTable(box,extraData.name);
     }
+  } else if (module == "condition") {
+    if (addDefault) {
+      if (!(extraData.name in conditions)) {alert("Condition does not exist");return;}
+      loadCondition(box,extraData.name);
+    }
   } else if (module == "spell") {
     if (addDefault) {
       box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch/display/?spell="+extraData.name.toLowerCase().replace(" ","-")+"&savebutton=false";
@@ -160,6 +168,8 @@ function save(box) {
       data["text"] = box.children[1].value;
     } else if (type == "table") {
       data["name"] = document.querySelector(`#${box.id} .tableName`).innerHTML;
+    } else if (type == "condition") {
+      data["name"] = document.querySelector(`#${box.id} .title, #${box.id} .tableName`).innerHTML;
     } else if (type == "spell") {
       data["link"] = box.children[1].src;
     } else if (type == "monster") {
