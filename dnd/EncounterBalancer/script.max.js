@@ -16,7 +16,7 @@ function start() {
   let playerAmount = Number(document.getElementById("playerAmount").value);
   //easy, medium, hard, deadly
   let easy = xps[playerLevel][0]*playerAmount;let medium = xps[playerLevel][1]*playerAmount;let hard = xps[playerLevel][2]*playerAmount;let deadly = xps[playerLevel][3]*playerAmount;
-  let difficulty = (xp<deadly)?((xp<hard)?((xp<medium)?((xp<easy)?"Easy":"Medium"):"Hard"):"Deadly"):"Impossible";
+  let difficulty = (xp<=easy)?"Easy":(xp<=medium)?"Medium":(xp<=hard)?"Hard":(xp<=deadly)?"Deadly":"Impossible";
   document.getElementById("output").innerHTML = "Rating: "+difficulty+"<br><br>"+xp+" xp<br>Easy: "+easy+" xp<br>Medium: "+medium+" xp<br>Hard: "+hard+" xp<br>Deadly: "+deadly+" xp";
   document.getElementById("output").innerHTML = document.getElementById("output").innerHTML.replaceAll(difficulty,("<b>"+difficulty+"<\/b>"));
 }
