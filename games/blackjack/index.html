@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Blackjack</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+  </head>
+  
+  <body class="bg-dark text-light">
+    <span id="centerButtons">
+      <span id="newGameSpan">
+        <button id="newGameButton" class="btn btn-outline-light" onclick="newGame()">New Game</button>
+        <br>
+        Betting <span id="betAmount">5</span> chips: <input id="playerBet" type="range" value="5" min="5" max="500" step="1" oninput="document.getElementById('betAmount').innerHTML = this.value;DATA.currentBet = Number(this.value)">
+        <br>
+      </span>
+      <span id="gameButtons" >
+        <button class="btn btn-outline-light" onclick="hitPlayer();">Hit</button>
+        <button class="btn btn-outline-light" onclick="stand()">Stand</button>
+        <button id="doubleDownButton" class="btn btn-outline-light" onclick="doubleDown()">Double Down</button>
+        <button id="splitPairsButton" class="btn btn-outline-light" onclick="splitPairs()">Split Pairs</button>
+        <br>
+      </span>
+    </span>
+    <div id="playerHand" class="hand"></div>
+    <div id="dealerHand" class="hand"></div>
+    <div><p><span id="playerChips"></span> Chips</p></div>
+    <div><p id="textDisplay"></p></div>
+    <script src="script.js"></script>
+    <script src="display.js"></script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+html, body {
+    /* overflow:hidden; */
+    margin:0;
+    height:100%;
+    width:100%;
+  }
+  #playerHand {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    left:0;
+    height:40%;
+    /* background-color:red; */
+  }
+  #dealerHand {
+    position:absolute;
+    top:0;
+    width:100%;
+    left:0;
+    height:40%;
+    /* background-color:red; */
+  }
+  .hand img {
+    height:100%;
+  }
+  #centerButtons {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    left:0;
+    width:100%;
+    text-align:center;
+  }
+  div:has(>p>#playerChips) {
+    position: absolute;
+    right:0;
+    bottom:0;
+  }
+  #gameButtons {
+    display:none;
+  }
+  div:has(>#textDisplay) {
+    position:absolute;
+    right:0;
+    top:0;
+    width:30%;
+    text-align:right;
+  }
+  button {
+    position:relative;
+    cursor:pointer;
+    z-index:100;
+  }
