@@ -56,7 +56,7 @@ function updateChunk(row,col) {
 }
 function interact(p2,p1,turn2,gravity=true) {
   if (!p1) {return false;}
-  if (p2.type === 7 && (p1.state > 1 && p1.type !== 8)) {return false;}
+  if (p2.type === 7 && (p1.state > 1 && p1.type !== 8 && p1.type !== 20)) {return false;}
   if (gravity) {
   if ((DENSITIES[p1.type]>DENSITIES[p2.type] || (p1.type != p2.type && DENSITIES[p1.type]===DENSITIES[p2.type] && p1.state < 2 && p2.state < 2)) && (((!p2.moved) && (!p1.moved)) || (p2.state < p1.state))) {
     // p2.turn = 1-p2.turn;
@@ -90,6 +90,7 @@ class Particle {
     this.leftLast = false;
     this.rightLast = false;
     this.nextHeat = HEATS[type];
+    this.friction = FRICTIONS[type];
     this.age = 0;
     // this.heatMatters = HEATS_MATTER[type];
     this.special = 0;
@@ -100,25 +101,43 @@ class Particle {
     this.lastType = this.type;
     this.type = type;
     this.state = STATES[type];
+    this.friction = FRICTIONS[type];
+
     this.age = 0;
     // this.heatMatters = HEATS_MATTER[type];
     this.special = 0;
   }
   explode(board,row2,col2,height,width,radius2) {
     const explodeStack = [[row2,col2,radius2]];
+    const explodedThisTime = new Set();
     while (explodeStack.length > 0) {
-      const [row,col,radius] = structuredClone(explodeStack.pop(0));
+      let [row,col,radius] = explodeStack.pop(0);
       const cur = board[row][col];
       if (cur.type === 0 || cur.type === 21) {cur.become(7);cur.lastType = 17;}
+      else if (EXPLOSION[cur.type]) {
+        radius = EXPLOSION[cur.type];
+        cur.become(7);
+        cur.lastType = 17;
+      } else if (radius >= radius2+Math.floor(radius2/6)-2 && STATES[cur.type]>2) {
+        cur.become(0);
+      }
       cur.nextHeat = Math.max(50,cur.nextHeat);
       if (radius<=0){continue;}
       const maxRow = (row<height-1?2:1);
       const maxCol = (col<width-1?2:1);
       for (var i = (row>0?-1:0);i<maxRow;i++) {
         for (var j = (col>0?-1:0);j<maxCol;j++) {
+          // if (i!==0&&j!==0) {continue;}
           //  && (board[row+i][col+j].type == 0 || board[row+i][col+j].type == 7)
-          if ((i!==0 || j!==0) && (board[row+i][col+j].type != 17 && board[row+i][col+j].type != 7)) {
-            explodeStack.push([row+i,col+j,radius-(i===0||j===0?1:ROOT2)])
+          if ((i!==0 || j!==0) && (board[row+i][col+j].type != 7)) {
+            // explodeStack.push([row+i,col+j,radius-(i===0||j===0?1:ROOT2)])
+            const p = (row+i)+","+(col+j);
+            if (explodedThisTime.has(p)) {
+              continue;
+            } 
+            explodedThisTime.add(p);
+            explodeStack.push([row+i,col+j,radius-((Math.abs(i)+Math.abs(j)==2)?1.414:1)]);
+
           }
         }
       }
@@ -134,7 +153,7 @@ class Particle {
     }
     //Spread sideways
     // if (Math.random()>0.5) {
-      if (Math.random()>0.5) {
+      if (Math.random()>WIND) {
         if (left.type === 16 && left.special < this.special) {this.special--;left.special++;return;}
         if (right.type === 16 && right.special < this.special) {this.special--;right.special++;return;}
       } else {
@@ -149,7 +168,7 @@ class Particle {
     //Grow down, then left/right
       if (down.type === 18) {down.become(16);this.special--;return}
 
-      if (Math.random()>0.5) {
+      if (Math.random()>WIND) {
 
         if (left.type === 0) {left.become(16);this.special--;return}
         if (right.type === 0) {right.become(16);this.special--;return}
@@ -163,7 +182,7 @@ class Particle {
 
 
   }
-  spread(other,a) {
+  spread(other,direction) {
     // Heat spread
     other.nextHeat = Math.max(Math.round((this.heat)/2)-2,other.nextHeat);
     // Powder giving impulse
@@ -173,40 +192,46 @@ class Particle {
         // console.log("Sand set another to falling");
       }
     }
-    // Fuse spreading
-    if (other.type == 12 && this.heat > 9 && other.heat < 10) {
-      other.nextHeat += FUEL[12];
-    } 
-    // Spring making water
-    if (this.type == 13 && Math.random()>0.95 && other.type == 0) {other.become(2);}
+    const rxn2 = SPREADS[this.type][other.type];
+    if (rxn2 !== undefined) {
+      let rxn = [];
+      let mn = rxn2.length;
+      if (typeof rxn2[0] == "number") {
+        rxn = rxn2;
+        mn = 1;
+      }
+      for (let i = 0; i < mn; i++) {
 
-    // Ice Freezing Water
-    if (this.type == 19 && Math.random()>0.95 && other.type == 2 && other.heat < 1) {other.become(19);}
+        if (mn > 1) {rxn = SPREADS[this.type][other.type][i];}
 
-    // Poison Spreading
-    if (this.type == 21 && Math.random()>0.95) {
-      if (other.type === 0 || other.type === 16) {
-        other.become(21);
-      } else if (other.type === 16) {
-        other.become(5);
+        if (Math.random() < (rxn[2]||0.05) && (rxn[3]===undefined || rxn[3].includes(direction))) {
+          if (other.type !== rxn[0]) {other.become(rxn[0]);}
+          if (this.type !== rxn[1]) {this.become(rxn[1]);break;}
+        }
       }
     }
+    //Lava catching air on fire
+    if (this.type == 20 && other.type == 0 && Math.random()>0.95 && direction==0) {
+      other.become(7);
+      other.heat = Math.max(other.heat,50);
+      other.nextHeat = Math.max(other.nextHeat,50);
+      other.lastType = 20;
+    }
+
 
     // Plant getting water
     else if (this.type == 16) {
-      if (Math.random()>0.95 && other.type == 2) {this.special++;other.become(0);}
+      if (Math.random()>0.95 && other.type == 2) {this.special+=2;other.become(0);}
     }
-    // Soil getting water
-    else if (this.type == 18) {
-      if (Math.random()>0.95 && other.type == 2) {this.become(16);other.become(0);}
+    // Plasma and fire making heat
+    else if ((this.type == 7 || this.type == 11) && Math.random()>0.99) {
+      other.nextHeat = (other.nextHeat+100)/2;
     }
-    // Plasma making heat
-    else if (this.type == 11 && Math.random()>0.99) {other.nextHeat = (other.nextHeat+100)/2;}
   }
   update(board,row,col,height,width,turn,a=0) {
     this.turn = 1-this.turn;
     this.moved = false;
-    const feelingRight = (this.leftLast == this.rightLast)?Math.random()<0.5:this.rightLast;
+    const feelingRight = (this.leftLast == this.rightLast || Math.random()<Math.abs(WIND-0.5))?Math.random()<WIND:this.rightLast;
     this.leftLast = false;
     this.rightLast = false;
     this.age++;
@@ -225,24 +250,20 @@ class Particle {
       this.become(2);
     }
     // Molten glass freezing
-    if (this.type == 10 && this.heat <= 0) {
+    if (this.type == 10 && this.heat <= 0 && (this.isFalling >= 10)) {
       console.log("glass froze");
       this.become(9);
     }
     if (this.type == 20 && this.heat <= 0 && (this.isFalling >= 10)) {
       this.become(4);
     }
-    // Glass melting, heat needed at 1000 rn
-    // if (this.type == 9 && this.heat >= 1000) {
-    //   this.become(10);
-    // }
     // Sand melting to glass
-    if (this.type == 1 && this.heat >= BURN_TEMP[1]) {
+    if ((this.type == 1 || this.type == 23) && this.heat >= BURN_TEMP[this.type]) {
       this.become(9);
     }
 
     // Water boiling
-    if (this.type == 2 && this.heat >= 50) {
+    if (this.type == 2 && this.heat >= 15) {
       this.become(6);
     }
     // Ice melting
@@ -255,13 +276,13 @@ class Particle {
       this.heat = Math.min(this.heat+FUEL[this.type],100);
       this.nextHeat += FUEL[this.type];
       if (this.type == 3) {BURNED_OIL_YET_THIS_FRAME = true;}
-      if (this.type == 17) {
-        this.explode(board,row,col,height,width,5);
+      if (EXPLOSION[this.type]) {
+        this.explode(board,row,col,height,width,EXPLOSION[this.type]);
       }
       this.become(7);
     }
     // Fire going out
-    if (this.type == 7 && (this.heat < 1 || (this.age>180) || (this.lastType == 12 && this.heat < 55))) {
+    if (this.type == 7 && (this.age>60 || (this.lastType == 12 && this.heat < 55))) {
       if (this.lastType == 5) {
         this.become(8);
       } else if (this.lastType == 2) {
@@ -273,13 +294,13 @@ class Particle {
       }
     }
     // Spreading
-    if (row>0) this.spread(board[row-1][col],2);
-    if (Math.random()>0.5) {
-      if (col>0) this.spread(board[row][col-1],2);
-      if (col<width-1) this.spread(board[row][col+1],2);
+    if (row>0) this.spread(board[row-1][col],0);
+    if (Math.random()>WIND) {
+      if (col>0) this.spread(board[row][col-1],3);
+      if (col<width-1) this.spread(board[row][col+1],1);
     } else {
-      if (col<width-1) this.spread(board[row][col+1],2);
-      if (col>0) this.spread(board[row][col-1],2);
+      if (col<width-1) this.spread(board[row][col+1],1);
+      if (col>0) this.spread(board[row][col-1],3);
     }
     if (row<height-1) this.spread(board[row+1][col],2);
     // Heat stuff
@@ -318,7 +339,7 @@ class Particle {
           return true;
         }}
         // More Falling
-        if (Math.random > 0.8) {
+        if (Math.random() < this.friction) {
           this.isFalling += 1;
           return false;
         }
@@ -389,6 +410,8 @@ class Particle {
         //   this.rightLast = true;
         //   return true;
         // }}
+      } else {
+        this.isFalling += 1;
       }
         if (feelingRight) {
         if (col < width-1 && interact(board[row][col+1],this,turn)) {
@@ -410,11 +433,8 @@ class Particle {
       if (Math.random()<0.01 && row>0 && interact(board[row-1][col])) {
         board[row-1][col] = swap(board[row][col], board[row][col]=board[row-1][col]);
         return true;
-      } else {
-        this.isFalling += 1;
-        return false;
-      }
-    } 
+      } 
+    }
   }
 }
 
@@ -447,9 +467,11 @@ class Board {
       for (let i = this.width-1;i!==0;i--) {
         const col = t[i];
         if (this.board[row][col].turn == this.turn) {
-          const k = getChunk(row,col);
+          // const k = getChunk(row,col);
           if (this.board[row][col].update(this.board,row,col,this.height,this.width,this.turn)) {
             this.board[row][col].moved = true;
+            // const [y,x]= getChunkPos(row,col);
+            // updateChunk(row,col);
           }
         }
       }
@@ -463,6 +485,8 @@ class Board {
     } else {BURNED_OIL_FRAMES_CONSECUTIVE = 0;}
     // alert("about to swap");
 
+    // lastTurnChunks = thisTurnChunks;
+    // thisTurnChunks = Array.from({length:Math.floor(CHUNK_AMOUNT*CHUNK_AMOUNT)},()=>false);
     // alert("ending update");
   }
 

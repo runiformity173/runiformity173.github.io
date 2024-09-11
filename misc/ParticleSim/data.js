@@ -15,6 +15,7 @@ const DATA = [
     "index": 1,
     "name": "Sand",
     "density": 10,
+    "friction":0.25,
     "state": 3,
     "color": [
       222,
@@ -32,7 +33,11 @@ const DATA = [
       3,
       8,
       252
-    ]
+    ],
+    "spread":{
+      // "18":[16,0],
+      "1":[23,0,0.05]
+    }
   },
   {
     "index": 3,
@@ -100,13 +105,15 @@ const DATA = [
     "index": 8,
     "name": "Ash",
     "density": 10,
+    "friction": 0.5,
     "state": 3,
     "color": [
       106,
       108,
       109
     ],
-    "heat": 5
+    "heat": 5,
+    "hidden":true
   },
   {
     "index": 9,
@@ -117,7 +124,8 @@ const DATA = [
       235,
       230,
       225
-    ]
+    ],
+    "hidden":true
   },
   {
     "index": 10,
@@ -167,12 +175,16 @@ const DATA = [
       53,
       58,
       252
-    ]
+    ],
+    "spread":{
+      "0":[2,13]
+    }
   },
   {
     "index": 14,
     "name": "Gunpowder",
     "density": 10,
+    "friction":0.1,
     "state": 3,
     "color": [
       72,
@@ -180,12 +192,19 @@ const DATA = [
       83
     ],
     "burnTemp": 15,
-    "fuel": 100
+    "fuel": 100,
+    "explosion":5,
+    "spread":{
+      25:[28,0,1],
+      26:[28,0,1],
+      28:[28,0]
+    }
   },
   {
     "index": 15,
     "name": "Phase Dust",
     "density": 101,
+    "friction":1.0,
     "state": 3,
     "color": [
       0,
@@ -218,12 +237,14 @@ const DATA = [
       200
     ],
     "burnTemp": 1,
-    "fuel": 100
+    "fuel": 100,
+    "explosion":5
   },
   {
     "index": 18,
     "name": "Soil",
     "density": 10,
+    "friction": 0.2,
     "state": 3,
     "color": [
       155,
@@ -240,8 +261,10 @@ const DATA = [
       200,
       200,
       255
-    ]//,
-    // "burnTemp": 40
+    ],
+    "spread": {
+      "2":[19,19]
+    }
   },
   {
     "index": 20,
@@ -264,8 +287,128 @@ const DATA = [
       230,
       255,
       230
-    ]
+    ],
+    "spread":{
+      "0":[21,21],
+      "16":[21,21],
+      "25":[26,21]
+    }
   },
+  {
+    "index": 22,
+    "name": "C4",
+    "density": 50,
+    "state": 4,
+    "color": [
+      230,
+      230,
+      200
+    ],
+    "burnTemp": 1,
+    "fuel": 100,
+    "explosion":5
+  },
+  {
+    "index": 23,
+    "name": "Wet Sand",
+    "density": 11,
+    "friction":0.5,
+    "state": 3,
+    "color": [
+      202,
+      172,
+      76
+    ],
+    "burnTemp": 50,
+    "hidden": true,
+    "alias": 1
+  },
+  {
+    "index": 24,
+    "name": "Bamboo Seeds",
+    "density": 9,
+    "state": 3,
+    "color": [
+      140,
+      202,
+      76
+    ],
+    "burnTemp": 10,
+    "fuel":50,
+    "spread":{
+      18:[18,25,1,[2]],
+      26:[26,0,1,[2]],
+      27:[27,0,1,[2]]
+
+    }
+  },
+  {
+    "index": 25,
+    "name": "Bamboo Shoot",
+    "density": 50,
+    "state": 4,
+    "color": [
+      100,
+      202,
+      76
+    ],
+    "burnTemp": 10,
+    "fuel":50,
+    "spread":{
+      0:[[25,26,0.1,[0]],[27,25,0.01,[1,3]]],
+      24:[25,26,0.1,[0]],
+      25:[25,26,0.1,[0]]
+    },
+    "alias":26,
+    "hidden":true
+  },
+  {
+    "index": 26,
+    "name": "Bamboo",
+    "density": 50,
+    "state": 4,
+    "color": [
+      100,
+      202,
+      76
+    ],
+    "burnTemp": 10,
+    "fuel":50,
+    "hidden":true
+  },
+  {
+    "index": 27,
+    "name": "Bamboo Leaf",
+    "density": 50,
+    "state": 4,
+    "color": [
+      100,
+      202,
+      76
+    ],
+    "burnTemp": 10,
+    "fuel":50,
+    "hidden":true,
+    "alias":26,
+    "spread":{
+      0:[24,26,0.01,[1,3]]
+    }
+  },
+  {
+    "index": 28,
+    "name": "Fireworks",
+    "density": 50,
+    "state": 4,
+    "color": [
+      100,
+      202,
+      76
+    ],
+    "burnTemp": 15,
+    "fuel": 100,
+    "explosion":15,
+    "hidden":true
+  }
 ]
 // const ALL = []
 // for (var i = 0; i < NAMES.length; i++) {
@@ -278,8 +421,13 @@ const DATA = [
 const NAMES = [];
 const STATES = [];
 const DENSITIES = [];
+const FRICTIONS = [];
 const HEATS = [];
 const BURN_TEMP = [];
+const EXPLOSION = [];
+const SPREADS = [];
+const ALIAS = [];
+
 const FUEL = [];
 const reds = [];
 const greens = [];
@@ -289,11 +437,18 @@ for (const i of DATA) {
   NAMES.push(i.name);
   STATES.push(i.state);
   DENSITIES.push(i.density);
+  FRICTIONS.push(i.friction);
+  SPREADS.push(i.spread!==undefined?i.spread:{});
+
+  ALIAS.push(i.alias?i.alias:i.index);
+
   reds.push(i.color[0]);
   greens.push(i.color[1]);
   blues.push(i.color[2]);
   HEATS.push(i.heat?i.heat:0);
   BURN_TEMP.push(i.burnTemp?i.burnTemp:1000);
+  EXPLOSION.push(i.explosion?i.explosion:0);
   FUEL.push(i.fuel?i.fuel:0);
   document.getElementById(i.hidden?"hiddenBrushes":(i.state+"Options")).innerHTML += `<option>${i.name}</option>`;
 }
+document.getElementById("3Options").firstElementChild.selected = true;
