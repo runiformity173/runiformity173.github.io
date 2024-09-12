@@ -1,21 +1,11 @@
 "use strict";
 // Add falling velocity
-// Only let sand go sideways diagonally if it's currently falling, set when falling or an adjacent object is falling (with a chance of inertia val)
 
 // When moving with force applied, convert to a particle, which converts back to the type when sees another element
 
 //Lazy Chunks
 
 // Gas is 1, Liquid is 2, Powder is 3, Solid is 4
-
-// const NAMES = ["Air","Sand","Water","Oil","Stone","Wood","Steam","Fire","Ash","Glass","Molten Glass","Plasma","Fuse","Spring","Gunpowder","Phase Dust","Plant","Methane","Soil"]
-// const DENSITIES = [0,10,5,4,100,50,-5,0,10,50,6,100,50,100,10,101,50,-10,10];
-// const STATES = [1,3,2,2,4,4,1,1,3,4,2,4,4,4,3,3,4,1,3];
-// const HEATS = [0,0,0,0,0,0,10,100,5,0,25,100,0,0,0,0,0,0,0];
-// const FALL_RATES = [0,];
-// const HEATS_MATTER = [false,true,true,true,false,true,true,false,true,true,false,true,false,true,false,true,true,false];
-// const BURN_TEMP = [1000,25,1000,15,1000,30,1000,1000,1000,1000,1000,1000,10,1000,15,1000,30,1,1000];
-// const FUEL = [0,0,0,100,0,50,0,100,0,0,0,100,50,0,100,0,40,100,0];
 
 const ROOT2 = Math.sqrt(2);
 var swap = function (x){return x;};

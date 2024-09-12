@@ -16,9 +16,6 @@ let DEBUG = false;
 // let lastTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>true);
 // let thisTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>false);
 
-// const reds = [255,222,3,149,128,161,180,161,106,235,230,200,215,53,72,0,75,190,155]
-// const greens = [255,192,8,62,128,102,190,102,108,230,230,200,215,58,71,0,230,190,118]
-// const blues = [255,96,252,0,128,47,210,47,109,225,230,255,205,252,83,0,75,200,83]
 const burnColors = {14:[255,255,255]};
 
 const board = new Board(WIDTH,HEIGHT);
@@ -45,7 +42,7 @@ canvas.width = WIDTH;
 canvas.height = HEIGHT;
 const ctx = canvas.getContext("2d");
 function setBrush(val) {
-  BRUSH = DEBUG?val:ALIAS[val];
+  BRUSH = (DEBUG||val<0)?val:ALIAS[val];
   THICKNESS = ([24].includes(BRUSH))?1:document.getElementById("thicknessSlider").value;
   document.getElementById("thicknessValue").innerHTML = THICKNESS;
   document.getElementById("current").innerHTML = BRUSH+1?NAMES[BRUSH]:"Heat Gun";
@@ -87,14 +84,14 @@ function draw(startX, startY, endX, endY) {
   let err = dx - dy;
   const offsets = [];
   for (let i = -THICKNESS + 1; i < THICKNESS; i++) {
-    offsets.push(i);
+    for (let j = -Math.round(Math.sqrt(THICKNESS**2-i**2))+1;j<Math.round(Math.sqrt(THICKNESS**2-i**2));j++) {
+      offsets.push([i,j]);
+    }
   }
   while (true) {
-    for (const offsetX of offsets) {
-      for (const offsetY of offsets) {
+    for (const [offsetY,offsetX] of offsets) {
         try {
-          
-          if (BRUSH > -1) {
+          if (BRUSH && BRUSH > -1) {
             board.board[startY + offsetY][startX + offsetX].become(BRUSH);
             board.board[startY + offsetY][startX + offsetX].heat = HEATS[BRUSH];
             board.board[startY + offsetY][startX + offsetX].nextHeat = HEATS[BRUSH];
@@ -108,7 +105,6 @@ function draw(startX, startY, endX, endY) {
           }
           // updateChunk(startY + offsetY,startX + offsetX);
         } catch {}
-      }
     }
     if (startX === endX && startY === endY) break;
     const e2 = 2 * err;

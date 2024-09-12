@@ -410,14 +410,6 @@ const DATA = [
     "hidden":true
   }
 ]
-// const ALL = []
-// for (var i = 0; i < NAMES.length; i++) {
-//   const final = {"index":i,"name":NAMES[i],"density":DENSITIES[i],"state":STATES[i],"color":[reds[i],greens[i],blues[i]]};
-//   if (HEATS[i] != 0) {final.heat = HEATS[i];}
-//   if (BURN_TEMP[i] != 1000) {final.burnTemp = BURN_TEMP[i];}
-//   if (FUEL[i] != 0) {final.fuel = FUEL[i];}
-//   ALL.push(final);
-// }
 const NAMES = [];
 const STATES = [];
 const DENSITIES = [];
