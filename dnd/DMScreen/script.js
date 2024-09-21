@@ -13,9 +13,6 @@ function eraseCookie(name) {
   localStorage.setItem("DMScreen", JSON.stringify(prev));
 }
 if (!("type" in getCookie("box-1"))) {
-  if (!Array.isArray(getCookie("defaultPlayerList"))) {
-    setCookie("defaultPlayerList",[]);
-  }
   for (let i = 1;i<=12;i++) {
     setCookie(`box-${i}`,{
       type:"blank",
@@ -23,8 +20,21 @@ if (!("type" in getCookie("box-1"))) {
     });
   }
 }
+if (!Array.isArray(getCookie("defaultPlayerList"))) {
+  setCookie("defaultPlayerList",[]);
+}
+if (!Array.isArray(getCookie("floatingBoxes"))) {
+  setCookie("floatingBoxes",[]);
+}
 function load() {
-  Array.from(document.getElementsByClassName("box")).forEach(function(i) {
+  const floatingBoxes = [];
+  for (const i of getCookie("floatingBoxes")) {
+    document.body.appendChild(document.getElementById("popoutWindowTemplate").content.cloneNode(true));
+    const d = document.body.lastElementChild.lastElementChild;
+    d.id = i;
+    floatingBoxes.push(d);
+  }
+  [...Array.from(document.getElementsByClassName("static-box")),...floatingBoxes].forEach(function(i) {
     i.appendChild(document.getElementById("plusButtonTemplate").content.cloneNode(true));
     const entry = getCookie(i.id);
     if (entry.type != "blank") {
@@ -59,6 +69,13 @@ function load() {
       } else if (entry.type == "monster") {
         i.children[1].src = data.link;
       }
+      
+      if (i.classList.contains("floating-box")) {
+        i.parentElement.style.left = data.left;
+        i.parentElement.style.top = data.top;
+      }
+    } else if (i.classList.contains("floating-box")) {
+      i.parentElement.remove();
     }
   });
   
@@ -97,11 +114,11 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
   Array.from(box.children).forEach(i=>i.remove());
   box.appendChild(document.getElementById(module+"Template").content.cloneNode(true));
   box.appendChild(document.getElementById("closeButtonTemplate").content.cloneNode(true));
+  box.appendChild(document.getElementById("popoutButtonTemplate").content.cloneNode(true));
   if (module == "initiativeTracker") {
     if (addDefault) {
       for (const item of getCookie("defaultPlayerList")) {
         const node = document.getElementById("initiative").content.cloneNode(true);
-        console.log(node);
         node.firstElementChild.firstElementChild.firstElementChild.innerHTML = item;
         document.querySelector(`#${id} .wrapper`).appendChild(node);
       }
@@ -148,8 +165,13 @@ function sortInitiative(box) {
   .sort((a, b) => Number(b.lastElementChild.firstElementChild.value) - Number(a.lastElementChild.firstElementChild.value))
   .forEach(node => box.appendChild(node));
 }
-function save(box) {
+function save(box=null) {
   if (box) {
+    if (Number(box.id.split("-")[1]) > 12) {
+      if (!getCookie("floatingBoxes").includes(box.id)) {
+        setCookie("floatingBoxes",[...getCookie("floatingBoxes"),box.id]);
+      }
+    }
     const type = (box?.firstElementChild?.id) || "blank";
     const data = {};
     if (type == "initiativeTracker") {
@@ -175,7 +197,13 @@ function save(box) {
     } else if (type == "monster") {
       data["link"] = box.children[1].src;
     }
+    if (box.classList.contains("floating-box")) {
+      data["left"] = box.parentElement.style.left;
+      data["top"] = box.parentElement.style.top;
+    }
     setCookie(box.id,{type:type,data:data});
+  } else if (box === null) {
+    setCookie("floatingBoxes",Array.from(document.getElementsByClassName("floating-box")).map(e => e.id));
   } else {
     console.log(box);
     alert("didn't pass box to 'save()' correctly");
@@ -187,4 +215,35 @@ function saveInitiative(box) {
     list.push(row.firstElementChild.firstElementChild.innerHTML);
   }
   setCookie("defaultPlayerList",list);
+}
+
+
+let dragging = -1;
+let dragStartPos = [0,0];
+let maxDragPos = [];
+function setMaxDragPos() {
+  maxDragPos = [
+    document.body.clientWidth-document.getElementById("box-1").clientWidth-2,
+    document.body.clientHeight-document.getElementById("box-1").clientHeight-22
+  ];
+}
+setMaxDragPos();
+window.addEventListener("resize",setMaxDragPos)
+document.addEventListener("mousemove", e => {
+  if (dragging < 0) return;
+  const dragged = document.getElementById("box-"+dragging).parentElement;
+  dragged.style.left = Math.min(maxDragPos[0],Math.max(0,e.clientX-dragStartPos[1]))+"px";
+  dragged.style.top = Math.min(maxDragPos[1],Math.max(0,e.clientY-dragStartPos[0]))+"px";
+});
+window.addEventListener("mouseout", e => {
+  if (e.x < 0 || e.y < 0 || e.x > window.innerWidth || e.y > window.innerHeight) {
+    stopDragging();
+  }
+});
+window.addEventListener("mouseup",e => {
+  stopDragging();
+});
+function stopDragging() {
+  save(document.getElementById("box-"+dragging));
+  dragging = -1;
 }

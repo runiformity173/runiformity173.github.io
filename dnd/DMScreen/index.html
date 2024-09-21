@@ -11,6 +11,15 @@
 </head>
 
 <body class="bg-dark text-light" onload="load()">
+  <template id="popoutWindowTemplate">
+    <div class="floating-box-container">
+      <div class="floating-box-movebar" 
+      onmousedown="dragging = Number(this.nextElementSibling.id.split('-')[1]);dragStartPos = [event.y-Number(window.getComputedStyle(this.parentElement).top.replace('px','')),event.x-Number(window.getComputedStyle(this.parentElement).left.replace('px',''))];"
+      onmouseup="stopDragging();">
+      </div>
+      <div class="box floating-box"></div>
+    </div>
+  </template>
   <template id="conditionTemplate">
     <div class="identifier d-none" id="condition"></div>
     <h2 class="title"></h2>
@@ -143,10 +152,41 @@
       </button>
     </div>
   </template>
+  <template id="popoutButtonTemplate">
+    <div class="popoutModuleContainer">
+      <button class="popoutButton" onclick="
+        document.body.appendChild(document.getElementById('popoutWindowTemplate').content.cloneNode(true));
+        const floating = document.body.lastElementChild;
+        let n = 13;
+        while (document.getElementById('box-'+n)) {n += 1;}
+        floating.lastElementChild.id = 'box-'+n;
+        const i  = this.parentElement.parentElement;
+        floating.lastElementChild.innerHTML = i.innerHTML;
+        save(floating.lastElementChild);
+        i.innerHTML = '';
+        save(i);
+        i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
+        ">
+        +
+      </button>
+    </div>
+  </template>
   <template id="closeButtonTemplate">
     <div class="closeModuleContainer">
-      <button class="closeButton" onclick="const i 
-= this.parentElement.parentElement;i.innerHTML = '';save(i);i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))">
+      <button class="closeButton" onclick="
+        const i = this.parentElement.parentElement;
+        if (i.closest('.floating-box-container')) {
+          i.innerHTML = '';
+          i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
+          i.closest('.floating-box-container').remove();
+          eraseCookie(i.id);
+          save();
+        } else {
+          i.innerHTML = '';
+          i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
+          save(i);
+        }
+        ">
         ×
       </button>
     </div>
@@ -173,20 +213,19 @@
   <datalist id="monstersDatalist"></datalist>
   <datalist id="conditionsDatalist"></datalist>
   <div id="container" class="container-fluid p-0">
-    <div class="box" id="box-1"></div>
-    <div class="box" id="box-2"></div>
-    <div class="box" id="box-3"></div>
-    <div class="box" id="box-4"></div>
-    <div class="box" id="box-5"></div>
-    <div class="box" id="box-6"></div>
-    <div class="box" id="box-7"></div>
-    <div class="box" id="box-8"></div>
-    <div class="box" id="box-9"></div>
-    <div class="box" id="box-10"></div>
-    <div class="box" id="box-11"></div>
-    <div class="box" id="box-12"></div>
+    <div class="box static-box" id="box-1"></div>
+    <div class="box static-box" id="box-2"></div>
+    <div class="box static-box" id="box-3"></div>
+    <div class="box static-box" id="box-4"></div>
+    <div class="box static-box" id="box-5"></div>
+    <div class="box static-box" id="box-6"></div>
+    <div class="box static-box" id="box-7"></div>
+    <div class="box static-box" id="box-8"></div>
+    <div class="box static-box" id="box-9"></div>
+    <div class="box static-box" id="box-10"></div>
+    <div class="box static-box" id="box-11"></div>
+    <div class="box static-box" id="box-12"></div>
   </div>
-  
   <script src="data.js"></script>
   <script src="tables.js"></script>
   <script src="spells.js"></script>

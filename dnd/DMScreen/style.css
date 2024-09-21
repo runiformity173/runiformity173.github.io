@@ -2,6 +2,7 @@ html {
   width: 100%;
   height: 100%;
   /* overflow: hidden; */
+  overflow-x: hidden;
 }
 body {
   width: 100vw;
@@ -35,6 +36,28 @@ body {
   overflow-y:auto;
   display: flex;
   flex-direction: column;
+}
+.floating-box-container { 
+  z-index: 100;
+  position:absolute;
+  top: 100px;
+  left: 100px;
+  width: 25vw;
+  height: 50vh;
+}
+.floating-box {
+  position:absolute;
+  top:20px;
+  left:0;
+  background-color: #212529;
+}
+.floating-box-movebar {
+  position:absolute;
+  background-color:#bbbbbb;
+  cursor: move;
+  width:100%;
+  height:20px;
+  top:0;
 }
 @media (max-width: 980px) {
   .box {
@@ -115,7 +138,7 @@ div.indentation {
   display:inline-block;
 }
 .closeButton {
-  z-index:100;
+  z-index:10;
   position:absolute;
   top:0;
   right:0;
@@ -123,7 +146,19 @@ div.indentation {
   background:none;
   color:red;
   border-radius: 30px;
-  /* background-color: #212529; */
+}
+.popoutButton {
+  z-index:10;
+  position:absolute;
+  top:0;
+  right:1rem;
+  border:none;
+  background:none;
+  color:lightblue;
+  border-radius: 30px;
+}
+.floating-box .popoutButton {
+  display: none;
 }
 .rollLink {
   color: #614dff;
