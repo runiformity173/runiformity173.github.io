@@ -14,7 +14,10 @@
   <template id="popoutWindowTemplate">
     <div class="floating-box-container">
       <div class="floating-box-movebar" 
-      onmousedown="dragging = Number(this.nextElementSibling.id.split('-')[1]);dragStartPos = [event.y-Number(window.getComputedStyle(this.parentElement).top.replace('px','')),event.x-Number(window.getComputedStyle(this.parentElement).left.replace('px',''))];"
+      onmousedown="
+      dragging = Number(this.nextElementSibling.id.split('-')[1]);
+      this.nextElementSibling.classList.add('dragging');
+      dragStartPos = [event.y-Number(window.getComputedStyle(this.parentElement).top.replace('px','')),event.x-Number(window.getComputedStyle(this.parentElement).left.replace('px',''))];"
       onmouseup="stopDragging();">
       </div>
       <div class="box floating-box"></div>

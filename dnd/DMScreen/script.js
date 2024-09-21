@@ -245,5 +245,6 @@ window.addEventListener("mouseup",e => {
 });
 function stopDragging() {
   save(document.getElementById("box-"+dragging));
+  document.getElementById("box-"+dragging).classList.remove("dragging");
   dragging = -1;
 }

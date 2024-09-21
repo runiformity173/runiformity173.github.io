@@ -59,6 +59,9 @@ body {
   height:20px;
   top:0;
 }
+.dragging iframe {
+  pointer-events: none;
+}
 @media (max-width: 980px) {
   .box {
     height: 50vh;
