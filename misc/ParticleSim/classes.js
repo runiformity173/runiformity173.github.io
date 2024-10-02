@@ -1,4 +1,5 @@
 "use strict";
+
 // Add falling velocity
 
 // When moving with force applied, convert to a particle, which converts back to the type when sees another element
@@ -44,23 +45,30 @@ function updateChunk(row,col) {
     }
   }
 }
-function interact(p2,p1,turn2,gravity=true) {
+function interact(p2,p1,turn2) {
   if (!p1) {return false;}
   if (p2.type === 7 && (p1.state > 1 && p1.type !== 8 && p1.type !== 20)) {return false;}
-  if (gravity) {
-  if ((DENSITIES[p1.type]>DENSITIES[p2.type] || (p1.type != p2.type && DENSITIES[p1.type]===DENSITIES[p2.type] && p1.state < 2 && p2.state < 2)) && (((!p2.moved) && (!p1.moved)) || (p2.state < p1.state))) {
+  if (p1.type === 7 && p2.type === 7) {
+    [p1.id,p2.id] = [p2.id,p1.id];
+    return false;
+  }
+  if (
+    (
+      DENSITIES[p1.type]>DENSITIES[p2.type] || // Density allows movement
+      (
+        p1.type != p2.type && p1.state < 2 && p2.state < 2 && DENSITIES[p1.type]===DENSITIES[p2.type] // Gases of equal density mixing
+      )
+    ) && 
+    (
+      (
+        (!p2.moved) && (!p1.moved) // Hasn't acted this tick
+      ) || (p2.state < p1.state) // Things can fall through an object multiple times in a tick
+    )
+  ) {
     // p2.turn = 1-p2.turn;
     // p2.moved = true;
     return true;
   }
-  } else {
-    if (DENSITIES[p1.type]<DENSITIES[p2.type] && ((!p2.moved) && (!p1.moved)) || (p2.state < p1.state)) {
-    p2.turn = 1-p2.turn;
-    // p2.moved = true;
-    return true;
-  }
-  }
-
   return false;
 }
 function isPlasma(p1,p2) {return ((p1) && (p1[p2]) && p1[p2].state == 8);}
@@ -94,21 +102,22 @@ class Particle {
     this.friction = FRICTIONS[type];
 
     this.age = 0;
-    // this.heatMatters = HEATS_MATTER[type];
     this.special = 0;
   }
   explode(board,row2,col2,height,width,radius2) {
-    const explodeStack = [[row2,col2,radius2]];
+    const explodeStack = new PriorityQueue((a,b) => a[0] > b[0]);
+    explodeStack.push([radius2,row2,col2]);
     const explodedThisTime = new Set();
-    while (explodeStack.length > 0) {
-      let [row,col,radius] = explodeStack.pop(0);
+    while (explodeStack.size() > 0) {
+      let [radius,row,col] = explodeStack.pop();
       const cur = board[row][col];
-      if (cur.type === 0 || cur.type === 21) {cur.become(7);cur.lastType = 17;}
+      if (cur.type === 0 || cur.type === 21) {cur.become(7);}
       else if (EXPLOSION[cur.type]) {
         radius = EXPLOSION[cur.type];
         cur.become(7);
-        cur.lastType = 17;
-      } else if (radius >= radius2+Math.floor(radius2/6)-2 && STATES[cur.type]>2) {
+        cur.heat = 100;
+        cur.nextHeat = 100;
+      } else if (radius >= radius2-2 && STATES[cur.type]>3) {
         cur.become(0);
       }
       cur.nextHeat = Math.max(50,cur.nextHeat);
@@ -117,22 +126,20 @@ class Particle {
       const maxCol = (col<width-1?2:1);
       for (var i = (row>0?-1:0);i<maxRow;i++) {
         for (var j = (col>0?-1:0);j<maxCol;j++) {
-          // if (i!==0&&j!==0) {continue;}
-          //  && (board[row+i][col+j].type == 0 || board[row+i][col+j].type == 7)
           if ((i!==0 || j!==0) && (board[row+i][col+j].type != 7)) {
-            // explodeStack.push([row+i,col+j,radius-(i===0||j===0?1:ROOT2)])
             const p = (row+i)+","+(col+j);
             if (explodedThisTime.has(p)) {
               continue;
             } 
             explodedThisTime.add(p);
-            explodeStack.push([row+i,col+j,radius-((Math.abs(i)+Math.abs(j)==2)?1.414:1)]);
+            const newRadius = (radius-((Math.abs(i)+Math.abs(j)==2)?1.414:1))*(Math.random()*0.4+0.8);
+            if (newRadius > 0)
+              explodeStack.push([newRadius,row+i,col+j]);
 
           }
         }
       }
     }
-
   }
   plantGrow(up,down,left,right) {
     // Grow up
@@ -272,7 +279,7 @@ class Particle {
       this.become(7);
     }
     // Fire going out
-    if (this.type == 7 && (this.age>60 || (this.lastType == 12 && this.heat < 55))) {
+    if (this.type == 7 && ((this.age>60 && Math.random()<0.2) || (this.lastType == 12 && this.heat < 55))) {
       if (this.lastType == 5) {
         this.become(8);
       } else if (this.lastType == 2) {

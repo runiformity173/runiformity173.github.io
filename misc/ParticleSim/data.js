@@ -204,7 +204,7 @@ const DATA = [
     "index": 15,
     "name": "Phase Dust",
     "density": 101,
-    "friction":1.0,
+    "friction":0.1,
     "state": 3,
     "color": [
       0,
@@ -406,10 +406,10 @@ const DATA = [
     ],
     "burnTemp": 15,
     "fuel": 100,
-    "explosion":15,
+    "explosion":5,
     "hidden":true
   }
-]
+];
 const NAMES = [];
 const STATES = [];
 const DENSITIES = [];

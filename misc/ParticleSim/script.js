@@ -16,7 +16,7 @@ let DEBUG = false;
 // let lastTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>true);
 // let thisTurnChunks = Array.from({length:Math.floor(WIDTH/CHUNK_AMOUNT*HEIGHT/CHUNK_AMOUNT)},()=>false);
 
-const burnColors = {14:[255,255,255]};
+const burnColors = {}; // {14:[255,255,255]};
 
 const board = new Board(WIDTH,HEIGHT);
 const plantMap = Array.from({ length: HEIGHT },() => Array.from({ length: WIDTH }, a=>(0)));
@@ -91,7 +91,7 @@ function draw(startX, startY, endX, endY) {
   while (true) {
     for (const [offsetY,offsetX] of offsets) {
         try {
-          if (BRUSH && BRUSH > -1) {
+          if (BRUSH > -1) {
             board.board[startY + offsetY][startX + offsetX].become(BRUSH);
             board.board[startY + offsetY][startX + offsetX].heat = HEATS[BRUSH];
             board.board[startY + offsetY][startX + offsetX].nextHeat = HEATS[BRUSH];
@@ -213,7 +213,7 @@ function loop() {
         theColor = [reds[b.type],greens[b.type],blues[b.type]];}
       } else {
         theColor = [reds[b.type],greens[b.type],blues[b.type]];}
-      theColor = addHeat(theColor,b.heat,b.type==7);
+      theColor = addHeat(theColor,b.nextHeat,b.type==7);
       const shading = randomColorBoard[b.id];
       data[t] = theColor[0]+shading[0];data[t+1] = theColor[1]+shading[1];data[t+2] = theColor[2]+shading[2];data[t+3] = 255;
       if (b.type == 11) {
