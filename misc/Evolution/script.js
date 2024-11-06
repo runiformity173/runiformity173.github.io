@@ -3,7 +3,7 @@ let CREATURE_MAX = 1024;
 let TURNS = 150;
 
 let GENE_NUMBER = 16;
-let INTERNAL_NEURONS = 6;
+let INTERNAL_NEURONS = 5;
 let MUTATION_CHANCE = 0.05;
 
 
@@ -32,48 +32,73 @@ function addCreatures() {
   }
 } addCreatures();
 function addCreature(x,y) {
-
     if (board[y][x] > -1) {return}
     board[y][x] = CREATURE_AMOUNT++;
-    creatures.push(new Creature(perfectGenesMiddle,x,y));
+    creatures.push(new Creature(GENE_NUMBER,x,y));
 }
 let TURN_COUNTER = 0;
 function update() {
   if (++TURN_COUNTER > TURNS) {
     const newCreatures = [];
     
-    board = Array.from({length:Math.floor(HEIGHT)},()=>Array.from({length:Math.floor(WIDTH)},()=>(-1)));
+    
     shuffle(creatures);
     for (let i = 0;i<CREATURE_AMOUNT;i++) {
-      if (creatures[i].x < 48 || creatures[i].x > 80) {continue;}
-      let x = Math.floor(Math.random()*WIDTH), y = Math.floor(Math.random()*HEIGHT);
-      while (board[y][x] > -1) {x = Math.floor(Math.random()*WIDTH);y = Math.floor(Math.random()*HEIGHT);}
-      board[y][x] = newCreatures.length;
-      
-      newCreatures.push(creatures[i].reproduce(x,y));
+      if (!survives(creatures[i],board)) {continue;}
+      newCreatures.push(creatures[i].reproduce());
     }
     document.getElementById("survived").innerHTML = 
- Math.round(((newCreatures.length/CREATURE_MAX) + Number.EPSILON) * 10000)/100 + "%";
+ String(Math.round(((newCreatures.length/CREATURE_MAX) + Number.EPSILON) * 10000)/100).padEnd(5,"0") + "%";
     const ccc = newCreatures.length;
     for (let i = 0;i<ccc && newCreatures.length<CREATURE_MAX;i++) {
+      newCreatures.push(newCreatures[i].reproduce());
+    }
+    while (newCreatures.length < CREATURE_MAX) {
+      newCreatures.push(new Creature(GENE_NUMBER));
+    }
+    board = Array.from({length:Math.floor(HEIGHT)},()=>Array.from({length:Math.floor(WIDTH)},()=>(-1)));
+    for (let i = 0;i<newCreatures.length;i++) {
       let x = Math.floor(Math.random()*WIDTH), y = Math.floor(Math.random()*HEIGHT);
       while (board[y][x] > -1) {x = Math.floor(Math.random()*WIDTH);y = Math.floor(Math.random()*HEIGHT);}
-      board[y][x] = newCreatures.length;
-      
-      newCreatures.push(newCreatures[i].reproduce(x,y));
-    } while (newCreatures.length < CREATURE_MAX) {
-      let x = Math.floor(Math.random()*WIDTH), y = Math.floor(Math.random()*HEIGHT);
-      while (board[y][x] > -1) {x = Math.floor(Math.random()*WIDTH);y = Math.floor(Math.random()*HEIGHT);}
-      board[y][x] = newCreatures.length;
-      
-      newCreatures.push(new Creature(GENE_NUMBER,x,y));
+      board[y][x] = i;
+      newCreatures[i].x = x;
+      newCreatures[i].y = y;
     }
     creatures = newCreatures;
     CREATURE_AMOUNT = CREATURE_MAX;
     TURN_COUNTER = 0;
+    document.getElementById("generations").innerHTML = Number(document.getElementById("generations").innerHTML)+1;
   } else {
     for (let i = 0;i<CREATURE_AMOUNT;i++) {
       creatures[i].act(board);
     }
+    if (TURN_COUNTER*2 == TURNS) {
+      for (let i = 0;i<CREATURE_AMOUNT;i++) {
+        creatures[i].midX = creatures[i].x;
+        creatures[i].midY = creatures[i].y;
+      }
+    }
   }
+}
+function visualizeSurviveFunction() {
+  let board2 = Array.from({length:Math.floor(HEIGHT)},()=>Array.from({length:Math.floor(WIDTH)},()=>(-1)));
+  for (let y = 0;y<HEIGHT;y++) {
+    for (let x = 0;x<WIDTH;x++) {
+      board2[y][x] = survives(new Creature(GENE_NUMBER,x,y),board) ? "+" : " ";
+    }
+  }
+  console.log(board2.map((row)=>row.join("")).join("\n"));
+}
+function survives(creature, board) {
+  const y = creature.y;
+  const x = creature.x;
+  
+  return Math.abs(WIDTH-x-y) < 7 || Math.abs(x-y) < 7; // Cross
+  return creature.midX < WIDTH/2 && creature.x > WIDTH / 2; // Left half first half, right second
+  return Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-2) < 1; // Space out
+  return Math.abs(x/2-y+HEIGHT/4) < 7; // -1/2 slope line
+  return x > 120; // Right wall
+  return Math.abs(WIDTH-x-y) < 7; // Diagonal
+  return (x >= 48 && x <= 80) || (y >= 48 && y <= 80); // Plus
+  return x >= 48 && x <= 80; // Vertical line
 }

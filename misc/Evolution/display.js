@@ -1,6 +1,8 @@
 const DISPLAY_WIDTH = 1024;
 const DISPLAY_HEIGHT = 1024;
 
+let UPDATES = 40;
+
 const CREATURE_RADIUS = DISPLAY_WIDTH/WIDTH/2;
 const WIDTH_MULTIPLIER = DISPLAY_WIDTH/WIDTH;
 const HEIGHT_MULTIPLIER = DISPLAY_HEIGHT/HEIGHT;
@@ -28,7 +30,7 @@ var animationCounter = 0;
 let frames = 0;
 setInterval(function(){document.getElementById("fps").innerHTML = frames;frames = 0;},1000);
 function frame() {
-  update();
+  for (let i = 0;i<UPDATES;i++) update();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = "black";
   ctx.lineWidth = 2;
