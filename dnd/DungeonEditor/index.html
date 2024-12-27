@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Dungeon Editor</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="bg-dark text-light" onload="load();">
+  <div id="output"></div>
+  <div id="selection"><p id="selectionSize" style="font-size:50%;">5 x 5</p></div>
+  <div id="sidebar">
+    <select class="btn btn-outline-light" onchange="changeMode(this.value)" id="modeSelect">
+      <option selected>View Mode</option>
+      <option>Layout Editor Mode</option>
+      <option>Room Editor Mode</option>
+    </select><br><br>
+    <div id="viewTools">
+      <p id="roomDescriptionOutput"></p>
+    </div>
+    <div id="layoutTools" style="display:none;">
+      <select class="btn btn-outline-light" onchange="changeRoom(this.value)" id="submodeSelect">
+        <option selected>Place Tile</option>
+        <option>Delete Tile</option>
+        <option>Place Wall</option>
+        <option>Clear Walls</option>
+        <option>Place Door</option>
+        <option>Clear Doors</option>
+        <option>Place Decoration</option>
+        <option>Delete Decoration</option>
+      </select><br>
+      <div id="directionSelect" style="display:none;">
+        Direction: <select class="btn btn-outline-light" id="directionSelector" onchange="save()">
+          <option>Top</option>
+          <option>Right</option>
+          <option>Left</option>
+          <option>Bottom</option>
+        </select><br>
+      </div>
+      <div id="decorationSelect" style="display:none;">
+        <select class="btn btn-outline-light" id="decorationSelector" onchange="save()">
+          <option>Water Tile</option>
+          <option>Circular Object</option>
+          <option>Square Object</option>
+        </select><br>
+      </div>
+      Freehand Mode: <input id="freehandSelector" type="checkbox" onchange="drawMode = this.checked?'freehand':'box';"><br>
+    </div>
+    <div id="roomTools" style="display:none;">
+      <input type="number" id="roomSelector" min="0" max="99" onchange="changeRoom(Number(this.value));" value='1'><br>
+      <button onclick="addRoom(room)" class="btn btn-outline-light">Add Room After</button>
+      <button onclick="removeRoom(room)" class="btn btn-outline-light">Delete Room</button>
+      <br>
+      <textarea id="roomDescriptionInput" oninput="roomDescriptions[room] = this.value;save()">
+
+      </textarea>
+    </div>
+    <br><br><br>
+    <button class="btn btn-outline-light" onclick="compressCookie(9);alert(localStorage.getItem('dungeonEditor'));">Export Save</button>
+    <button class="btn btn-outline-light" onclick="const d = prompt('Input save data here');if (d) {localStorage.setItem('dungeonEditor',d);location.reload()}">Load Save</button>
+  </div>
+  <!-- <div id="placement" class="tile-group"></div> -->
+  <script src="display.js"></script>
+  <script src="script.js"></script>
+  <script src="saveLoad.js"></script>
+
+</body>
+
+</html>
