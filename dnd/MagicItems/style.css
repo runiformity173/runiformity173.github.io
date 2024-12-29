@@ -1,0 +1,78 @@
+.tab {
+  display: inline-block;
+  width:2rem;
+}
+#output {
+  position:absolute;
+  display:none;
+  left:25%;
+  top:10%;
+  width:50%;
+  border: 1px solid white;
+  padding-top: 40px;
+}
+.emoji-button {
+  background-color: transparent;
+  border: none;
+  padding: none;
+  font-size: 24px;
+}
+.button-placeholder {
+  display: inline-block;
+  width:32px;
+  height:10px;
+}
+h3 {
+  transition: 2s;
+}
+#swapNameButton {
+  position: absolute;
+  top:3px;
+  left:calc(50% - 20px);
+}
+#swapPrefixButton {
+  position: absolute;
+  left:3px;
+  top:3px;
+}
+#swapSuffixButton {
+  position: absolute;
+  right:3px;
+  top:3px;
+}
+#generateButton {
+  position: absolute;
+  left:50%;
+  top:0;
+  transform: translateX(-50%);
+}
+@keyframes rotate {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+@keyframes flipX {
+  0% {
+      transform: scaleX(1);
+  }
+  100% {
+      transform: scaleX(-1);
+  }
+}
+.regenerate-btn {
+  width: 38px;
+  border-radius: 30px !important;
+  animation: 0.2s ease-out rotate;
+}
+.regenerate-btn:active {
+  animation: none;
+}
+#swapNameButton:active {
+  animation: none;
+}
+#swapNameButton {
+  animation: 0.2s ease-out flipX;
+}

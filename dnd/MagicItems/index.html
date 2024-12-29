@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Magic Item Generator</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light">
+  <button id="generateButton" onclick="generate()" class="btn btn-outline-light">New Item!</button>
+
+  <div id="output">
+    <h3 id="itemName"><div style="float: left" id="prefix"></div><div style="float: right" id="suffix"></div><div style="margin: 0 auto; width: 200px;text-align: center;" id="item"></div></h3>
+    <br>
+    <p id="itemDescription1"></p>
+    <p id="itemDescription2"></p>
+    <button id="swapNameButton" class="btn btn-outline-light" onclick="swapName()">↔</button>
+    <button id="swapPrefixButton" class="btn btn-outline-light regenerate-btn" onclick="regenerate('prefix')">↻</button>
+    <button id="swapSuffixButton" class="btn btn-outline-light regenerate-btn" onclick="regenerate('suffix')">↻</button>
+
+  </div>
+  <script src="alea.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script src="../bootstrap.js"></script>
+  <p id="output" class="text-light search"></p>
+  
+</body>
+
+</html>
