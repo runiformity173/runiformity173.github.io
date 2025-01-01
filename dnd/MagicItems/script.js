@@ -30,7 +30,9 @@ function getItem(item={
     if (!item.item) {
         const itemIndex = Math.floor(random.random()*3);
         item.itemIndex = itemIndex;
-        const itemType = ["weapon","armor","misc"][itemIndex];
+    }
+    if (item.shuffleItem != undefined || !item.item) {
+        const itemType = ["weapon","armor","misc"][item.itemIndex];
         if (itemType == "weapon") {
             item.item = choose(weapons);
         }
@@ -40,6 +42,7 @@ function getItem(item={
         else if (itemType == "misc") {
             item.item = choose(misc);
         }
+        if (item.shuffleItem != undefined) delete item.shuffleItem;
     }
     if (item.regenerateEffect != undefined) {
         if (item.regenerateEffect == 'prefix') {
@@ -196,6 +199,11 @@ function shuffleName(effect) {
 }
 function shuffleEffect(effect) {
     currentItem.shuffleEffect = effect;
+    getItem(currentItem);
+    displayItem(currentItem);
+}
+function shuffleItem() {
+    currentItem.shuffleItem = true;
     getItem(currentItem);
     displayItem(currentItem);
 }

@@ -19,12 +19,12 @@
   <button id="generateButton" onclick="generate()" class="btn btn-outline-light">New Item!</button>
 
   <div id="output">
-    <h3 id="itemName"><div style="float: left" id="prefix"></div><div style="float: right" id="suffix"></div><div style="margin: 0 auto; width: 200px;text-align: center;" id="item"></div></h3>
-    <br>
+    <h3 id="itemName"><button id="swapNameButton" class="btn btn-outline-light" onclick="swapName()">↔</button><div style="float: left" id="prefix"></div><div style="float: right" id="suffix"></div><div style="margin: 0 auto; width: 200px;text-align: center;" id="item"></div></h3>
+    <br><br>
     <p id="itemDescription1"></p>
     <p id="itemDescription2"></p>
-    <button id="swapNameButton" class="btn btn-outline-light" onclick="swapName()">↔</button>
     <button id="swapPrefixButton" class="btn btn-outline-light regenerate-btn" onclick="regenerate('prefix')">↻</button>
+    <button id="swapItemButton" class="btn btn-outline-light regenerate-btn" onclick="shuffleItem()">↻</button>
     <button id="swapSuffixButton" class="btn btn-outline-light regenerate-btn" onclick="regenerate('suffix')">↻</button>
     <h4 id="rarity"></h4>
     <button id="final" onclick="printFinal()" class="btn btn-outline-light">Print Final</button>

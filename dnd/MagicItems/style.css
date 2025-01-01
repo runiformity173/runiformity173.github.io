@@ -27,6 +27,11 @@ h3 {
 }
 #swapNameButton {
   position: absolute;
+  bottom:-40px;
+  left:calc(50% - 20px);
+}
+#swapItemButton {
+  position: absolute;
   top:3px;
   left:calc(50% - 20px);
 }
@@ -45,6 +50,9 @@ h3 {
   left:50%;
   top:0;
   transform: translateX(-50%);
+}
+#itemName {
+  position: relative;
 }
 @keyframes rotate {
   from {
