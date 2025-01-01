@@ -60,8 +60,10 @@
       </textarea>
     </div>
     <br><br><br>
-    <button class="btn btn-outline-light" onclick="compressCookie(9);alert(localStorage.getItem('dungeonEditor'));">Export Save</button>
+    <button class="btn btn-outline-light" onclick="compressCookie(9);document.getElementById('saveData').innerHTML = (localStorage.getItem('dungeonEditor'));">Export Save</button>
     <button class="btn btn-outline-light" onclick="const d = prompt('Input save data here');if (d) {localStorage.setItem('dungeonEditor',d);location.reload()}">Load Save</button>
+    <br>
+    <p id="saveData"></p>
   </div>
   <!-- <div id="placement" class="tile-group"></div> -->
   <script src="display.js"></script>
