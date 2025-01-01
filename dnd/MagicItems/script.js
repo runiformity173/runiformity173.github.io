@@ -1,5 +1,3 @@
-let seed = Math.floor(Math.random()*100000000);
-let random = new Alea(seed);
 const choose=function(a){
     if (a.length)
         return a[Math.floor(a.length*random.random())]
@@ -9,9 +7,26 @@ const choose=function(a){
     }
     return i;
 };
+const rarityMap = ["????","Common","Uncommon","Uncommon","Rare","Rare","Very Rare","Legendary","Artifact","Artifact"];
+function evaluateRarity(item) {
+    const [i,j] = item.effects.map(o=>rarities[o]);
+    const rarityNumber = i===j?i+1:Math.max(i,j);
+    item.rarity = rarityMap[rarityNumber];
+}
+function hasInCommon(a,b) {
+    for (const i of a) if (!["Passive Buff","Spell","Skill","Extra Ability","Extra Protection"].includes(i) && b.includes(i)) return true;
+    return false;
+}
+function actuallyHasInCommon(a,b) {
+    console.log(a);
+    for (const i of a) if (b.includes(i)) return true;
+    return false;
+}
 function getItem(item={
     effects:[]
 }) {
+    const desiredRarities = [...document.getElementsByClassName("rarityCheckbox")].filter(o=>o.checked).map(o=>o.value);
+    if (desiredRarities.length == 0) desiredRarities.push("Common","Uncommon","Rare","Very Rare","Legendary");
     if (!item.item) {
         const itemIndex = Math.floor(random.random()*3);
         item.itemIndex = itemIndex;
@@ -30,15 +45,33 @@ function getItem(item={
         if (item.regenerateEffect == 'prefix') {
             const prev = item.effects[0];
             item.effects[0] = choose(data);
-            while (!canApply[item.effects[0]][item.itemIndex] || item.effects[0] == prev)
+            evaluateRarity(item);
+            let count = 0;
+            while ((!canApply[item.effects[0]][item.itemIndex] || item.effects[0] == prev || item.effects[0] == item.effects[1] || !desiredRarities.includes(item.rarity) || hasInCommon(categories[item.effects[0]],categories[item.effects[1]])) && count++ < 10000) {
                 item.effects[0] = choose(data);
+                evaluateRarity(item);
+            }
+            if (count >= 10000) {
+                delete item.regenerateEffect;
+                alert("Couldn't make an item with those specifications");
+                return item;
+            }
             item.shuffleName = 1;
         }
         if (item.regenerateEffect == 'suffix') {
             const prev = item.effects[1];
             item.effects[1] = choose(data);
-            while (!canApply[item.effects[1]][item.itemIndex] || item.effects[1] == prev)
+            evaluateRarity(item);
+            let count = 0;
+            while ((!canApply[item.effects[1]][item.itemIndex] || item.effects[1] == prev || item.effects[0] == item.effects[1] || !desiredRarities.includes(item.rarity) || hasInCommon(categories[item.effects[0]],categories[item.effects[1]])) && count++ < 10000) {
                 item.effects[1] = choose(data);
+                evaluateRarity(item);
+            }
+            if (count >= 10000) {
+                delete item.regenerateEffect;
+                alert("Couldn't make an item with those specifications");
+                return item;
+            }
             item.shuffleName = 2;
         }
         delete item.regenerateEffect;
@@ -60,12 +93,20 @@ function getItem(item={
         delete item.shuffleEffect;
     }
     else if (item.effects.length == 0) {
-        item.effects.push(choose(data));
-        while (!canApply[item.effects[0]][item.itemIndex])
+        let count = 0;
+        while ((!desiredRarities.includes(item.rarity) || item.effects[0] == item.effects[1] || hasInCommon(categories[item.effects[0]],categories[item.effects[1]])) && count++ < 100000) {
+            item.effects = [];
+            item.effects.push(choose(data));
+            while (!canApply[item.effects[0]][item.itemIndex])
                 item.effects[0] = choose(data);
-        item.effects.push(choose(data));
-        while (!canApply[item.effects[1]][item.itemIndex])
+            item.effects.push(choose(data));
+            while (!canApply[item.effects[1]][item.itemIndex])
                 item.effects[1] = choose(data);
+            evaluateRarity(item);
+        }
+        if (count >= 100000) {
+            alert("Couldn't make an item with those specifications");
+        }
     }
     if (item.swapName) {
         [item.effects[0],item.effects[1]] = [item.effects[1],item.effects[0]];
@@ -87,20 +128,23 @@ function getItem(item={
         item.prefix = choose(data[item.effects[0]][0]);
         item.suffix = choose(data[item.effects[1]][1]);
     }
-    
-    item.name = [item.prefix, item.item, item.suffix].filter(o=>o).join(" ");
+    evaluateRarity(item);
     return item;
 }
-function formatAbilityName(str) {
-    return str.replaceAll("'s","").replaceAll("of the ","").replaceAll("of ","");
+function formatAbilityNamePrefix(str) {
+    return (str+"|").replaceAll("'s|","").replaceAll("|","");
+}
+function formatAbilityNameSuffix(str) {
+    return str.replaceAll("of the ","").replaceAll("of ","");
 }
 function displayItem(item) {
-    // document.getElementById("itemName").innerHTML = item.name;
+    item.name = [item.prefix, item.item, item.suffix].filter(o=>o).join(" ");
     document.getElementById("prefix").innerHTML = item.prefix;
     document.getElementById("item").innerHTML = item.item;
     document.getElementById("suffix").innerHTML = item.suffix;
-    document.getElementById("itemDescription1").innerHTML = "<span class='tab'></span><strong>" + formatAbilityName(item.prefix) + ".</strong> " + item.effects[0]
-    document.getElementById("itemDescription2").innerHTML = "<span class='tab'></span><strong>" + formatAbilityName(item.suffix) + ".</strong> " + item.effects[1];
+    document.getElementById("rarity").innerHTML = item.rarity;
+    document.getElementById("itemDescription1").innerHTML = "<span class='tab'></span><strong>" + formatAbilityNamePrefix(item.prefix) + ".</strong> " + item.effects[0]
+    document.getElementById("itemDescription2").innerHTML = "<span class='tab'></span><strong>" + formatAbilityNameSuffix(item.suffix) + ".</strong> " + item.effects[1];
     let prefixCanSwap = item.prefix in commonPrefixes;
     if (prefixCanSwap) {
         let t = false;
@@ -166,9 +210,11 @@ function generate() {
     currentItem = getItem();
     displayItem(currentItem);
 }
-// while (generate() != "of Eavesdropping") {
-//     seed += 1;
-//     random = new Alea(seed);
-// }
-// random = new Alea(seed);
-// console.log(seed);
+function printFinal() {
+    const item = currentItem;
+    document.getElementById("finalOutput").style.display = "block";
+    document.getElementById("finalName").innerHTML = item.name;
+    document.getElementById("finalRarity").innerHTML = item.rarity + ((atunements[item.effects[0]] || atunements[item.effects[1]])?(` (requires atunement)`):"");
+    document.getElementById("finalItemDescription").innerHTML = "<strong>" + formatAbilityNamePrefix(item.prefix) + ".</strong> " + item.effects[0];
+    document.getElementById("finalItemDescription").innerHTML += "<br><strong>" + formatAbilityNameSuffix(item.suffix) + ".</strong> " + item.effects[1];
+}

@@ -76,3 +76,34 @@ h3 {
 #swapNameButton {
   animation: 0.2s ease-out flipX;
 }
+#rarity {
+  position: absolute;
+  right:0;
+}
+#final {
+  position: absolute;
+  left:0;
+}
+.bg-dnd {
+  background-color: rgba(251,244,226,0.8);
+}
+#finalOutput {
+  position:absolute;
+  display:none;
+  left:25%;
+  bottom:10%;
+  width:50%;
+  border: none;
+  padding-top: 40px;
+  line-height: 100%;
+  word-spacing: -30%;
+}
+#finalOutput h2 {
+  color:#4d251f;
+  font-family:peddana;
+}
+#finalOutput p {
+  color:black;
+  font-family:peddana;
+  font-size:160%;
+}

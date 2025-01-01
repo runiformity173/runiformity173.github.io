@@ -8,8 +8,14 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Peddana">
 </head>
 <body onload="const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light">
+  Uncommon: <input type="checkbox" checked class="rarityCheckbox" value="Uncommon"><br>
+  Rare: <input type="checkbox" checked class="rarityCheckbox" value="Rare"><br>
+  Very Rare: <input type="checkbox" checked class="rarityCheckbox" value="Very Rare"><br>
+  Legendary: <input type="checkbox" checked class="rarityCheckbox" value="Legendary"><br>
+  <span style="display:none;">Artifact: <input type="checkbox" class="rarityCheckbox" value="Artifact"><br></span>
   <button id="generateButton" onclick="generate()" class="btn btn-outline-light">New Item!</button>
 
   <div id="output">
@@ -20,9 +26,15 @@
     <button id="swapNameButton" class="btn btn-outline-light" onclick="swapName()">↔</button>
     <button id="swapPrefixButton" class="btn btn-outline-light regenerate-btn" onclick="regenerate('prefix')">↻</button>
     <button id="swapSuffixButton" class="btn btn-outline-light regenerate-btn" onclick="regenerate('suffix')">↻</button>
-
+    <h4 id="rarity"></h4>
+    <button id="final" onclick="printFinal()" class="btn btn-outline-light">Print Final</button>
   </div>
-  <script src="alea.js"></script>
+  <div id="finalOutput" class="bg-dnd">
+    <h2 id="finalName"></h2>
+    <p><i id="finalRarity"></i></p>
+    <p id="finalItemDescription"></p>
+  </div>
+  <script src="random.js"></script>
   <script src="data.js"></script>
   <script src="script.js"></script>
   <script src="../bootstrap.js"></script>
