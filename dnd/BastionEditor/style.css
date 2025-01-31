@@ -1,0 +1,152 @@
+:root {
+    --door-color: #964B00;
+    --wall-color: #000000;
+}
+html {
+    height: 100%;
+    width: 100%;
+    /* overflow: hidden; */
+}
+#output {
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:calc(round(down,calc(100vh / 50), 1px) * 50);
+    height:calc(round(down,calc(100vh / 50), 1px) * 50);
+    /* background-size: round(down,2vh, 1px) round(down,2vh, 1px);
+    background-color: transparent;
+    background-image:
+        linear-gradient(to right, #dddddd 0.5px, transparent 1px, transparent calc(round(down,2vh, 1px) - 0.5px), transparent 1px, #dddddd 0.5px),
+        linear-gradient(to bottom, #dddddd 0.5px, transparent 1px, transparent calc(round(down,2vh, 1px) - 0.5px), transparent 1px, #dddddd 0.5px); */
+}
+#sidebar {
+    position:absolute;
+    right:0px;
+    top:0px;
+    text-align:right;
+    width:calc(100vw - round(down,calc(100vh / 50), 1px) * 50);
+}
+#roomDescriptionOutput {
+    text-align: left;
+}
+.tile {
+    z-index: 1;
+    position:absolute;
+    margin: none;
+    width:round(down,calc(100vh / 50), 1px);
+    height:round(down,calc(100vh / 50), 1px);
+    border-top: 0.5px solid white;
+    border-left: 0.5px solid white;
+    border-right: 0.5px solid gray;
+    border-bottom: 0.5px solid gray;
+}
+.room--1 {
+    border: none;
+}
+.resource {
+    z-index: 5;
+    position:absolute;
+    margin: none;
+}
+.tile-group {
+    position: absolute;
+}
+img {
+    user-select: none;
+}
+#placement {
+    filter:drop-shadow(black 3px 3px 10px);
+}
+.wall-top {
+    border-top: 1px solid var(--wall-color);
+}
+.wall-left {
+    border-left: 1px solid var(--wall-color);
+}
+.wall-bottom {
+    border-bottom: 1px solid var(--wall-color);
+}
+.wall-right {
+    border-right: 1px solid var(--wall-color);
+}
+.door-top {
+    border-top: 2px solid var(--door-color);
+}
+.door-left {
+    border-left: 2px solid var(--door-color);
+}
+.door-bottom {
+    border-bottom: 2px solid var(--door-color);
+}
+.door-right {
+    border-right: 2px solid var(--door-color);
+}
+#selection {
+    border:blue 3px solid;
+    position: absolute;
+    display:none;
+    z-index: 100;
+    pointer-events: none;
+}
+.water-tile {
+    background-color: darkblue;
+    border-top: 0.5px solid lightblue;
+    border-left: 0.5px solid lightblue;
+    border-right: 0.5px solid blue;
+    border-bottom: 0.5px solid blue;
+    z-index: 2;
+}
+.circular-object {
+    background-color: transparent;
+    margin: 1px;
+    border: 1px solid black;
+    border-radius: 100px;
+    z-index: 3;
+    width:calc(round(down,calc(100vh / 50), 1px) - 2px);
+    height:calc(round(down,calc(100vh / 50), 1px) - 2px);
+}
+.square-object {
+    background-color: transparent;
+    border: 1px solid black;
+    z-index: 3;
+}
+#roomTypeDescription, #bastionRoomSelectContainer {
+    text-align: left;
+}
+#roomTypeDescription,#roomDescriptionOutput {
+    font-size: 80%;
+}
+
+
+
+
+
+b>em::before {
+    content: " ";
+    display: inline-block;
+    width: 1em; /* Adjust the width for the desired indent size */
+}
+qs {
+    display:inline-block;
+    text-indent: -1em;
+    padding-left: 1em;
+}
+table td, table th {
+    border:1px solid #cccccc;
+}
+#validateButton {
+    position: absolute;
+    left:10px;
+    top:20px;
+    z-index: 100;
+}
+.overfullMeter::-moz-meter-bar { /* Firefox Pseudo Class */
+    background: red;
+    border-radius: 100px;
+    border: 1px darkred solid;
+  }
+  .overfullMeter::-webkit-meter-optimum-value { /* Firefox Pseudo Class */
+    background: red;
+    border-radius: 100px;
+    border: 1px darkred solid;
+  }
