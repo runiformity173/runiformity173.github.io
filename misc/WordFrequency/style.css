@@ -1,0 +1,24 @@
+#output {
+    font-family: 'Courier New', Courier, monospace;
+}
+#sidebar {
+    position:absolute;
+    right:0;
+    top:0;
+    height:100vh;
+    width:100%;
+    text-align:right;
+    z-index:100;
+}
+#inputArea {
+    height:80vh;
+}
+#controlContainer {
+    position:sticky;
+    top: 0;
+    text-align: center;
+}
+.tab {
+    width: 1em;
+    display: inline-block;
+}
