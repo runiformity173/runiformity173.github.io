@@ -1,9 +1,10 @@
 let redacted = true;
+let revealAll = document.querySelector("#revealAllCheckbox").checked;
 function changeRedacted(newVal) {
     redacted = newVal;
     for (const i of document.getElementsByClassName("redactedSpan")) {
         const thingy = i.getAttribute("thingy");
-        i.innerHTML = (words[format(thingy)] && words[format(thingy)] <= lastValue) ? (thingy) : dashify(thingy);
+        i.innerHTML = (revealAll || words[format(thingy)] && words[format(thingy)] <= lastValue) ? (thingy) : dashify(thingy);
     }
     for (let i = 0; i < lastValue2;i++) {
         [...document.getElementsByClassName("frequent-"+i)].forEach(o=>o.innerHTML = o.getAttribute("thingy"));

@@ -15,8 +15,8 @@
     <button class="btn btn-outline-light" onclick="start()">Submit</button>
   </div>
   <div id="controlContainer" class="bg-dark">
-    <input type="range" value="0.005" min="0.005" max="1" step="0.005" oninput="sliderChange(Number(this.value))"><span class="tab"></span><label for="redactedCheckbox">Redacted Mode:&nbsp;</label><input id="redactedCheckbox" type="checkbox" onchange="changeRedacted(this.checked);"><span class="tab"></span><input type="range" value="0" min="0" max="10" step="1" oninput="slider2Change(Number(this.value))"><span class="tab"></span><button class="btn btn-outline-light" onclick="erase();location.reload()">Enter New Text</button>
-    <p><input id="sliderValueDisplay" type="number" value="0" min="0" max="10000" onchange="sliderChange(Number(this.value),false)"> Most Common English Words and <input id="slider2ValueDisplay" value="0" min="0" max="10" type="number" onchange="slider2Change(Number(this.value))"> Most Common Words in the Text</p>
+    <input type="range" value="0.005" min="0.005" max="1" step="0.005" oninput="sliderChange(Number(this.value))"><span class="tab"></span><label for="redactedCheckbox" checked>Redacted Mode:&nbsp;</label><input id="redactedCheckbox" type="checkbox" onchange="changeRedacted(this.checked);"><span class="tab"></span><input type="range" value="0" min="0" max="10" step="1" oninput="slider2Change(Number(this.value))"><span class="tab"></span><button class="btn btn-outline-light" onclick="erase();location.reload()">Enter New Text</button>
+    <p><label for="revealAllCheckbox">Reveal All:&nbsp;</label><input type="checkbox" id="revealAllCheckbox" unchecked onchange="revealAll = this.checked;changeRedacted(redacted)">&emsp;<input id="sliderValueDisplay" type="number" value="0" min="0" max="10000" onchange="sliderChange(Number(this.value),false)"> Most Common English Words and <input id="slider2ValueDisplay" value="0" min="0" max="10" type="number" onchange="slider2Change(Number(this.value))"> Most Common Words in the Text</p>
   </div>
   <p id="output">
 
