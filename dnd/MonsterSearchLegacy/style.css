@@ -76,36 +76,18 @@ input[type="checkbox"] {
 @media only screen and (min-width: 1200px) {
 #all {
   position:absolute;
-  left:2.5%;
-  width:45%;
-  height:100%;
-}
-#info {
-  position:absolute;
-  right:2.5%;
+  left:5%;
   width:45%;
   height:100%;
 }
 }
 @media only screen and (min-width: 1200px) {
 #nall {
-  cursor: pointer;
   position:absolute;
   top:2%;
-  right:50%;
-  width:3em;
-  transition: 0.1s;
-  height:auto;
-  mix-blend-mode:multiply;
-}
-#nall:hover {
-  cursor: pointer;
-  position:absolute;
-  top:2%;
-  right:50%;
+  right:5%;
   width:40%;
   height:auto;
-  mix-blend-mode:normal;
 }
 }
 #all2 {
@@ -176,31 +158,4 @@ br {
 }
 div.noUi-handle {
   cursor: pointer;
-}
-.stripe-odd-table>tbody>tr:nth-child(odd), div.wrapper>.row:nth-child(odd) {
-  background-color:rgba(78,78,78,0.5);
-}
-div.indentation {
-  width:1em;
-  display:inline-block;
-}
-table {
-  color:black;
-}
-div:has(> table) {
-  display:flex;
-  flex-direction:column;
-  font-size: 120%;
-}
-td,th {
-  line-height:100%;
-  font-family:peddana;
-}
-.rollLink {
-  color: #614dff;
-  cursor: pointer;
-}
-.selectedRow {
-  background-color: yellow !important;
-  color:black;
 }

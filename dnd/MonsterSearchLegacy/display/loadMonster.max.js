@@ -1,3 +1,5 @@
+
+
 let level = 0;
 function validURL(a) {
   for (const v of a.toLowerCase().split("")) {
@@ -37,11 +39,9 @@ function getCookie(name) {
 const sizeMap = {
   "T":"tiny",
   "S":"small",
-  "SM":"small or Medium",
   "M":"medium",
   "L":"large",
   "H":"huge",
-  "HG":"huge or Gargantuan",
   "G":"gargantuan"
 }
 window.addEventListener("hashchange",function(e) {
@@ -55,21 +55,12 @@ function load(mName) {
   document.getElementById("hiddenba").style.display = "none";
   document.getElementById("name").innerHTML = ff.name;
   const type = ff["type"];
-  document.getElementById("meta").innerHTML = `${cap(sizeMap[ff.size instanceof String ? ff.size : ff.size.join("")])} ${type.type || type}${(type.tags?(" ("+type.tags.join(", ")+")"):"")}, ${alignmentString(ff.alignment)}`;
+  document.getElementById("meta").innerHTML = `${cap(sizeMap[ff.size])} ${type.type || type}${(type.tags?(" ("+type.tags.join(", ")+")"):"")}, ${alignmentString(ff.alignment)}`;
   let c = ff.ac;
   if (Array.isArray(c)) {
     c = c.map(o=>`${o.ac?o.ac:o}${o.from?(" ("+o.from+")"):""}${o.condition?(" "+o.condition):""}`).join(", ");
   }
   document.getElementById("ac").innerHTML = "<strong>Armor Class </strong>"+c;
-  c = Math.floor(ff.dex/2)-5;
-  if (ff.initiative) {
-    if (ff.initiative.proficiency) {
-      c += ff.initiative.proficiency * getProficiencyBonus(ff.cr.cr || ff.cr);
-    } else {
-      
-    }
-  }
-  document.getElementById("initiative").innerHTML = "<strong>Initiative </strong>"+(c<0?"":"+")+c + " (" + (c+10) + ")";
   document.getElementById("hp").innerHTML = "<strong>Hit Points </strong>"+ff.hp.average + (ff.hp.formula?(` (${ff.hp.formula})`):"");
   let speeds = Object.entries(ff.speed).map(function(o) {
     if (o[1].number) {
@@ -126,9 +117,8 @@ function load(mName) {
         resistances += (last?"; ":", ")+resistance;
       }
     }
-    document.getElementById("skills").innerHTML += `<strong>Resistances</strong> ${resistances.slice(2)}<br>`
+    document.getElementById("skills").innerHTML += `<strong>Damage Resistances</strong> ${resistances.slice(2)}<br>`
   }
-  let damageImmunityString = "";
   if (ff.immune) {
     let immunities = "";
     let last = false;
@@ -151,53 +141,33 @@ function load(mName) {
         immunities += (last?"; ":", ")+immunity;
       }
     }
-    damageImmunityString += immunities.slice(2);
+    document.getElementById("skills").innerHTML += `<strong>Damage Immunities</strong> ${immunities.slice(2)}<br>`
   }
-  let conditionImmunityString = "";
   if (ff.conditionImmune) {
     let immunities = "";
     let last = false;
     for (const immunity of ff.conditionImmune) {
-      if (immunity.conditionImmune) {
-        let temp = "";
-        for (let i = 0;i < immunity.conditionImmune.length;i++) {
-          const r = immunity.conditionImmune[i];
-          if (i === 0) {
-            temp += r;
-          } else if (i === immunity.conditionImmune.length-1) {
-            temp += ", and "+r;
-          } else {
-            temp += ", "+r;
-          }
-        }
-        immunities += "; "+temp+" "+immunity.note;
-        last = true;
+      if (immunity.immune) {
+        alert("bad, condition immunity with condition");
+        throw Error("yo");
       } else {
         immunities += (last?"; ":", ")+immunity;
       }
     }
-    conditionImmunityString += immunities.slice(2);
-  }
-  if (ff.conditionImmune || ff.immune) {
-    document.getElementById("skills").innerHTML += `<strong>Immunities</strong> ${ff.conditionImmune && ff.immune ? damageImmunityString + "; " + conditionImmunityString : (damageImmunityString || conditionImmunityString)}<br>`
-  }
-  if (ff.gear) {
-    document.getElementById("skills").innerHTML += `<strong>Gear</strong> ${capAll(ff.gear.map(function(o) {
-      return typeof o === "string" || o instanceof String ? o.split("|")[0] : o.item.split("|")[0] + " (" + o.quantity + ")";
-    }).join(", "))}<br>`;
+    document.getElementById("skills").innerHTML += `<strong>Condition Immunities</strong> ${immunities.slice(2)}<br>`;
   }
   let senses = [];
   if (ff.senses) {
-    senses = structuredClone(ff.senses);
+    senses = ff.senses;
   }
   senses.push(`passive Perception ${ff.passive}`);
   document.getElementById("skills").innerHTML += `<strong>Senses</strong> ${senses.join(", ")}<br>`;
   document.getElementById("skills").innerHTML += `<strong>Languages</strong> ${ff.languages?ff.languages.join(", "):"&horbar;"}<br>`;
   if (ff.cr) {
     if (ff.cr.cr) {
-      document.getElementById("skills").innerHTML += `<strong>CR</strong> ${ff.cr.cr} (${ff.cr.xpLair} XP when in lair)<br>`;
+      document.getElementById("skills").innerHTML += `<strong>Challenge</strong> ${ff.cr.cr} (${ff.cr.lair} when in lair)<br>`;
     } else {
-      document.getElementById("skills").innerHTML += `<strong>CR</strong> ${ff.cr}<br>`;
+      document.getElementById("skills").innerHTML += `<strong>Challenge</strong> ${ff.cr}<br>`;
     }
   }
   
@@ -208,32 +178,32 @@ function load(mName) {
     }
     document.getElementById("abilities").innerHTML = `${traitString}`;
   }
+  if (ff.spellcasting) {
+    for (const spellcasting of ff.spellcasting) {
+      let spellString = [];
+      if (spellcasting.will) {
+        spellString.push(`At will: <em>${spellcasting.will.join(", ")}</em>`);
+      }
+      for (let i = 0;i < 10;i++) {
+        if ((spellcasting.spells||{})[String(i)]) {
+          spellString.push(`${["Cantrips","1st","2nd","3rd","4th","5th","6th","7th","8th","9th"][i]} ${["(at will)","level ("+spellcasting.spells[i].slots+" slots)"][+(i>0)]}: <em>${spellcasting.spells[String(i)].spells.join(", ")}</em>`);
+        }
+      }
+      for (let i = 1;i < 5;i++) {
+        const s = (spellcasting.daily||{})[String(i)] || (spellcasting.daily||{})[String(i)+"e"];
+        if (s) {
+          spellString.push(`${i}/day each: <em>${s.join(", ")}</em>`);
+        }
+      }
+      document.getElementById("abilities").innerHTML += `<p><em><strong>${spellcasting.name}.</strong></em> ${entryJoin(spellcasting.headerEntries)}</p><p>${spellString.join("<br>")}</p>`;
+    }
+  }
   if (ff.action) {
     let actionString = "";
     for (const action of ff.action) {
         actionString += `<p><em><strong>${action.name}.</strong></em> ${entryJoin(action.entries)}</p>`;
     }
     document.getElementById("actions").innerHTML = `${actionString}`;
-  }
-  if (ff.spellcasting) {
-    for (const spellcasting of ff.spellcasting) {
-      let spellString = [];
-      if (spellcasting.will) {
-        spellString.push(`At will: ${spellcasting.will.join(", ")}`);
-      }
-      for (let i = 0;i < 10;i++) {
-        if ((spellcasting.spells||{})[String(i)]) {
-          spellString.push(`${["Cantrips","1st","2nd","3rd","4th","5th","6th","7th","8th","9th"][i]} ${["(at will)","level ("+spellcasting.spells[i].slots+" slots)"][+(i>0)]}: ${spellcasting.spells[String(i)].spells.join(", ")}`);
-        }
-      }
-      for (let i = 1;i < 5;i++) {
-        const s = (spellcasting.daily||{})[String(i)] || (spellcasting.daily||{})[String(i)+"e"];
-        if (s) {
-          spellString.push(`${i}/day each: ${s.join(", ")}`);
-        }
-      }
-      document.getElementById("actions").innerHTML += `<p><em><strong>${spellcasting.name}.</strong></em> ${entryJoin(spellcasting.headerEntries)}</p><p>${spellString.join("<br>")}</p>`;
-    }
   }
   if (ff.legendary) {
     document.getElementById("hiddenla").style.display = "block";
@@ -259,19 +229,47 @@ function load(mName) {
     }
     document.getElementById("bactions").innerHTML = `${bactionString}`;
   }
-  document.getElementById("environments").innerHTML = "";
-  document.getElementById("treasure").innerHTML = "";
-  if (ff.environment) document.getElementById("environments").innerHTML = "<strong>Habitat:</strong> " + formatEnvironments(ff.environment);
-  if (ff.treasure) document.getElementById("treasure").innerHTML = "<strong>Treasure:</strong> " + capAll(ff.treasure.join(", "));
   document.getElementById("nall").src=`https://5e.tools/img/bestiary/tokens/${ff.source}/${ff.name}.webp`;
   document.getElementById("all").innerHTML = parseStrings(document.getElementById("all").innerHTML);
-  loadFluff(mName);
+}
+function recolorImage(img, oldRed, oldGreen, oldBlue, newRed, newGreen, newBlue) {
+
+    var c = document.createElement('canvas');
+    var ctx = c.getContext("2d");
+    var w = img.width;
+    var h = img.height;
+
+    c.width = w;
+    c.height = h;
+    // draw the image on the temporary canvas
+    ctx.drawImage(img, 0, 0, w, h);
+    // pull the entire image into an array of pixel data
+    var imageData = ctx.getImageData(0, 0, w, h);
+
+    // examine every pixel, 
+    // change any old rgb to the new-rgb
+    for (var i = 0; i < imageData.data.length; i += 4) {
+        // is this pixel the old rgb?
+        if (imageData.data[i] == oldRed &&
+            imageData.data[i + 1] == oldGreen &&
+            imageData.data[i + 2] == oldBlue
+        ) {
+            // change to your new rgb
+            imageData.data[i] = newRed;
+            imageData.data[i + 1] = newGreen;
+            imageData.data[i + 2] = newBlue;
+            imageData.data[i + 3] = 0;
+        }
+    }
+    // put the altered data back on the canvas  
+    ctx.putImageData(imageData, 0, 0);
+    // put the re-colored image back on the image
+    var img1 = document.getElementById("nall");
+    img1.src = c.toDataURL('image/png');
+
 }
 function cap(str) {
   return str[0].toUpperCase() + str.slice(1).toLowerCase();
-}
-function capAll(str) {
-  return str.split(" ").map(cap).join(" ");
 }
 const alignmentMap = {
   "LG":"lawful good",
@@ -317,10 +315,6 @@ function getAbilityScoreModifier(as) {
   const final = Math.floor(as/2)-5;
   return (final<0?"":"+")+final
 }
-const crToProfBonusMap = {"0":2,"1":2,"2":2,"3":2,"4":2,"5":3,"6":3,"7":3,"8":3,"9":4,"10":4,"11":4,"12":4,"13":5,"14":5,"15":5,"16":5,"17":6,"18":6,"19":6,"20":6,"21":7,"22":7,"23":7,"24":7,"25":8,"26":8,"27":8,"28":8,"29":9,"30":9,"1/8":2,"1/4":2,"1/2":2};
-function getProficiencyBonus(cr) {
-  return crToProfBonusMap[cr];
-}
 const asIndex = {
   "Str":0,
   "Dex":1,
@@ -342,41 +336,13 @@ const attackMatches = {
   "{@atk ms}":"<em>Melee Spell Attack:</em> ",
   "{@atk rs}":"<em>Ranged Spell Attack:</em> ",
   "{@atk ms,rs}":"<em>Melee or Ranged Spell Attack:</em> ",
-  "{@atkr m}":"<em>Melee Attack Roll:</em> ",
-  "{@atkr m,r}":"<em>Melee or Ranged Attack Roll:</em> ",
-  "{@atkr r}":"<em>Ranged Attack Roll:</em> ",
-  "{@actSave str}":"<em>Strength Saving Throw:</em> ",
-  "{@actSave dex}":"<em>Dexterity Saving Throw:</em> ",
-  "{@actSave con}":"<em>Constitution Saving Throw:</em> ",
-  "{@actSave int}":"<em>Intelligence Saving Throw:</em> ",
-  "{@actSave wis}":"<em>Wisdom Saving Throw:</em> ",
-  "{@actSave cha}":"<em>Charisma Saving Throw:</em> ",
   "{@h}":"<em>Hit:</em> ",
-  "{@m}":"<em>Miss:</em> ",
-  "{@hom}":"<em>Hit or Miss:</em> ",
   "{@recharge}":"(Recharge 6)",
-  "{@actSaveFail}":"<em>Failure:</em>",
-  "{@actSaveSuccess}":"<em>Success:</em>",
-  "{@actSaveSuccessOrFail}":"<em>Failure or Success:</em>",
-  "{@actTrigger}":"<em>Trigger:</em>",
-  "{@actResponse}":"<em>Response:</em>",
-}
-function formatEnvironments(environments) {
-  let final = [];
-  for (const env of environments) {
-    if (env.includes(",")) {
-      final.push(cap(env.split(", ")[0]) + " (" + cap(env.split(", ")[1]) + ")")
-    } else {
-      final.push(cap(env));
-    }
-  }
-  return final.join(", ");
 }
 function parseStrings(str) {
   if (typeof str === 'string' || str instanceof String) {
     const regex = /\{@[^\s}]+(?:\s+([^|}]+)(?:\s*\|[^}]+)?)?\}/g;
     return str.replace(regex, function(match, item){
-      // console.log(match);
       if (match in attackMatches) {
         return attackMatches[match];
       }
@@ -392,12 +358,8 @@ function parseStrings(str) {
         const num = Number(match.slice(5,-1));
         return `DC ${num}`;
       }
-      if (match.split(" ")[0] === "{@i") {
-        const num = match.slice(4,-1);
-        return `<em style="font-size:100%;">${num}</em>`;
-      }
       if (match.split(" ")[0] === "{@spell") {
-        const spell = match.slice(8,-1).split("|")[0];
+        const spell = match.slice(8,-1);
         return `<a href="https://runiformity173.github.io/dnd/SpellSearch/display/?spell=${spell.replaceAll(" ","-")}" target="_blank">${spell}</a>`;
       }
       if (match.split(" ")[0] === "{@creature") {
@@ -410,7 +372,7 @@ function parseStrings(str) {
         final = splat[splat.length-1].replace(/[{}]/g,"").trim();
       }
       return final;
-    }).replaceAll("–","-").replaceAll("―","&horbar;").replaceAll("—","&horbar;").replaceAll("−","-");
+    }).replaceAll("–","-").replaceAll("—","&horbar;").replaceAll("−","-");
   } else if (typeof str === 'object' && !Array.isArray(str) && str !== null) {
     return str.roll.exact;
   }
@@ -426,85 +388,4 @@ function multiEntry(i) {
     final += `<br><span class='tab'></span><em>${entry.name}.</em> ${entry.entries?entryJoin(entry.entries):entry.entry}`;
   }
   return final;
-}
-function loadFluff(mn) {
-  const monsterName = getByName(mn).name;
-  let fluff = monsterFluff[monsterName.replaceAll(" ","-").toLowerCase()];
-  document.getElementById("name2").innerHTML = "";
-  document.getElementById("miniDescription").innerHTML = "";
-  let tableCounter = 1;
-  if (fluff?._copy?._mod?.entries?.items) {
-    let final = "";
-    const entries = fluff._copy?._mod?.entries?.items[0].entries;
-    for (const i of entries) {
-      if (typeof i === 'string' || i instanceof String) {
-        final += i + "<br>"
-      } else {
-        console.log(i);
-      }
-    }
-    document.getElementById("miniDescription").innerHTML = final;
-    document.getElementById("name2").innerHTML = fluff.name;
-    fluff = monsterFluff[fluff._copy.name.toLowerCase().replaceAll(" ","-")];
-  }
-  if (fluff.entries) {
-    document.getElementById("name3").innerHTML = fluff.name;
-    const entries = fluff.entries[0].entries;
-    document.getElementById("monsterDescription").innerHTML = entries[0];
-    document.getElementById("fluff").innerHTML = "";
-    for (const i of entries) {
-      if (typeof i === 'string' || i instanceof String) {
-        if (i.slice(0,3) == "{@i") continue;
-        document.getElementById("fluff").innerHTML += `<p>${i}</p>`;
-      } else if (i.type == "table") {
-        const j = document.createElement("div");
-        document.getElementById("fluff").appendChild(j);
-        j.appendChild(document.getElementById("tableTemplate").content.cloneNode(true));
-        j.id = "table"+tableCounter++;
-        j.classList.add("tableContainer");
-        loadTable(j,i);
-      }else {
-        console.log(i);
-      }
-    }
-  }
-  document.getElementById("info").innerHTML = parseStrings(document.getElementById("info").innerHTML);
-  for (const f of document.getElementsByClassName("rollLink")) {
-    f.addEventListener("click",function(){rollTable(f.closest(".tableContainer"),f.innerHTML);});
-  }
-}
-
-function searchMonsters() {
-  const final = {};
-  for (const i in monsterData) {
-    const ff = monsterData[i];
-    for (const j of ff.environment) {
-      if (!(j in final)) {final[j] = i;}
-    }
-  }
-  return final;
-}
-
-function searchFluff() {
-  for (const i in monsterFluff) {
-    const ff = monsterFluff[i];
-    if (ff.entries) {
-      try {
-      if (!ff.entries[0].entries[0].includes("{@i")) console.log(i);
-      } catch {
-        console.log(ff.entries)
-      }
-    } else if (ff._copy?._mod?.entries?.items) {
-      if (ff._copy?._mod?.entries?.items[0].entries.length != 1) console.log(i);
-    } else {
-      // console.log(i);
-    }
-  }
-}
-
-function testMonsters() {
-  for (const i in monsterData) {
-    console.log(i);
-    load(i)
-  }
 }

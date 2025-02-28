@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Peddana">
   <style>
     body,html {
-      font-size: 120%;
       height:100%;
       width:100%;
       margin: 0;
@@ -19,26 +18,16 @@
       background-attachment: fixed;
     }
     * {
-      /* font-size:120%; */
-      line-height:30%;
-      text-underline-offset: 0.1em;
-    }
-    p {
       font-size:120%;
+      line-height:30%;
     }
-    h1,h2,h3 {
+    h1 {
       margin-bottom:-0.3em;
       font-size:300%;
       color:#481500;
       font-family:peddana;
       font-variant:small-caps;
       font-weight:599;
-    }
-    h2 {
-      font-size:250%;
-    }
-    h3 {
-      font-size:220%;
     }
     p {
       word-spacing:-0.2rem;
@@ -50,8 +39,12 @@
       color:#4e2615;
     }
     strong {
+      
       font-size:110%;
       font-family:peddana !important;
+    }
+    i {
+      font-size:100%;
     }
     hr.solid {
       margin-top:0px;
@@ -83,6 +76,9 @@
       border-top: 3px solid #6d4f3d;
       clip-path: circle(100%);
     }
+    #meta {
+      font-size:100%;
+    }
     #skills2 {
       line-height:30% !important;
     }
@@ -100,13 +96,21 @@
       display:block;
       float:left;
     }
+    #lactions, #reactions, #bactions {
+      font-size:100% !important;
+    }
+    #actions p em, #lactions p em, #bactions p em, #reactions p em, #actions ul li em{
+      font-size:100%;
+    }
     #abilities p, #actions p, #actions ul li,#lactions p,#bactions p,#reactions p{
       line-height:75%;
       color:#000000;
     }
-    #info p{
-      line-height:75%;
-      color:#000000;
+    #actions ul li {
+      font-size:100%;
+    }
+    #abilities em, #abilities em strong {
+      font-size:100%;
     }
     
     #actions p em strong, #lactions p em strong, #bactions p em strong, #reactions p em strong{
@@ -133,7 +137,6 @@
     } */
     #nall {
       mix-blend-mode:multiply;
-      z-index:100;
     }
   </style>
 </head>
@@ -142,37 +145,11 @@
   <script src="../bootstrap.bundle.min.js"></script>
   <script src="../script.max.js"></script>
   <script src="loadMonster.max.js"></script>
-  <script src="tables.js"></script>
-
-  <template id="tableTemplate">
-    <div class="identifier d-none" id="table"></div>
-    <table>
-      <tr>
-        <th class="tableName" colspan="6"></th>
-        <tr>
-          <td colspan="6">
-            <table class="w-100 stripe-odd-table">
-              <!-- <caption class="tableCaption"></caption> -->
-              <thead>
-                <tr class="tableLabels">
-                  
-                </tr>
-              </thead>
-              <tbody class="tableBody">
-                
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tr>
-    </table>
-  </template>
-
   <div id="all">
   <h1 id="name"></h1>
   <p><em id="meta"></em></p>
     <hr class="solid">
-    <p style="width: 100%;"><span id="ac"><strong>Armor Class </strong></span> <span id="initiative" style="float: right;"><strong>Initiative </strong></span></p>
+    <p id="ac"><strong>Armor Class </strong></p>
     <p id="hp"><strong>Hit Points </strong></p>
     <p id="speed"><strong>Speed </strong></p>
     <hr class="solid">
@@ -189,6 +166,11 @@
     <h2 class="actions-header">Actions</h2>
     <hr class="action-divider">
     <div id="actions"></div>
+    <div id="hiddenla">
+    <h2 class="actions-header">Legendary Actions</h2>
+    <hr class="action-divider">
+    <div id="lactions"></div>
+    </div>
     <div id="hiddenba">
     <h2 class="actions-header">Bonus Actions</h2>
     <hr class="action-divider">
@@ -199,28 +181,9 @@
     <hr class="action-divider">
     <div id="reactions"></div>
     </div>
-    <div id="hiddenla">
-    <h2 class="actions-header">Legendary Actions</h2>
-    <hr class="action-divider">
-    <div id="lactions"></div>
-    </div>
-  </div>
-  <div id="info">
-    <br>
-    <div id="copy">
-      <h2 id="name2"></h2><br>
-      <p id="miniDescription"></p>
-    </div>
-    <h2 id="name3"></h2><br>
-    <p id="monsterDescription"></p>
-    <div id="extraInfo">
-      <p id="environments"></p>
-      <p id="treasure"></p>
-      <div id="fluff"></div>
-    </div>
   </div>
   <div>
-    <img id="nall">
+      <img id="nall">
     </div>
 </body>
 

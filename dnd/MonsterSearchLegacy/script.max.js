@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 let FILTERS = {
   "level":[],
   "type":[]
@@ -45,7 +45,7 @@ function checkAll(arg,c) {
 }
 function start() {
   monsters = Object.values(monsterData);
-  DEBUG && console.clear();
+  console.clear();
   FILTERS = {"level":[],"type":[],"yesSpeed":[],"noSpeed":[],"yesSense":[],"noSense":[],"yesAlignment":[],"noAlignment":[]};
   levels = ["0","1/8","1/4","1/2","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"];
   const [minValue,maxValue] = slider.noUiSlider.get();
@@ -106,7 +106,7 @@ document.getElementById("output").innerHTML += `<a href="${href}" target="_blank
 function filterTypes(s) {
   for (const l of FILTERS["type"]) {
     const c = s["type"];
-    if ((c.type?.choose && c.type.choose.includes(l.toLowerCase())) || !c.type?.choose && (c.type||c).toLowerCase()===l.toLowerCase()) {
+    if ((c.type||c).toLowerCase()===l.toLowerCase()) {
       return true;
     }
   }
