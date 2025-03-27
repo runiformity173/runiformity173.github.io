@@ -210,8 +210,8 @@ function circleSort(a) {
 
 function heapify(arr, n, i) {
   let largest = i;
-  const left = 2 * i + 1;
-  const right = 2 * i + 2;
+  const left = i*2 + 1;
+  const right = i*2 + 2;
   if (left < n && arr[left] > arr[largest]) {
     largest = left;
   }
@@ -225,7 +225,7 @@ function heapify(arr, n, i) {
 }
 function buildMaxHeap(arr) {
   const n = arr.length;
-  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+  for (let i = n<<1 - 1; i >= 0; i--) {
     heapify(arr, n, i);
   }
 }
@@ -243,7 +243,7 @@ function mySort(arr,oglow=0,oghigh=-1,flag=2) {
   let high=oghigh, low=oglow;
   while (high-low > 0){
     mid = Math.floor((oghigh-oglow)/2) + oglow;
-    if (flag) {
+    if (Math.random()<0.5) {
       mySort(arr,mid+1,oghigh,flag-1);
       mid = Math.floor((oghigh-oglow)/2) + oglow;
       mySort(arr,oglow,mid,flag-1);
@@ -268,6 +268,69 @@ function mySort(arr,oglow=0,oghigh=-1,flag=2) {
   }
   return arr;
 }
+function pairwiseSort(array) {
+   let length = array.length;
+    let a = 1;
+    let b = 0;
+    let c = 0;
+    let d = 0;
+    let e = 0;
+    while (a < length){
+        b = a;
+        c = 0;
+        while (b < length){
+
+            if(array[b - a] > array[b]) {
+              array.swap(b-a,b);
+            }
+            c = (c + 1) % a;
+            b++;
+            if (c == 0){
+                b += a;
+            }
+        }
+        a *= 2;
+    }
+    a = Math.floor(a/4);
+    e = 1;
+    while (a > 0){
+        d = e;
+        while (d > 0){
+            b = ((d + 1) * a);
+            c = 0;
+            while (b < length){
+                if(array[b - (d * a)] > array[b]) {
+                    array.swap(b-(d*a),b);
+                }
+                c = (c + 1) % a;
+                b++;
+                if (c == 0){
+                    b += a;
+                }
+            }
+          d = Math.floor(d/2);
+        }
+        a = Math.floor(a/2);
+        e = (e * 2) + 1;
+    }
+}
+function boseNelsonRangeComp(arr,a,b,offset) {
+  let half = Math.floor((b-a)/2), m = a+half;
+  a += offset;
+  for(let i = 0; i < half - offset; i++)
+    if((i & ~offset) == i) {
+      if (arr[a+i] > arr[m+i]) {arr.swap(a+i,m+i)}}
+}
+
+function boseNelsonSort(arr) {
+  let currentLength = arr.length;
+currentLength = 1 << (Math.ceil(Math.log(currentLength)/Math.log(2)));
+for(let k = 2; k <= currentLength; k*=2) {
+  for(let j = 0; j < k/2; j++) {
+    for(let i = 0; i+j < arr.length; i+=k) {
+      boseNelsonRangeComp(arr, i, i+k, j);}}}
+}
+
 const sortingAlgorithms = {
   "Bubble Sort":bubbleSort,
   "Quick Sort":quickSort,
@@ -280,5 +343,7 @@ const sortingAlgorithms = {
   "Circle Sort":circleSort,
   "Heap Sort":heapSort,
   "My Sort":mySort,
+  "Pairwise Sorting Network":pairwiseSort,
+  "Bose Nelson Sort":boseNelsonSort,
 }
 const badMethods = ["Bubble Sort","Cocktail Shaker Sort","Odd Even Sort"];
