@@ -13,7 +13,7 @@ function bubbleSort(arr) {
   }
 }
 function anytimeQuickSort(arr){
-  const q = new PriorityQueue();
+  const q = new PriorityQueue((a,b)=>Number(a[0])>Number(b[0]));
   q.push([arr.length,0,arr.length-1]);
   while (!q.isEmpty()) {
     let [s,start,end] = q.pop();
