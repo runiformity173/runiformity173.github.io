@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Spell Search | Runiformity's Websites</title>
+  <meta name="description" content="A D&D spell search and spell list tool">
+  <meta name="author" content="runiformity173">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body onload="checkAll('bookCheckbox',document.getElementById('bookAll'));checkAll('levelCheckbox',document.getElementById('levelAll'));checkAll('classCheckbox',document.getElementById('classAll'));checkAll('schoolCheckbox',document.getElementById('schoolAll'));const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\'tooltip\']');const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))" class="bg-dark text-light no-select">
+  <script src="spells_filtering.js"></script>
+  <script src="script.max.js"></script>
+  <script src="display/loadSpell.max.js"></script>
+  <!-- <script src="loadSpell.minified.js"></script> -->
+  <script src="bootstrap.bundle.min.js"></script>
+  <script src="help.js"></script>
+  <script src="/sharedScripts/help.js"></script>
+  <div id="header"><a href="spell_list/">Spell Lists</a></div>
+  <div id="filters">
+    <span id="col1">
+    <!-- <input type="checkbox" id="books" name="books" value="0" class="bookC"> -->
+      <input type="checkbox" id="bookAll" name="bookAll" value="all" class="bookCheckbox" onchange="checkAll('bookCheckbox',this)" checked>
+      <label for="bookAll">Select All</label><br>
+      <input type="checkbox" id="bookPHB" class="bookCheckbox">
+      <label for="bookPHB">Player's Handbook</label><br>
+      <input type="checkbox" id="bookXGE" class="bookCheckbox">
+      <label for="bookXGE">Xanathar's Guide to Everything</label><br>
+      <input type="checkbox" id="bookTCE" class="bookCheckbox">
+      <label for="bookTCE">Tasha's Cauldron of Everything</label><br>
+      <input type="checkbox" id="bookFTD"class="bookCheckbox">
+      <label for="bookFTD">Fizban's Treasury of Dragons</label><br><br>
+      <!-- <label for="books" data-bs-toggle="tooltip" data-bs-title="Check to include Xanathar's, Tasha's, Fizban's, and Ravnica">Include Supplemental Books</label><br><br> -->
+      <input type="checkbox" id="ritual" name="ritual" value="ritual">
+      <label for="ritual" data-bs-toggle="tooltip" data-bs-title="All spells when unchecked, only rituals when checked">Ritual?</label><br>
+      <br>
+      <input type="checkbox" id="verbal" name="verbal" value="verbal" checked>
+      <label for="verbal" data-bs-toggle="tooltip" data-bs-title="Either when checked, no verbal components when unchecked">Verbal Components</label><br>
+      <input type="checkbox" id="somatic" name="somatic" value="somatic" checked>
+      <label for="somatic" data-bs-toggle="tooltip" data-bs-title="Either when checked, no somatic components when unchecked">Somatic Components</label><br>
+      <input type="checkbox" id="material" name="material" value="material" checked>
+      <label for="material" data-bs-toggle="tooltip" data-bs-title="Either when checked, no material components when unchecked">Material Components</label><br>
+      <br>
+      <input type="checkbox" id="concentration" name="concentration" value="concentration" checked>
+      <label for="concentration" data-bs-toggle="tooltip" data-bs-title="Either when checked, no concentration when unchecked">Concentration?</label><br>
+    </span>
+    <span id="col2">
+      <input type="checkbox" id="levelAll" name="levelAll" value="all" class="levelCheckbox" onchange="checkAll('levelCheckbox',this)" checked>
+      <label for="levelAll">Select All</label><br>
+      <input type="checkbox" id="level0" name="level0" value="0" class="levelCheckbox">
+      <label for="level0">Cantrip</label><br>
+      <input type="checkbox" id="level1" name="level1" value="1" class="levelCheckbox">
+      <label for="level1">1</label><br>
+      <input type="checkbox" id="level2" name="level2" value="2" class="levelCheckbox">
+      <label for="level2">2</label><br>
+      <input type="checkbox" id="level3" name="level3" value="3" class="levelCheckbox">
+      <label for="level3">3</label><br>
+      <input type="checkbox" id="level4" name="level4" value="4" class="levelCheckbox">
+      <label for="level4">4</label><br>
+      <input type="checkbox" id="level5" name="level5" value="5" class="levelCheckbox">
+      <label for="level5">5</label><br>
+      <input type="checkbox" id="level6" name="level6" value="6" class="levelCheckbox">
+      <label for="level6">6</label><br>
+      <input type="checkbox" id="level7" name="level7" value="7" class="levelCheckbox">
+      <label for="level7">7</label><br>
+      <input type="checkbox" id="level8" name="level8" value="8" class="levelCheckbox">
+      <label for="level8">8</label><br>
+      <input type="checkbox" id="level9" name="level9" value="9" class="levelCheckbox">
+      <label for="level9">9</label><br>
+    </span>
+    <span id="col3">
+      <input type="checkbox" id="classAll" name="classAll" value="all" class="classCheckbox" onchange="checkAll('classCheckbox',this)" checked>
+      <label for="classAll">Select All</label><br>
+      <input type="checkbox" id="classWizard" name="classWizard" value="wizard" class="classCheckbox">
+      <label for="classWizard">Wizard</label><br>
+      <input type="checkbox" id="classWarlock" name="classWarlock" value="wizard" class="classCheckbox">
+      <label for="classWarlock">Warlock</label><br>
+      <input type="checkbox" id="classSorcerer" name="classSorcerer" value="sorcerer" class="classCheckbox">
+      <label for="classSorcerer">Sorcerer</label><br>
+      <input type="checkbox" id="classDruid" name="classDruid" value="druid" class="classCheckbox">
+      <label for="classDruid">Druid</label><br>
+      <input type="checkbox" id="classBard" name="classBard" value="bard" class="classCheckbox">
+      <label for="classBard">Bard</label><br>
+      <input type="checkbox" id="classRanger" name="classRanger" value="ranger" class="classCheckbox">
+      <label for="classRanger">Ranger</label><br>
+      <input type="checkbox" id="classPaladin" name="classPaladin" value="paladin" class="classCheckbox">
+      <label for="classPaladin">Paladin</label><br>
+      <input type="checkbox" id="classArtificer" name="classArtificer" value="artificer" class="classCheckbox">
+      <label for="classArtificer">Artificer</label><br>
+      <input type="checkbox" id="classCleric" name="classCleric" value="cleric" class="classCheckbox">
+      <label for="classCleric">Cleric</label><br>
+    </span>
+    <span id="col4">
+      <input type="checkbox" id="schoolAll" name="schoolAll" value="all" class="schoolCheckbox" onchange="checkAll('schoolCheckbox',this)" checked>
+      <label for="schoolAll">Select All</label><br>
+      <input type="checkbox" id="schoolAbjuration" name="schoolAbjuration" value="conjuration" class="schoolCheckbox">
+      <label for="schoolAbjuration">Abjuration</label><br>
+      <input type="checkbox" id="schoolConjuration" name="schoolConjuration" value="conjuration" class="schoolCheckbox">
+      <label for="schoolConjuration">Conjuration</label><br>
+      <input type="checkbox" id="schoolDivination" name="schoolDivination" value="conjuration" class="schoolCheckbox">
+      <label for="schoolDivination">Divination</label><br>
+      <input type="checkbox" id="schoolEnchantment" name="schoolEnchantment" value="conjuration" class="schoolCheckbox">
+      <label for="schoolEnchantment">Enchantment</label><br>
+      <input type="checkbox" id="schoolEvocation" name="schoolEvocation" value="conjuration" class="schoolCheckbox">
+      <label for="schoolEvocation">Evocation</label><br>
+      <input type="checkbox" id="schoolIllusion" name="schoolIllusion" value="conjuration" class="schoolCheckbox">
+      <label for="schoolIllusion">Illusion</label><br>
+      <input type="checkbox" id="schoolNecromancy" name="schoolNecromancy" value="conjuration" class="schoolCheckbox">
+      <label for="schoolNecromancy">Necromancy</label><br>
+      <input type="checkbox" id="schoolTransmutation" name="schoolTransmutation" value="conjuration" class="schoolCheckbox">
+      <label for="schoolTransmutation">Transmutation</label><br>
+    </span>
+  </div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <center><button onclick='start()' class="btn btn-outline-light">Filter</button></center>
+ <p id="output" class="text-light search"></p>
+  
+</body>
+
+</html>
