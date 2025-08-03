@@ -4,7 +4,7 @@ for (const condition in conditions) {
 }
 document.getElementById("conditionsDatalist").innerHTML = conditionDatalist;
 function loadCondition(box, name) {
-    if (name == "Exhaustion") {
+    if (name == "Exhaustion2") {
         [...box.querySelectorAll(`#${box.id} h2,#${box.id} p`)].forEach(o=>o.remove());
         box.appendChild(document.getElementById("tableTemplate").content.cloneNode(true));
         loadTable(box,name);
@@ -15,7 +15,7 @@ function loadCondition(box, name) {
         box.appendChild(document.getElementById("conditionTemplate").content.cloneNode(true));
     }
     let final = "";
-    final += `<ul><li>${conditions[name].entries[0].items.join("</li><li>")}</li></ul>`;
+    final += `<ul><li>${conditions[name].entries[1].entries.map(o=>`<strong><em>${o.name}</em></strong>. ${o.entries[0]}`).join("</li><li>")}</li></ul>`;
     document.querySelector(`#${box.id} .title`).innerHTML = name;
     document.querySelector(`#${box.id} .content`).innerHTML = parseStrings(final);
 }

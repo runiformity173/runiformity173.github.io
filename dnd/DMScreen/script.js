@@ -61,7 +61,7 @@ function load() {
       } else if (entry.type == "notes") {
         document.querySelector(`#${i.id} .notesArea`).value = data.text;
       } else if (entry.type == "table") {
-        loadTable(i,data.name);
+        loadTable(i,data.name.split(" (").slice(0,-1).join(" ("));
       } else if (entry.type == "condition") {
         loadCondition(i,data.name);
       } else if (entry.type == "spell") {
@@ -151,7 +151,7 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   } else if (module == "spell") {
     if (addDefault) {
-      box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch/display/?spell="+extraData.name.toLowerCase().replace(" ","-")+"&savebutton=false";
+      box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell="+extraData.name.toLowerCase().replace(" ","-")+"&savebutton=false";
     }
   } else if (module == "monster") {
     if (addDefault) {
@@ -244,6 +244,7 @@ window.addEventListener("mouseup",e => {
   stopDragging();
 });
 function stopDragging() {
+  if (dragging === -1) return;
   save(document.getElementById("box-"+dragging));
   document.getElementById("box-"+dragging).classList.remove("dragging");
   dragging = -1;

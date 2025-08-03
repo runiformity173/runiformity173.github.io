@@ -1,9 +1,9 @@
 function filterTables() {
-  return tables.table.filter(o=>["Screen","ScreenDungeonKit","ScreenWildernessKit","DMG","XGE","TCE","VGM","PHB"].includes(o.source));
+  return tables.table.filter(o=>["Screen","ScreenDungeonKit","ScreenWildernessKit","DMG","XGE","TCE","VGM","PHB","XPHB","XDMG"].includes(o.source));
 }
 const data = {};
 for (const i of filterTables()) {
-  document.getElementById("tablesDatalist").innerHTML += `<option>${i.name}</option>`;
+  document.getElementById("tablesDatalist").innerHTML += `<option>${i.name} (${i.source})</option>`;
   data[i.name] = i;
   if (i.colLabels) {
     const t = parseStrings(i.colLabels[0],false);
@@ -13,7 +13,7 @@ for (const i of filterTables()) {
     i.colStyles = i.rows[0].map(o=>"");
   }
 }
-const INDENT = "<div class='indentation'></div>"
+const INDENT = "<div class='indentation'></div>";
 function loadTable(box,name) {
   const table = data[name];
   document.querySelector(`#${box.id} .tableName`).innerHTML = table.name;
@@ -72,7 +72,7 @@ function parseStrings(str,rollLiterals=true) {
       } else if (match.includes("@creature")) {
         final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/MonsterSearch/display/#${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
       } else if (match.includes("@spell")) {
-        final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/SpellSearch/display/?spell=${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
+        final = `<a class='rollLink' href='https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell=${final.replaceAll(' ','-')}' target='_blank'>${final}</a>`
       } else {
         const splat = match.split("|");
         if (splat.length == 3) {
