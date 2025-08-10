@@ -61,7 +61,7 @@ function load() {
       } else if (entry.type == "notes") {
         document.querySelector(`#${i.id} .notesArea`).value = data.text;
       } else if (entry.type == "table") {
-        loadTable(i,data.name.split(" (").slice(0,-1).join(" ("));
+        loadTable(i,data.name);
       } else if (entry.type == "condition") {
         loadCondition(i,data.name);
       } else if (entry.type == "spell") {
@@ -141,8 +141,8 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   } else if (module == "table") {
     if (addDefault) {
-      if (!(extraData.name in data)) {alert("Table does not exist");return;}
-      loadTable(box,extraData.name);
+      if (!(extraData.name.split(" (").slice(0,-1).join(" (") in data)) {alert("Table does not exist");console.log(extraData);return;}
+      loadTable(box,extraData.name.split(" (").slice(0,-1).join(" ("));
     }
   } else if (module == "condition") {
     if (addDefault) {
