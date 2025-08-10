@@ -398,7 +398,7 @@ function parseStrings(str) {
       }
       if (match.split(" ")[0] === "{@spell") {
         const spell = match.slice(8,-1).split("|")[0];
-        return `<a href="https://runiformity173.github.io/dnd/SpellSearch/display/?spell=${spell.replaceAll(" ","-")}" target="_blank">${spell}</a>`;
+        return `<a href="https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell=${spell.replaceAll(" ","-")}" target="_blank">${spell}</a>`;
       }
       if (match.split(" ")[0] === "{@creature") {
         const creature = match.slice(11,-1);
