@@ -1,5 +1,5 @@
 function filterTables() {
-  return tables.table.filter(o=>["Screen","ScreenDungeonKit","ScreenWildernessKit","DMG","XGE","TCE","VGM","PHB","XPHB","XDMG"].includes(o.source));
+  return tables.table.filter(o=>["Screen","ScreenDungeonKit","ScreenWildernessKit","DMG","XGE","TCE","VGM","PHB","XPHB","XDMG","FTD"].includes(o.source));
 }
 const data = {};
 for (const i of filterTables()) {
