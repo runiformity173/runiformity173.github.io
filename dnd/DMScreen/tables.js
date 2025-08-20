@@ -82,7 +82,7 @@ function parseStrings(str,rollLiterals=true) {
       return final;
     });
   } else if (typeof str === 'object' && !Array.isArray(str) && str !== null) {
-    return str.roll.exact;
+    return str?.roll?.exact || "";
   }
   return str;
 }
@@ -119,7 +119,7 @@ function rollTable(box,die) {
     const i = row.firstElementChild.innerHTML.replace("00","100");
     let correct = false;
     if (i.includes("-")) {
-      let [lower,upper] = i.split("-");
+      let [lower,upper] = i.split(/\-/g);
       correct=(Number(lower)<=selected&&Number(upper)>=selected);
     } else {
       correct = String(selected) == i;
