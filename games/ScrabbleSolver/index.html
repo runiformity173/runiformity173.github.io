@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Scrabble Solver</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="../bootstrap.css" rel="stylesheet" type="text/css" />
+  </head>
+  
+  <body class="bg-dark text-light">
+    <div id="board"></div>
+
+    <div id="sidebar">
+      <input type="text" id="hand-input" oninput="this.value=this.value.toUpperCase();saveBoard();"><br>
+      <button class="btn btn-outline-light" onclick="solveClicked()">Solve</button><br>
+      <button class="btn btn-outline-light" onclick="acceptSuggestion()">Accept Suggestion</button><br>
+      <button class="btn btn-outline-light" onclick="getLetter();">Get letter</button><br>
+      <button class="btn btn-outline-light" onclick="viewBag();">View bag</button><br>
+      <br>
+      <button class="btn btn-outline-light" onclick="if (confirm('you sure?')) resetGame()">Reset Game</button><br>
+
+    </div>
+
+    <script src="data.js"></script>
+    <script src="solver.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

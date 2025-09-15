@@ -1,0 +1,74 @@
+html, body {
+    /* overflow:hidden; */
+    margin:0;
+    height:100%;
+    width:100%;
+}
+#board {
+    width: min(100vw, 100vh);
+    height: min(100vw, 100vh);
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+.board-tile {
+    border: 1px solid;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    position: relative;
+}
+.double-letter {
+    background-color: skyblue;
+}
+.triple-letter {
+    background-color: blue;
+}
+.double-word {
+    background-color: orange;
+}
+.triple-word {
+    background-color: hotpink;
+}
+.tile-input {
+    width: 100%;
+    background: none;
+    border: none;
+    height: 100%;
+    text-align: center;
+    color: white;
+    font-size: min(6vh,6vw);
+    text-transform: uppercase;
+}
+.tile-placed {
+    
+}
+.tile-placed input {
+    color:brown;
+    background-color: beige;
+    border:1px solid black;
+    border-radius: 5px;
+}
+.tile-input:active {
+    border: none;
+}
+.tile-blank input {
+    color:hotpink;
+}
+.tile-suggestion {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.tile-suggestion-active {
+    background-color: grey;
+}
+#sidebar {
+    position: absolute;
+    right:0;
+    top:0;
+    text-align: right;
+}
