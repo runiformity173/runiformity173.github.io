@@ -53,3 +53,6 @@ help.innerHTML = '<img src="/images/help.png" style="width:100%;height:100%;opac
 // })
 // document.body.appendChild(help);
 window.addEventListener("load",function(){document.body.appendChild(overlay)});
+if (window.portfolioText && window.location.hash == "#portfolio") {
+  console.log("AYYYY");
+}
