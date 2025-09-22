@@ -4,6 +4,7 @@
 const wordSet = new Set(wordList);
 const alphabetSet = new Set("QWERTYUIOPASDFGHJKLZXCVBNM");
 const wordsByHash = {};
+let random;
 function structuredClone(a) {
     return JSON.parse(JSON.stringify(a));
 }
@@ -117,6 +118,30 @@ function isValidRow(row) {
     }
     return true;
 }
+function solveFirstTurn(board,handLetters,blanks) {
+    let regexString = "[A-Z]";
+    let hashString = ".";
+    let bestScore = 0;
+    let bestWord = [];
+    for (let j = 2;j<=hand.length;j++) {
+        regexString += "[A-Z]";
+        hashString += ".";
+        for (const l of findMatches(regexString,j,hashString)) {
+            if (canPlayWord(structuredClone(handLetters),l,blanks)) {
+                for (let k = 0;k<8;k++) {
+                    if (k+j < 7) continue;
+                    const score = scorePlay(board,l,7,k,"row","               ",handLetters,structuredClone(handLetters),blanks);
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestWord = [l, 7, "row", k];
+                    }
+                }
+            }
+        }
+    }
+    console.log(bestScore,bestWord);
+    return [bestScore,bestWord];
+}
 function solveBoard(board, hand) {
     const rows = Array.from({length:15}).map(o=>"");
     const cols = Array.from({length:15}).map(o=>"");
@@ -128,13 +153,18 @@ function solveBoard(board, hand) {
         if (alphabetSet.has(i)) handLetters[i] = handLetters[i]+1||1;
         else if (i == "*") blanks++;
     }
+    let foundAnything = false;
     for (let row = 0;row<15;++row) {
         for (let col = 0;col<15;++col) {
             let i = board[row][col].toUpperCase();
             if (i == "") i = " ";
+            else foundAnything = true;
             rows[row] += i;
             cols[col] += i;
         }
+    }
+    if (!foundAnything) {
+        return solveFirstTurn(board,handLetters,blanks);
     }
     const colRegexes = [];
     const colHashes = [];
@@ -239,4 +269,36 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
     return points;
 }
 
+function playGame(seed) {
+    random = new Alea(seed);
+    const simulatedBag = ["A","A","A","A","A","A","A","A","A","B","B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E","F","F","G","G","G","H","H","I","I","I","I","I","I","I","I","I","J","K","L","L","L","L","M","M","N","N","N","N","N","N","O","O","O","O","O","O","O","O","P","P","Q","R","R","R","R","R","R","S","S","S","S","T","T","T","T","T","T","U","U","U","U","V","V","W","W","X","Y","Y","Z","*","*"];
+    function getTile() {
+        if (simulatedBag.length == 0) return;
+        return simulatedBag.splice(Math.floor(simulatedBag.length*random()),1)[0];
+    }
+    function addTile(hand) {
+        const tile = getTile();
+        if (tile) hand.push(tile);
+    }
+    function removeTiles(hand,tiles) {
+        for (const i of tiles) {
+            hand.splice(hand.index(i),1);
+        }
+    }
+    const player1Hand = [];
+    const player2Hand = [];
+    for (let i = 0;i<7;i++) {
+        addTile(player1Hand);
+        addTile(player2Hand);
+    }
+    let player1Turn = true;
+    while (player1Hand.length && player2Hand.length) {
+        if (player1Turn) {
+            // ADD LOGIC FOR WEIGHT SWITCHING
+        }
+        const [bestScore, bestWord] = solveBoard
+        player1Turn = !player1Turn;
+    }
+}
+playGame("123");
 // [["L","A","P","","","","","V","I","T","A","E","","","C"],["","R","A","J","","","","","","W","I","N","D","E","R"],["","","D","I","F","","","","Q","I","","","","","Y"],["","","","N","E","O","N","","I","N","","","","",""],["","","","","R","E","A","M","","G","","","","",""],["C","H","O","R","E","","","A","P","E","","","","",""],["U","","","","","S","A","M","O","S","A","","","",""],["T","","","","","","W","A","X","","A","G","O","N","S"],["E","T","","","","","","","","","","","F","O","E"],["L","O","","","","","","","","","","","","B","I"],["Y","O","","","","","","","","","","","","",""],["","N","","","","","","","","","","","","",""],["","I","","","","","","","","","","","","",""],["","E","","","","","","","","","","","","",""],["","","","","","","","","","","","","","",""],["L","O","I","U","E","B","S"],["A","A","A","A","A","A","A","A","A","B","B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E","F","F","G","G","G","H","H","I","I","I","I","I","I","I","I","I","J","K","L","L","L","L","M","M","N","N","N","N","N","N","O","O","O","O","O","O","O","O","P","P","Q","R","R","R","R","R","R","S","S","S","S","T","T","T","T","T","T","U","U","U","U","V","V","W","W","X","Y","Y","Z","*","*"]]
