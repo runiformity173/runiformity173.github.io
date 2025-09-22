@@ -105,3 +105,8 @@ function getLetter() {
 //     }
 //     alert(string);
 // }
+function testSolve() {
+    console.time("100")
+    for (let i = 0;i<100;i++) solveBoard(board.map(row=>row.map(o=>o.firstElementChild.value)),hand);
+    console.timeEnd("100")
+}

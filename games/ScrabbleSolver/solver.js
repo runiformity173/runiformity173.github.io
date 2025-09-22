@@ -60,7 +60,7 @@ function bestWordAlone(letters) {
     }
     return [bestPoints,bestWords];
 }
-function findMatches(expression,length,hash) { // 36% of 65%
+function findMatches(expression,length,hash) { // 36% of 65%... 53-55% of solveRow
     const matches = [];
     let hashString = Array.from(hash);
     let foundLetter = false;
@@ -118,7 +118,6 @@ function isValidRow(row) {
     return true;
 }
 function solveBoard(board, hand) {
-    console.time("solve");
     const rows = Array.from({length:15}).map(o=>"");
     const cols = Array.from({length:15}).map(o=>"");
     const handLetters = {};
@@ -193,7 +192,6 @@ function solveBoard(board, hand) {
         if (a > bestScore) {bestScore = a;bestWord = b;}
         if (c > bestScore) {bestScore = c;bestWord = d;}
     }
-    console.timeEnd("solve");
     return [bestScore, bestWord];
 }
 
@@ -241,5 +239,4 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
     return points;
 }
 
-// REMOVE NUBILOSE AND REZ, DOESN'T FIND NUBILOSE WHEN REZ IS THERE.
 // [["L","A","P","","","","","V","I","T","A","E","","","C"],["","R","A","J","","","","","","W","I","N","D","E","R"],["","","D","I","F","","","","Q","I","","","","","Y"],["","","","N","E","O","N","","I","N","","","","",""],["","","","","R","E","A","M","","G","","","","",""],["C","H","O","R","E","","","A","P","E","","","","",""],["U","","","","","S","A","M","O","S","A","","","",""],["T","","","","","","W","A","X","","A","G","O","N","S"],["E","T","","","","","","","","","","","F","O","E"],["L","O","","","","","","","","","","","","B","I"],["Y","O","","","","","","","","","","","","",""],["","N","","","","","","","","","","","","",""],["","I","","","","","","","","","","","","",""],["","E","","","","","","","","","","","","",""],["","","","","","","","","","","","","","",""],["L","O","I","U","E","B","S"],["A","A","A","A","A","A","A","A","A","B","B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E","F","F","G","G","G","H","H","I","I","I","I","I","I","I","I","I","J","K","L","L","L","L","M","M","N","N","N","N","N","N","O","O","O","O","O","O","O","O","P","P","Q","R","R","R","R","R","R","S","S","S","S","T","T","T","T","T","T","U","U","U","U","V","V","W","W","X","Y","Y","Z","*","*"]]
