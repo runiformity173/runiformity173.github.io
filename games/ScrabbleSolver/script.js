@@ -61,7 +61,7 @@ loadBoard();
 saveBoard();
 
 function clearDisplayedSolution() {
-    [...document.getElementsByClassName("tile-suggestion-active")].forEach(o=>{o.classList.remove("tile-suggestion-active");o.firstElementChild.value = "";});
+    [...document.getElementsByClassName("tile-suggestion-active")].forEach(o=>{o.classList.remove("tile-suggestion-active");o.parentElement.firstElementChild.value = "";});
 }
 function acceptSuggestion() {
     [...document.getElementsByClassName("tile-suggestion-active")].forEach(o=>{
@@ -88,7 +88,7 @@ function displaySolution([word,index,direction,rowIndex],) {
 function solveClicked() {
     const solutions = [solveBoard(board.map(row=>row.map(o=>o.firstElementChild.value)),hand)];
     displaySolution(solutions[0][1]);
-    alert(solutions[0][0] + " points")
+    document.getElementById("result-points").innerHTML = (solutions[0][0] + " points")
     console.log(solutions[0][0], "points")
 }
 

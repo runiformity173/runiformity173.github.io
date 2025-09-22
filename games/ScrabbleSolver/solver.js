@@ -1,9 +1,12 @@
 // LIMITATIONS: if 2 same letters and one is a blank, might not put correct one on triple letter spot or vertical play.
 // Score remaining letters in hand, under-/over-valued?
+// STRUCTURED CLONE IS BAD. Fixed it a bit with overriding to JSON, but still could do better by repairing the letter list probably.
 const wordSet = new Set(wordList);
 const alphabetSet = new Set("QWERTYUIOPASDFGHJKLZXCVBNM");
 const wordsByHash = {};
-
+function structuredClone(a) {
+    return JSON.parse(JSON.stringify(a));
+}
 const wordListByLength = Array.from({length:16}).map(o=>[]);
 for (const i of wordSet) {
     wordListByLength[i.length].push(i);
@@ -57,7 +60,7 @@ function bestWordAlone(letters) {
     }
     return [bestPoints,bestWords];
 }
-function findMatches(expression,length,hash) {
+function findMatches(expression,length,hash) { // 36% of 65%
     const matches = [];
     let hashString = Array.from(hash);
     let foundLetter = false;
@@ -66,8 +69,9 @@ function findMatches(expression,length,hash) {
         else foundLetter = true;
     }
     if (!(hashString.join("") in wordsByHash)) return [];
+    const a = new RegExp(`^${expression}$`,"g");
     for (const word of wordsByHash[hashString.join("")]) {
-        if (word.match(new RegExp(`^${expression}$`,"g"))) {
+        if (word.match(a)) {
             matches.push(word);
         }
     }
@@ -114,6 +118,7 @@ function isValidRow(row) {
     return true;
 }
 function solveBoard(board, hand) {
+    console.time("solve");
     const rows = Array.from({length:15}).map(o=>"");
     const cols = Array.from({length:15}).map(o=>"");
     const handLetters = {};
@@ -188,6 +193,7 @@ function solveBoard(board, hand) {
         if (a > bestScore) {bestScore = a;bestWord = b;}
         if (c > bestScore) {bestScore = c;bestWord = d;}
     }
+    console.timeEnd("solve");
     return [bestScore, bestWord];
 }
 
