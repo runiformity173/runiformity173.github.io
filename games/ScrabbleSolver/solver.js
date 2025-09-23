@@ -118,7 +118,7 @@ function isValidRow(row) {
     }
     return true;
 }
-function solveFirstTurn(board,handLetters,blanks) {
+function solveFirstTurn(board,hand,handLetters,blanks) {
     let regexString = "[A-Z]";
     let hashString = ".";
     let bestScore = 0;
@@ -139,7 +139,6 @@ function solveFirstTurn(board,handLetters,blanks) {
             }
         }
     }
-    console.log(bestScore,bestWord);
     return [bestScore,bestWord];
 }
 function solveBoard(board, hand) {
@@ -164,7 +163,7 @@ function solveBoard(board, hand) {
         }
     }
     if (!foundAnything) {
-        return solveFirstTurn(board,handLetters,blanks);
+        return solveFirstTurn(board,hand,handLetters,blanks);
     }
     const colRegexes = [];
     const colHashes = [];
@@ -271,6 +270,7 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
 
 function playGame(seed) {
     random = new Alea(seed);
+    const gameBoard = Array.from({length:15}).map(o=>Array.from({length:15}).map(p=>""));
     const simulatedBag = ["A","A","A","A","A","A","A","A","A","B","B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E","F","F","G","G","G","H","H","I","I","I","I","I","I","I","I","I","J","K","L","L","L","L","M","M","N","N","N","N","N","N","O","O","O","O","O","O","O","O","P","P","Q","R","R","R","R","R","R","S","S","S","S","T","T","T","T","T","T","U","U","U","U","V","V","W","W","X","Y","Y","Z","*","*"];
     function getTile() {
         if (simulatedBag.length == 0) return;
@@ -282,11 +282,13 @@ function playGame(seed) {
     }
     function removeTiles(hand,tiles) {
         for (const i of tiles) {
-            hand.splice(hand.index(i),1);
+            hand.splice(hand.indexOf(i),1);
         }
     }
     const player1Hand = [];
     const player2Hand = [];
+    let player1Score = 0;
+    let player2Score = 0;
     for (let i = 0;i<7;i++) {
         addTile(player1Hand);
         addTile(player2Hand);
@@ -294,11 +296,42 @@ function playGame(seed) {
     let player1Turn = true;
     while (player1Hand.length && player2Hand.length) {
         if (player1Turn) {
-            // ADD LOGIC FOR WEIGHT SWITCHING
+            // TODO: ADD LOGIC FOR WEIGHT SWITCHING
+            const [bestScore, bestData] = solveBoard(gameBoard,player1Hand.join(""));
+            const [word,index,direction,rowIndex] = bestData;
+            let y,x;
+            if (direction == "row") [y,x]=[index,rowIndex];
+            else [y,x]=[rowIndex,index];
+            for (let i = 0;i<word.length;i++) {
+                gameBoard[y][x] = word[i];
+                if (direction == "row") x++;
+                else y++;
+            }
+            player1Score += bestScore;
+            removeTiles(player1Hand,word);
+            for (let i = 0;i<word.length;i++) addTile(player1Hand)
+        } else {
+            const [bestScore, bestData] = solveBoard(gameBoard,player2Hand.join(""));
+            const [word,index,direction,rowIndex] = bestData;
+            let y,x;
+            if (direction == "row") [y,x]=[index,rowIndex];
+            else [y,x]=[rowIndex,index];
+            for (let i = 0;i<word.length;i++) {
+                gameBoard[y][x] = word[i];
+                if (direction == "row") x++;
+                else y++;
+            }
+            player2Score += bestScore;
+            removeTiles(player2Hand,word);
+            for (let i = 0;i<word.length;i++) addTile(player2Hand)
         }
-        const [bestScore, bestWord] = solveBoard
         player1Turn = !player1Turn;
     }
+    console.log(player1Score,player2Score);
+    gameBoard.push([],[]);
+    window.localStorage.setItem("scrabbleSolver",JSON.stringify(gameBoard));
+    loadBoard();
+    saveBoard();
+    console.log(gameBoard);
 }
-playGame("123");
 // [["L","A","P","","","","","V","I","T","A","E","","","C"],["","R","A","J","","","","","","W","I","N","D","E","R"],["","","D","I","F","","","","Q","I","","","","","Y"],["","","","N","E","O","N","","I","N","","","","",""],["","","","","R","E","A","M","","G","","","","",""],["C","H","O","R","E","","","A","P","E","","","","",""],["U","","","","","S","A","M","O","S","A","","","",""],["T","","","","","","W","A","X","","A","G","O","N","S"],["E","T","","","","","","","","","","","F","O","E"],["L","O","","","","","","","","","","","","B","I"],["Y","O","","","","","","","","","","","","",""],["","N","","","","","","","","","","","","",""],["","I","","","","","","","","","","","","",""],["","E","","","","","","","","","","","","",""],["","","","","","","","","","","","","","",""],["L","O","I","U","E","B","S"],["A","A","A","A","A","A","A","A","A","B","B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E","F","F","G","G","G","H","H","I","I","I","I","I","I","I","I","I","J","K","L","L","L","L","M","M","N","N","N","N","N","N","O","O","O","O","O","O","O","O","P","P","Q","R","R","R","R","R","R","S","S","S","S","T","T","T","T","T","T","U","U","U","U","V","V","W","W","X","Y","Y","Z","*","*"]]
