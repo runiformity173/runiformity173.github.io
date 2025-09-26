@@ -1,7 +1,7 @@
 // LIMITATIONS: if 2 same letters and one is a blank, might not put correct one on triple letter spot or vertical play.
 // Score remaining letters in hand, under-/over-valued?
 
-// ~790-840ms for 1 game (seed "123") currently
+// ~770ms for 1 game (seed "123") currently
 
 const wordSet = new Set(wordList);
 const alphabetSet = new Set("QWERTYUIOPASDFGHJKLZXCVBNM");
@@ -77,9 +77,9 @@ function bestWordAlone(letters) {
     return [bestPoints,bestWords];
 }
 
-function matchesRegex(expression,word) {
-    for (let j = 0;j<expression.length;j++) {
-        const i = expression[j];
+function matchesRegex(expressionArr,word) {
+    for (let j = expressionArr.length-1;j>-1;j--) {
+        const i = expressionArr[j];
         if (i != "[A-Z]" && !(i.length==1?i:i.slice(1,-1)).includes(word[j])) return false;
     }
     return true;
@@ -127,10 +127,10 @@ function solveRow(board, index, direction, row, rowRegex, rowHash, handLetters, 
                 }
                 for (const l of findMatches(c,cc,j-i+1,rowHash.slice(i,j+1))) {
                     if (canPlayWord(newLetters,l,blanks)) {
-                        const score = scorePlay(board,l,index,i,direction,row,handLetters,newLetters,blanks);
+                        const [score, playedLetters, wordAsPlayed] = scorePlay(board,l,index,i,direction,row,handLetters,newLetters,blanks);
                         if (score > bestScore) {
                             bestScore = score;
-                            bestWord = [l, index, direction, i];
+                            bestWord = [l, index, direction, i, playedLetters, wordAsPlayed];
                         }
                     }
                 }
@@ -164,10 +164,10 @@ function solveFirstTurn(board,hand,handLetters,blanks) {
             if (canPlayWord(handLetters,l,blanks)) {
                 for (let k = 0;k<8;k++) {
                     if (k+j < 7) continue;
-                    const score = scorePlay(board,l,7,k,"row","               ",handLetters,handLetters,blanks);
+                    const [score, playedLetters, wordAsPlayed] = scorePlay(board,l,7,k,"row","               ",handLetters,handLetters,blanks);
                     if (score > bestScore) {
                         bestScore = score;
-                        bestWord = [l, 7, "row", k];
+                        bestWord = [l, 7, "row", k, playedLetters, wordAsPlayed];
                     }
                 }
             }
@@ -178,6 +178,7 @@ function solveFirstTurn(board,hand,handLetters,blanks) {
 function solveBoard(board, hand) {
     const rows = Array.from({length:15}).map(o=>"");
     const cols = Array.from({length:15}).map(o=>"");
+    const leftInBag = ["A","A","A","A","A","A","A","A","A","B","B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E","F","F","G","G","G","H","H","I","I","I","I","I","I","I","I","I","J","K","L","L","L","L","M","M","N","N","N","N","N","N","O","O","O","O","O","O","O","O","P","P","Q","R","R","R","R","R","R","S","S","S","S","T","T","T","T","T","T","U","U","U","U","V","V","W","W","X","Y","Y","Z","*","*"];
     const handLetters = {};
     let bestScore = 0;
     let bestWord = [];
@@ -185,6 +186,7 @@ function solveBoard(board, hand) {
     for (const i of hand) {
         if (alphabetSet.has(i)) handLetters[i] = handLetters[i]+1||1;
         else if (i == "*") blanks++;
+        leftInBag.splice(leftInBag.indexOf(i), 1);
     }
     let foundAnything = false;
     for (let row = 0;row<15;++row) {
@@ -192,6 +194,8 @@ function solveBoard(board, hand) {
             let i = board[row][col].toUpperCase();
             if (i == "") i = " ";
             else foundAnything = true;
+            const a = leftInBag.indexOf(i.toUpperCase())
+            if (a > -1) leftInBag.splice(a, 1);
             rows[row] += i;
             cols[col] += i;
         }
@@ -263,13 +267,18 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
     let extra = 0;
     let mult = 1;
     let newLetters = 0;
+    let playedLetters = "";
     const blankPositions = wordBlanksPosition(newLetterDict,word);
+    let wordAsPlayed = "";
     for (let i = index;i < index+word.length;i++) {
         if (row[i] == " ") {
             newLetters++;
+            playedLetters += word[i-index];
             const [wordMult,letterMult] = getBoardSpecial(direction=="row"?rowIndex:i,direction=="row"?i:rowIndex);
             mult *= wordMult;
-            points += blankPositions.includes(i-index)?0:letterPoints[word[i-index]]*letterMult; // figure out which are blanks
+            const isABlank = blankPositions.includes(i-index);
+            points += isABlank?0:letterPoints[word[i-index]]*letterMult; // figure out which are blanks
+            wordAsPlayed += isABlank?word[i-index].toLowerCase():word[i-index].toUpperCase();
             if (direction == "col") {
                 let l = rowIndex;
                 let r = rowIndex;
@@ -292,6 +301,7 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
                 if (l != r) extra += blankPositions.includes(i-index)?0:letterPoints[word[i-index]]*letterMult*wordMult;
             }
         } else {
+            wordAsPlayed += row[i];
             points += letterPoints[row[i]];
         }
     }
@@ -299,7 +309,7 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
     points += extra;
     if (newLetters == 7) points += 50;
     // Add remaining letters scoring eventually.
-    return points;
+    return [points,playedLetters,wordAsPlayed];
 }
 
 function playGame(seed) {
@@ -330,39 +340,40 @@ function playGame(seed) {
     }
     let player1Turn = true;
     while (player1Hand.length && player2Hand.length) {
+        let newTiles = 0;
         if (player1Turn) {
             // TODO: ADD LOGIC FOR WEIGHT SWITCHING
             const [bestScore, bestData] = solveBoard(gameBoard,player1Hand.join(""));
-            const [word,index,direction,rowIndex] = bestData;
+            const [word,index,direction,rowIndex, playedLetters, wordAsPlayed] = bestData;
             if (bestScore > 0) {
                 let y,x;
                 if (direction == "row") [y,x]=[index,rowIndex];
                 else [y,x]=[rowIndex,index];
                 for (let i = 0;i<word.length;i++) {
-                    gameBoard[y][x] = word[i];
+                    if (gameBoard[y][x] == "") gameBoard[y][x] = wordAsPlayed[i];
                     if (direction == "row") x++;
                     else y++;
                 }
                 player1Score += bestScore;
-                removeTiles(player1Hand,word);
-                for (let i = 0;i<word.length;i++) addTile(player1Hand)
+                removeTiles(player1Hand,playedLetters);
+                for (let i = 0;i<playedLetters.length;i++) addTile(player1Hand)
             }
         } else {
             const [bestScore, bestData] = solveBoard(gameBoard,player2Hand.join(""));
-            const [word,index,direction,rowIndex] = bestData;
+            const [word,index,direction,rowIndex, playedLetters, wordAsPlayed] = bestData;
             if (bestScore > 0) {
                 let y,x;
                 if (direction == "row") [y,x]=[index,rowIndex];
                 else [y,x]=[rowIndex,index];
-                for (let i = 0;i<word.length;i++) {
-                    gameBoard[y][x] = word[i];
+                for (let i = 0;i<wordAsPlayed.length;i++) {
+                    if (gameBoard[y][x] == "") gameBoard[y][x] = wordAsPlayed[i];
                     if (direction == "row") x++;
                     else y++;
                 }
                 player2Score += bestScore;
-                removeTiles(player2Hand,word);
-                for (let i = 0;i<word.length;i++) addTile(player2Hand)
-            } else {console.log(player2Hand);break;}
+                removeTiles(player2Hand,playedLetters);
+                for (let i = 0;i<playedLetters.length;i++) addTile(player2Hand)
+            } else {break};
         }
         player1Turn = !player1Turn;
     }

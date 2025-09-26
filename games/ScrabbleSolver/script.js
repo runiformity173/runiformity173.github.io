@@ -69,7 +69,7 @@ function acceptSuggestion() {
     });
     saveBoard();
 }
-function displaySolution([word,index,direction,rowIndex],) {
+function displaySolution([word,index,direction,rowIndex,playedLetters,wordAsPlayed],) {
     clearDisplayedSolution();
     let y,x;
     if (direction == "row") [y,x]=[index,rowIndex];
