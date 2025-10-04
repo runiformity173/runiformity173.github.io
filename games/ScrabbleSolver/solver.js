@@ -1,5 +1,6 @@
 // LIMITATIONS: if 2 same letters and one is a blank, might not put correct one on triple letter spot or vertical play.
 // Score remaining letters in hand, under-/over-valued?
+// ADD points for going out during play evaluation
 
 // ~940ms for 1 game (seed "123") currently
 
@@ -7,6 +8,7 @@ const wordSet = new Set(wordList);
 const alphabetSet = new Set("QWERTYUIOPASDFGHJKLZXCVBNM");
 const wordsByHash = {};
 let random;
+window.calibration = false;
 function repair(a,b) {
     for (const i of b) a[i] += 1;
 }
@@ -26,6 +28,18 @@ for (const i of wordSet) {
 
 function getBoardSpecial(y,x) {
     return specialBoard[y][x];
+}
+function getVowelProportion(bag,cull=false) {
+    if (cull && bag.length < 7) return -1;
+    vowels = 0;
+    for (const i of bag) 
+        if ("AEIOU".includes(i))
+            vowels++;
+    return vowels/bag.length;
+}
+function punishVowelProportion(p) {
+    const dist = Math.abs(window.idealVowelProportion-p);
+    return dist*window.idealVowelPunisher;
 }
 function canPlayWord(letters, word, blanks) {
     const repairList = [];
@@ -118,7 +132,7 @@ function solveRow(board, index, direction, row, rowRegex, rowHash, handLetters, 
             c += rowRegex[j];
             cc.push(rowRegex[j]);
             if (validA && validB && (j == 14 || rowRegex[j+1].includes("["))) {
-                const newLetters = handLetters;
+                const newLetters = JSON.parse(JSON.stringify(handLetters));
                 for (let k = i; k <= j;k++) {
                     if (alphabetSet.has(row[k])) {
                         if (row[k] in newLetters) newLetters[row[k]]++;
@@ -134,11 +148,11 @@ function solveRow(board, index, direction, row, rowRegex, rowHash, handLetters, 
                         }
                     }
                 }
-                for (let k = i; k <= j;k++) {
-                    if (alphabetSet.has(row[k])) {
-                        newLetters[row[k]]--;
-                    }
-                }
+                // for (let k = i; k <= j;k++) {
+                //     if (alphabetSet.has(row[k])) {
+                //         newLetters[row[k]]--;
+                //     }
+                // }
             }
         }
     }
@@ -201,7 +215,7 @@ function solveBoard(board, hand) {
         }
     }
     if (!foundAnything) {
-        return solveFirstTurn(board,hand,handLetters,blanks,bag);
+        return solveFirstTurn(board,hand,handLetters,blanks,leftInBag);
     }
     const colRegexes = [];
     const colHashes = [];
@@ -254,8 +268,8 @@ function solveBoard(board, hand) {
         rowHashes.push(h);
     }
     for (let i = 0;i<15;i++) {
-        const [a,b] = solveRow(board, i, "col", cols[i], colRegexes[i], colHashes[i], handLetters, blanks, bag);
-        const [c,d] = solveRow(board, i, "row", rows[i], rowRegexes[i], rowHashes[i], handLetters, blanks, bag);
+        const [a,b] = solveRow(board, i, "col", cols[i], colRegexes[i], colHashes[i], handLetters, blanks, leftInBag);
+        const [c,d] = solveRow(board, i, "row", rows[i], rowRegexes[i], rowHashes[i], handLetters, blanks, leftInBag);
         if (a > bestScore) {bestScore = a;bestWord = b;}
         if (c > bestScore) {bestScore = c;bestWord = d;}
     }
@@ -310,9 +324,24 @@ function scorePlay(board, word, rowIndex, index, direction, row, handLetters, ne
     if (newLetters == 7) points += 50;
     let score = points;
     let used;
-    if (window.firstPlayerTurn) used = weighting1;
-    else used = weighting2;
-    for (const i of playedLetters) score -= used[i];
+    let remainingHand = "";
+    for (const i in handLetters) remainingHand += i.repeat(handLetters[i]||blanks-(playedLetters.split(i).length - 1));
+    if (bag.length > 7) {
+        if (window.firstPlayerTurn) used = weighting1;
+        else used = weighting2;
+        for (const i of playedLetters) score -= used[i];
+        const bagVowelProportion = getVowelProportion(bag,true);
+        if (bagVowelProportion > -1) {
+            const handVowelProportion = getVowelProportion(remainingHand);
+            let predictedNewProportion = handVowelProportion*remainingHand.length/7+bagVowelProportion*(1-remainingHand.length)/7;
+            score -= punishVowelProportion(predictedNewProportion);
+        }
+    } else {
+        for (const i of playedLetters) score += letterPoints[i]/2;
+        if (remainingHand.length == 0) 
+            for (const i of bag)
+                score += letterPoints[i]*2;
+    }
     return [score,playedLetters,wordAsPlayed,points];
 }
 
@@ -348,7 +377,6 @@ function playGame(seed,display=false) {
         let newTiles = 0;
         if (player1Turn) {
             window.firstPlayerTurn = true;
-            // TODO: ADD LOGIC FOR WEIGHT SWITCHING
             const [bestScore, bestData] = solveBoard(gameBoard,player1Hand.join(""));
             const [word,index,direction,rowIndex, playedLetters, wordAsPlayed, points] = bestData;
             if (word) {
@@ -397,7 +425,7 @@ function playGame(seed,display=false) {
             player1Score += letterPoints[i];
             player2Score -= letterPoints[i];
         }
-    } else {
+    } else if (player2Hand.length == 0) {
         for (const i of player1Hand) {
             player2Score += letterPoints[i];
             player1Score -= letterPoints[i];
@@ -411,5 +439,7 @@ function playGame(seed,display=false) {
         loadBoard();
         saveBoard();
     }
+    window.TEST2++;
+    if (player1Score>player2Score) window.TEST++;
     return [player1Score, player2Score];
 }

@@ -1,3 +1,6 @@
+window.idealVowelProportion = 3/7;
+window.idealVowelPunisher = 50;
+//0.9123778772999969
 let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const alphabets = (alphabet+alphabet.toLowerCase()).split("");
 alphabet = alphabet.split("")
@@ -31,7 +34,37 @@ const letterPoints = {
     "*":0,
 };
 let weighting1 = structuredClone(letterPoints);
-let weighting2 = structuredClone(weighting1);
+let weighting2 = {
+    "A":0,
+    "B":0,
+    "C":0,
+    "D":0,
+    "E":0,
+    "F":0,
+    "G":0,
+    "H":0,
+    "I":0,
+    "J":0,
+    "K":-3,
+    "L":0,
+    "M":0,
+    "N":0,
+    "O":0,
+    "P":0,
+    "Q":0,
+    "R":0,
+    "S":6,
+    "T":0,
+    "U":0,
+    "V":0,
+    "W":0,
+    "X":0,
+    "Y":0,
+    "Z":0,
+    "*":8,
+};
+for (const i in weighting1) weighting1[i] = 0;
+for (const i in weighting2) weighting2[i] = 0;
 for (const i in letterPoints) letterPoints[i.toLowerCase()] = 0;
 const specialBoard = [
     [[3,1],[1,1],[1,1],[1,2],[1,1],[1,1],[1,1],[3,1],[1,1],[1,1],[1,1],[1,2],[1,1],[1,1],[3,1]],
