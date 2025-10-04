@@ -110,4 +110,3 @@ function testSolve() {
     for (let i = 0;i<100;i++) solveBoard(board.map(row=>row.map(o=>o.firstElementChild.value)),hand);
     console.timeEnd("100")
 }
-if (location.href.includes("localhost")) playGame("test")

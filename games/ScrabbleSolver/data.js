@@ -29,7 +29,10 @@ const letterPoints = {
     "Y":4,
     "Z":10,
     "*":0,
-};for (const i in letterPoints) letterPoints[i.toLowerCase()] = 0;
+};
+let weighting1 = structuredClone(letterPoints);
+let weighting2 = structuredClone(weighting1);
+for (const i in letterPoints) letterPoints[i.toLowerCase()] = 0;
 const specialBoard = [
     [[3,1],[1,1],[1,1],[1,2],[1,1],[1,1],[1,1],[3,1],[1,1],[1,1],[1,1],[1,2],[1,1],[1,1],[3,1]],
     [[1,1],[2,1],[1,1],[1,1],[1,1],[1,3],[1,1],[1,1],[1,1],[1,3],[1,1],[1,1],[1,1],[2,1],[1,1]],
