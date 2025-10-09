@@ -45,14 +45,28 @@ help.style.top = "10px";
 help.style.width = "50px";
 help.style.height = "50px";
 help.innerHTML = '<img src="/images/help.png" style="width:100%;height:100%;opacity:0.5;border-radius:100px;">';
-// help.addEventListener("keydown",function(){
-//   overlay.style.display = "block";
-//   overlay.style.transition = "opacity 0.2s ease-out";
-//   setTimeout(function(){overlay.style.opacity = 0.5;},0);
-//   helpIsDisplayed = true;
-// })
+help.addEventListener("click",function(){
+  overlay.style.display = "block";
+  overlay.style.transition = "opacity 0.2s ease-out";
+  setTimeout(function(){overlay.style.opacity = 0.5;},0);
+  helpIsDisplayed = true;
+})
 // document.body.appendChild(help);
 window.addEventListener("load",function(){document.body.appendChild(overlay)});
 if (window.portfolioText && window.location.hash == "#portfolio") {
   console.log("AYYYY");
+  const container = document.createElement("div");
+  const blur = document.createElement("div");
+  document.getElementById("container").style.filter = "blur(2px)";
+  container.id = "portfolio-instructions-container";
+  blur.id = "blur-screen-instructions";
+  blur.innerHTML = `<div style="width:100%;height:1000%;position:fixed;top:0;left:0;background-color:rgba(0,0,0,0.5);">
+  </div>`;
+  container.innerHTML = `<div style="border-radius:20px;background-color:#212529;width:max(50vw,min(100vw,400px));height:90%;position:fixed;left:50%;top:5%;transform:translateX(-50%);overflow-y: scroll;">
+    <div style="margin:10px">${window.portfolioText}
+    <div class="text-center"><button class="btn btn-outline-light" onclick="document.getElementById('blur-screen-instructions').remove();this.closest('#portfolio-instructions-container').remove();document.getElementById('container').style.filter = ''">Close</button></div>
+    </div>
+  </div>`;
+  document.body.appendChild(blur);
+  document.body.appendChild(container);
 }
