@@ -151,11 +151,11 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   } else if (module == "spell") {
     if (addDefault) {
-      box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell="+extraData.name.toLowerCase().replace(" ","-")+"&savebutton=false";
+      box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell="+extraData.name.toLowerCase().replaceAll(" ","-")+"&savebutton=false";
     }
   } else if (module == "monster") {
     if (addDefault) {
-      box.children[1].src = "https://runiformity173.github.io/dnd/MonsterSearch/display/#"+extraData.name.toLowerCase().replace(" ","-");
+      box.children[1].src = "https://runiformity173.github.io/dnd/MonsterSearch/display/#"+extraData.name.toLowerCase().replaceAll(" ","-");
     }
   }
   if (addDefault) save(box);
@@ -229,23 +229,39 @@ function setMaxDragPos() {
 }
 setMaxDragPos();
 window.addEventListener("resize",setMaxDragPos)
+function getHoveredBox(e) {
+  return Array.from(document.elementsFromPoint(e.clientX, e.clientY)).filter(o=>o.classList.contains("static-box"))[0];
+}
 document.addEventListener("mousemove", e => {
   if (dragging < 0) return;
   const dragged = document.getElementById("box-"+dragging).parentElement;
   dragged.style.left = Math.min(maxDragPos[0],Math.max(0,e.clientX-dragStartPos[1]))+"px";
   dragged.style.top = Math.min(maxDragPos[1],Math.max(0,e.clientY-dragStartPos[0]))+"px";
+  const box = getHoveredBox(e);
+  if (box) {
+
+  }
 });
 window.addEventListener("mouseout", e => {
   if (e.x < 0 || e.y < 0 || e.x > window.innerWidth || e.y > window.innerHeight) {
-    stopDragging();
+    stopDragging(e);
   }
 });
 window.addEventListener("mouseup",e => {
-  stopDragging();
+  stopDragging(e);
 });
-function stopDragging() {
+function stopDragging(e) {
   if (dragging === -1) return;
-  save(document.getElementById("box-"+dragging));
-  document.getElementById("box-"+dragging).classList.remove("dragging");
+  const box = getHoveredBox(e);
+  if (box && box.querySelector(".addModuleContainer")) {
+    box.innerHTML = document.getElementById("box-"+dragging).innerHTML;
+    document.getElementById("box-"+dragging).closest(".floating-box-container").remove();
+    save(box);
+    save(null);
+  } else {
+    console.log("wouldn't")
+    save(document.getElementById("box-"+dragging));
+    document.getElementById("box-"+dragging).classList.remove("dragging");
+  }
   dragging = -1;
 }

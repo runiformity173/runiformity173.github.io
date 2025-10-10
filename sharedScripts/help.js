@@ -60,9 +60,9 @@ if (window.portfolioText && window.location.hash == "#portfolio") {
   document.getElementById("container").style.filter = "blur(2px)";
   container.id = "portfolio-instructions-container";
   blur.id = "blur-screen-instructions";
-  blur.innerHTML = `<div style="width:100%;height:1000%;position:fixed;top:0;left:0;background-color:rgba(0,0,0,0.5);">
+  blur.innerHTML = `<div style="z-index:999998;width:100%;height:1000%;position:fixed;top:0;left:0;background-color:rgba(0,0,0,0.5);">
   </div>`;
-  container.innerHTML = `<div style="border-radius:20px;background-color:#212529;width:max(50vw,min(100vw,400px));height:90%;position:fixed;left:50%;top:5%;transform:translateX(-50%);overflow-y: scroll;">
+  container.innerHTML = `<div style="z-index:999999;border-radius:20px;background-color:#212529;width:max(50vw,min(100vw,400px));height:90%;position:fixed;left:50%;top:5%;transform:translateX(-50%);overflow-y: scroll;">
     <div style="margin:10px">${window.portfolioText}
     <div class="text-center"><button class="btn btn-outline-light" onclick="document.getElementById('blur-screen-instructions').remove();this.closest('#portfolio-instructions-container').remove();document.getElementById('container').style.filter = ''">Close</button></div>
     </div>
