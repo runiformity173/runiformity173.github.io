@@ -5,6 +5,7 @@ let TURNS = 150;
 let GENE_NUMBER = 16;
 let INTERNAL_NEURONS = 5;
 let MUTATION_CHANCE = 0.05;
+let SURVIVAL_CONDITION = document.getElementById("condition-select").value;
 
 
 let WIDTH = 128;
@@ -93,12 +94,14 @@ function survives(creature, board) {
   const y = creature.y;
   const x = creature.x;
   
-  return Math.abs(WIDTH-x-y) < 7 || Math.abs(x-y) < 7; // Cross
-  return creature.midX < WIDTH/2 && creature.x > WIDTH / 2; // Left half first half, right second
-  return Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-2) < 1; // Space out
-  return Math.abs(x/2-y+HEIGHT/4) < 7; // -1/2 slope line
-  return x > 120; // Right wall
-  return Math.abs(WIDTH-x-y) < 7; // Diagonal
-  return (x >= 48 && x <= 80) || (y >= 48 && y <= 80); // Plus
-  return x >= 48 && x <= 80; // Vertical line
+  return {
+    "Cross": ()=>Math.abs(WIDTH-x-y) < 7 || Math.abs(x-y) < 7,
+    "Change Sides Halfway Through": ()=>creature.midX < WIDTH/2 && creature.x > WIDTH / 2,
+    "Spread Out": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-2) < 1,
+    "Sloped Line": ()=>Math.abs(x/2-y+HEIGHT/4) < 7,
+    "Right Wall": ()=>x > 120, // Right wall
+    // "Diagonal": ()=>Math.abs(WIDTH-x-y) < 7, // Diagonal
+    "Plus Sign": ()=>(x >= 48 && x <= 80) || (y >= 48 && y <= 80), // Plus
+    "Vertical Line": ()=>x >= 48 && x <= 80, // Vertical line
+  }[SURVIVAL_CONDITION]();
 }

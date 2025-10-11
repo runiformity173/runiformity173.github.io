@@ -16,8 +16,17 @@
     <p>Generations: <span id="generations">0</span></p>
     <p>Survived: <span id="survived">?</span></p>
     <br>
-    <label for="mutationsCheckbox">Mutations:&nbsp;</label><input id="mutationsCheckbox" type="checkbox" checked onchange="MUTATION_CHANCE = this.checked?0.05:0;"><br>
-    <label for="speedCheckbox">Fast:&nbsp;</label><input type="checkbox" id="speedCheckbox" checked onchange="UPDATES = this.checked?40:1;"><br>
+    <label for="mutationsCheckbox">Mutations:&nbsp;</label><input id="mutationsCheckbox" type="checkbox" checked onchange="MUTATION_CHANCE = this.checked?0.05:0;" onload="this.checked=true"><br>
+    <label for="speedCheckbox">Fast:&nbsp;</label><input type="checkbox" id="speedCheckbox" checked onchange="UPDATES = this.checked?40:1;" onload="this.checked=true"><br>
+    Survival Condition: <select onchange="SURVIVAL_CONDITION = this.value;" id="condition-select">
+      <option>Cross</option>
+      <option>Change Sides Halfway Through</option>
+      <option>Spread Out</option>
+      <option>Sloped Line</option>
+      <option>Right Wall</option>
+      <option>Plus Sign</option>
+      <option>Vertical Line</option>
+    </select>
     </div>
   <!-- <script src="data.js"></script> -->
   <script src="creature.js"></script>
