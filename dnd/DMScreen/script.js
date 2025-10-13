@@ -262,8 +262,9 @@ document.addEventListener("mousemove", e => {
   dragged.style.left = Math.min(maxDragPos[0],Math.max(0,e.clientX-dragStartPos[1]))+"px";
   dragged.style.top = Math.min(maxDragPos[1],Math.max(0,e.clientY-dragStartPos[0]))+"px";
   const box = getHoveredBox(e);
-  if (box) {
-
+  [...document.querySelectorAll(".hovered-box")].forEach(o=>o.classList.remove("hovered-box"));
+  if (box && box.querySelector(".addModuleContainer")) {
+    box.classList.add("hovered-box");
   }
 });
 window.addEventListener("mouseout", e => {
@@ -276,6 +277,7 @@ window.addEventListener("mouseup",e => {
 });
 function stopDragging(e) {
   if (dragging === -1) return;
+  [...document.querySelectorAll(".hovered-box")].forEach(o=>o.classList.remove("hovered-box"));
   const box = getHoveredBox(e);
   if (box && box.querySelector(".addModuleContainer")) {
     box.innerHTML = document.getElementById("box-"+dragging).innerHTML;
