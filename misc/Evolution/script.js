@@ -4,7 +4,7 @@ let TURNS = 150;
 
 let GENE_NUMBER = 16;
 let INTERNAL_NEURONS = 5;
-let MUTATION_CHANCE = 0.05;
+let MUTATION_CHANCE = document.getElementById("mutationsCheckbox").checked?0.05:0;
 let SURVIVAL_CONDITION = document.getElementById("condition-select").value;
 
 
@@ -97,7 +97,8 @@ function survives(creature, board) {
   return {
     "Cross": ()=>Math.abs(WIDTH-x-y) < 7 || Math.abs(x-y) < 7,
     "Change Sides Halfway Through": ()=>creature.midX < WIDTH/2 && creature.x > WIDTH / 2,
-    "Spread Out": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-2) < 1,
+    "Spread Out": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))) < 1,
+    "1-2 Neighbors": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-1.5)+0.5 < 2,
     "Sloped Line": ()=>Math.abs(x/2-y+HEIGHT/4) < 7,
     "Right Wall": ()=>x > 120, // Right wall
     // "Diagonal": ()=>Math.abs(WIDTH-x-y) < 7, // Diagonal

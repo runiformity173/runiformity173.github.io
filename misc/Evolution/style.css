@@ -1,6 +1,7 @@
 html {
   height: 100%;
   width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   /* overflow: hidden; */
 }
 * {
@@ -18,4 +19,8 @@ html {
   right:0px;
   top:0px;
   text-align:right;
+  width: calc(100vw - 100vh - 2rem);
+}
+.accordion-body br::after {
+  content: "<span style='width:1rem;'>";
 }

@@ -1,7 +1,7 @@
 const DISPLAY_WIDTH = 1024;
 const DISPLAY_HEIGHT = 1024;
 
-let UPDATES = 40;
+let UPDATES = document.getElementById("speedCheckbox").checked?40:1;
 
 const CREATURE_RADIUS = DISPLAY_WIDTH/WIDTH/2;
 const WIDTH_MULTIPLIER = DISPLAY_WIDTH/WIDTH;

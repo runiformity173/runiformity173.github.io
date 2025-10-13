@@ -16,19 +16,99 @@
     <p>Generations: <span id="generations">0</span></p>
     <p>Survived: <span id="survived">?</span></p>
     <br>
-    <label for="mutationsCheckbox">Mutations:&nbsp;</label><input id="mutationsCheckbox" type="checkbox" checked onchange="MUTATION_CHANCE = this.checked?0.05:0;" onload="this.checked=true"><br>
-    <label for="speedCheckbox">Fast:&nbsp;</label><input type="checkbox" id="speedCheckbox" checked onchange="UPDATES = this.checked?40:1;" onload="this.checked=true"><br>
+    <label for="mutationsCheckbox">Mutations:&nbsp;</label><input id="mutationsCheckbox" type="checkbox" checked onchange="MUTATION_CHANCE = this.checked?0.05:0;"><br>
+    <label for="speedCheckbox">Fast:&nbsp;</label><input type="checkbox" id="speedCheckbox" checked onchange="UPDATES = this.checked?40:1;"><br>
     Survival Condition: <select onchange="SURVIVAL_CONDITION = this.value;" id="condition-select">
       <option>Cross</option>
       <option>Change Sides Halfway Through</option>
       <option>Spread Out</option>
+      <option>1-2 Neighbors</option>
       <option>Sloped Line</option>
       <option>Right Wall</option>
       <option>Plus Sign</option>
       <option>Vertical Line</option>
     </select>
+    <br><br><br>
+    <div style="text-align: left;">
+      <div class="accordion" id="infoAccordion">
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button bg-dark text-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructions" aria-expanded="true" aria-controls="collapseInstructions">
+              Instructions
+            </button>
+          </h2>
+          <div id="collapseInstructions" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              You can individually adjust whether mutations are enabled and whether the simulation should be fast or not.<br>
+              While <strong>mutations</strong> are enabled, surviving creatures have a chance to mutate their genes when they reproduce. While this is enabled, creatures can adapt and improve. However, most mutations will just make the individual creature worse and not survive.<br>
+              While <strong>fast mode</strong> is enabled, the creatures can evolve much faster (in real time) because the simulation is accelerated. However, this makes it difficult to see what the creatures are actually doing, which is why you can turn it off to get a better look.<br>
+              You can also change the <strong>survival condition</strong> to decide how creatures survive and, therefore, what they adapt towards.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasics" aria-expanded="false" aria-controls="collapseBasics">
+              Basic Information
+            </button>
+          </h2>
+          <div id="collapseBasics" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              These [1024]* creatures all have a neural network determining their behavior, with sensors, internal nodes, action nodes, and weighted connections. If a creature meets the survival condition at the end of the generation, it asexually reproduces up to 2 offspring, and possibly mutates. The rest of the [1024] after offspring are filled with creatures with random brains.<br>
+              A generation is [150] turns, during which each creature reads inputs from their sensors and makes a decision based off of the highest value output node after running the inputs through that creature's neural network.<br>
+              Since this meets the requirements for natural selection, the creatures will (eventually) evolve to fit the required survival condition.<br>
+              <br>
+              *Every number I put brackets around can be changed easily in the code, but I don't trust users to mess with it
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBrains" aria-expanded="false" aria-controls="collapseBrains">
+              Brains
+            </button>
+          </h2>
+          <div id="collapseBrains" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              Every creature's neural network is made up of [16] connections from input nodes or internal nodes to output notes or internal nodes. <br>
+              Each gene is 16 bits long. The first 5 bits represent which node the connection is from, the next 4 represent the node the connection is to (because there are many more sensors than possible actions or internal nodes), and the final 7 bits represent the weight of the connections.<br>
+              This weight is normalized to a float from -3.0 to 3.0.<br>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMutations" aria-expanded="false" aria-controls="collapseMutations">
+              Mutations
+            </button>
+          </h2>
+          <div id="collapseMutations" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              There is a [5%] chance that a creature mutates when it is born.<br>
+              The mutation is either a bit shift (left representing duplication, right representing deletion) or a change in a single bit (representing a point mutation).<br>
+              This mutation occurs in a random gene.<br>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLimitations" aria-expanded="true" aria-controls="collapseLimitations">
+              Limitations
+            </button>
+          </h2>
+          <div id="collapseLimitations" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
+            <div class="accordion-body">
+              This simulation is limited in many ways. It is mostly limited by population size and time, and therefore only relatively survival conditions can be adapted to.<br>
+              Another limitation is the brain size. With only 16 connections between up to 13 sensors, 5 internal nodes, and 10 action output nodes, there is still a lot of untapped potential for complex behavior. However, larger brains take even longer to evolve.<br>
+              As you can see, some complex survival conditions (such as the one where the creatures must change sides halfway through) take a long time due to these limitations. (Definitely wait around for that one though, it's super cool once they figure it out!)<br>
+              Also due to a display limitation, creatures oscillating between positions might be showed as two dim circles instead on some devices.
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   <!-- <script src="data.js"></script> -->
+  <script src="/bootstrap.js"></script>
   <script src="creature.js"></script>
   <script src="script.js"></script>
   <script src="display.js"></script>
