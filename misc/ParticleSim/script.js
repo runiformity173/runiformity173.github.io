@@ -122,6 +122,7 @@ function getMousePos(event) {
   const rect = canvas.getBoundingClientRect();
   const x = Math.floor((event.clientX - rect.left) * (canvas.width / rect.width));
   const y = Math.floor((event.clientY - rect.top) * (canvas.height / rect.height));
+  console.log(y,x)
   return [y, x];
 }
 

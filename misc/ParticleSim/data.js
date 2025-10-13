@@ -6,9 +6,9 @@ const DATA = [
     "density": 0,
     "state": 1,
     "color": [
-      255,
-      255,
-      255
+      33,
+      37,
+      41
     ]
   },
   {
@@ -284,9 +284,9 @@ const DATA = [
     "density": 0,
     "state": 1,
     "color": [
-      230,
-      255,
-      230
+      33,
+      60,
+      41
     ],
     "spread":{
       "0":[21,21],

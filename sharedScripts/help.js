@@ -57,7 +57,8 @@ if (window.portfolioText && window.location.hash == "#portfolio") {
   console.log("AYYYY");
   const container = document.createElement("div");
   const blur = document.createElement("div");
-  document.getElementById("container").style.filter = "blur(2px)";
+  try {document.getElementById("container").style.filter = "blur(2px)";}
+  catch {}
   container.id = "portfolio-instructions-container";
   blur.id = "blur-screen-instructions";
   blur.innerHTML = `<div style="z-index:999998;width:100%;height:1000%;position:fixed;top:0;left:0;background-color:rgba(0,0,0,0.5);">

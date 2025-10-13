@@ -17,6 +17,7 @@ html {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: pixelated;
     -ms-interpolation-mode: nearest-neighbor;
+    box-shadow: 2px 0px 0 #ffffff;
   }
   #fps {
     position:absolute;
