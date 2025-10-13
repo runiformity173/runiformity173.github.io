@@ -280,8 +280,10 @@ function stopDragging(e) {
   [...document.querySelectorAll(".hovered-box")].forEach(o=>o.classList.remove("hovered-box"));
   const box = getHoveredBox(e);
   if (box && box.querySelector(".addModuleContainer")) {
-    box.innerHTML = document.getElementById("box-"+dragging).innerHTML;
-    document.getElementById("box-"+dragging).closest(".floating-box-container").remove();
+    const from = document.getElementById("box-"+dragging);
+    box.innerHTML = "";
+    while (from.firstChild) box.appendChild(from.firstChild);
+    from.closest(".floating-box-container").remove();
     save(box);
     save(null);
   } else {

@@ -166,7 +166,7 @@
         while (document.getElementById('box-'+n)) {n += 1;}
         floating.lastElementChild.id = 'box-'+n;
         const i  = this.parentElement.parentElement;
-        floating.lastElementChild.innerHTML = i.innerHTML;
+        while (i.firstChild) floating.lastElementChild.appendChild(i.firstChild);
         save(floating.lastElementChild);
         i.innerHTML = '';
         save(i);
