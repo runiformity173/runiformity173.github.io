@@ -53,3 +53,9 @@
 .vertical {
   transform:rotate(90deg);
 }
+input[type="range"] {
+  cursor: pointer;
+}
+label {
+  cursor: pointer;
+}

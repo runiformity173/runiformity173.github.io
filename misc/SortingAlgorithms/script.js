@@ -3,7 +3,7 @@
 //  Bar view *
 let SIZE = 128;
 let HEIGHT = 128;
-let VIEW = "both";
+let VIEW = {'Colors':'color','Bars':'bar', 'Colored Bars':'both'}[document.getElementById("displayMode").value];
 let colorMap = ['#ff0000', '#ffffff', '#0000ff'];
 let swaps = [];
 Array.prototype.swap = function(i,j) {

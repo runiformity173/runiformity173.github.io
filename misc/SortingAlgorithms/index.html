@@ -13,6 +13,7 @@
 
 <body class="bg-dark text-light">
   <div id="sidebar">
+    Press me! -----&gt;<button onclick="start()" class="btn btn-outline-light"><strong>Sort</button></strong><br>
     <select class="btn btn-outline-light" id="sortMethod">
       <option>Quick Sort</option>
       <option>Anytime Quick Sort</option>
@@ -30,14 +31,15 @@
       <!-- <option>My Sort</option> -->
 
     </select><br>
-    <button onclick="start()" class="btn btn-outline-light">Sort</button>
+    Size of sorted array:<br>
+    <input type="range" min=3 max=10 value=7 step=1 onchange="changeSize(2**Number(this.value))" id="sortNumber"><p>Sorting <span id="size">128</span> items</p>
     <br>
-    <select class="btn btn-outline-light" onchange="changeView({'Color Mode':'color','Bar Mode':'bar', 'Colored Bars':'both'}[this.value]);">
+    Display As: <select class="btn btn-outline-light" id="displayMode" onchange="changeView({'Colors':'color','Bars':'bar', 'Colored Bars':'both'}[this.value]);">
       <option>Colored Bars</option>
-      <option>Color Mode</option> 
-      <option>Bar Mode</option>
+      <option>Colors</option> 
+      <option>Bars</option>
     </select>
-    <br>
+    <br><br><br>
     <template id="template">
       <span class="colorField">
         <p class="colorInput">
@@ -50,14 +52,19 @@
         <br>
       </span>
     </template>
+    <div id="verticalWrapper">
+      <label for="vertical">Vertical:&nbsp;</label><input id="vertical" type="checkbox" onchange="if (document.getElementById('output').classList.contains('vertical') != this.checked) {document.getElementById('output').classList.toggle('vertical')}">
+    </div>
+    <br>
     <div id="colorStuff">
-      <div id="verticalWrapper">
-      Vertical: <input id="vertical" type="checkbox" onchange="if (document.getElementById('output').classList.contains('vertical') != this.checked) {document.getElementById('output').classList.toggle('vertical')}"></div>
-      <div id="colorInputs"></div><button class="btn btn-outline-light" onclick="addColor('#ffffff');">Add Color</button>
-      <br>
+      <details>
+        <summary>
+          Edit Gradient
+        </summary>
+        <p><div id="colorInputs"></div><button class="btn btn-outline-light" onclick="addColor('#ffffff');">Add Color</button></p>
+      </details>
       
     </div>
-    <input type="range" min=3 max=10 value=7 step=1 onchange="changeSize(2**Number(this.value))"><p>Sorting <span id="size">128</span> items</p>
   </div>
   
   <canvas id="output" class="unpixelated">
