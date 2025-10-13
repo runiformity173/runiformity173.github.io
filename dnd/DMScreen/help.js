@@ -23,7 +23,10 @@ You can type whatever you want in here.`;
 window.portfolioText = `<h1>Instructions</h1>Select a module to add to a box and press the plus button to add it.
 Everything is saved in local storage, so you should be able to reload the page as much as you want without losing module data.
 Click the red "x" on the top right of a module to remove it.
-Click the light blue "+" on the top right of a module to pop it out into a floating window.
+Click the light blue "<span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+</svg></span>" on the top right of a module to pop it out into a floating window.
 Drag a floating window over an empty module to pop it back in.
 <h3>Initiative Tracker</h3>
 The initiative tracker starts with your default names.
@@ -38,7 +41,7 @@ You can also edit the health in the box.
 Press the red "-" button to remove an entry from the health tracker.
 <h3>Condition, Spell, Monster, and Table Select</h3>
 Start typing the name of the condition, spell, monster, or table you want to load.
-Click on the name you want in the dropdown. Without editing it further, press the plus button.
+Click on the name you want in the dropdown. Without editing it further, enter or click the plus button.
 <h4>Table Select</h4>
 If the table is rollable, you can click on the blue die expression on the top left of the table to roll on the table.
 You can roll within entries if there are dice expressions within the entry.

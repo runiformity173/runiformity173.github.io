@@ -5,6 +5,7 @@ function setCookie(name,value) {
   localStorage.setItem("DMScreen", JSON.stringify(prev));
 }
 function getCookie(name) {
+  if (location.href.includes("#portfolio") && !localStorage.getItem("DMScreen")) localStorage.setItem("DMScreen",JSON.stringify(portfolioData));
   return JSON.parse(localStorage.getItem("DMScreen") || "{}")[name] || {};
 }
 function eraseCookie(name) {   
@@ -26,6 +27,16 @@ if (!Array.isArray(getCookie("defaultPlayerList"))) {
 if (!Array.isArray(getCookie("floatingBoxes"))) {
   setCookie("floatingBoxes",[]);
 }
+function datalistInput(element) {
+    var val = element.value;
+    var opts = element.list.children;
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].value === val) {
+        element.parentElement.lastElementChild.click();
+        break;
+      }
+    }
+  }
 function load() {
   const floatingBoxes = [];
   for (const i of getCookie("floatingBoxes")) {
@@ -141,16 +152,29 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   } else if (module == "table") {
     if (addDefault) {
-      if (!(extraData.name.split(" (").slice(0,-1).join(" (") in data)) {alert("Table does not exist");console.log(extraData);return;}
+      if (!(extraData.name.split(" (").slice(0,-1).join(" (") in data)) {
+        alert("Table does not exist");
+        addModule("tableSelect",box,true);
+        return;
+      }
       loadTable(box,extraData.name.split(" (").slice(0,-1).join(" ("));
     }
   } else if (module == "condition") {
     if (addDefault) {
-      if (!(extraData.name in conditions)) {alert("Condition does not exist");return;}
+      if (!(extraData.name in conditions)) {
+        alert("Condition does not exist");
+        addModule("conditionSelect",box,true);
+        return;
+      }
       loadCondition(box,extraData.name);
     }
   } else if (module == "spell") {
     if (addDefault) {
+      if (!spells.includes(extraData.name)) {
+        alert("Spell does not exist!");
+        addModule("spellSelect",box,true);
+        return;
+      }
       box.children[1].src = "https://runiformity173.github.io/dnd/SpellSearch2024/display/?spell="+extraData.name.toLowerCase().replaceAll(" ","-")+"&savebutton=false";
     }
   } else if (module == "monster") {
@@ -259,7 +283,6 @@ function stopDragging(e) {
     save(box);
     save(null);
   } else {
-    console.log("wouldn't")
     save(document.getElementById("box-"+dragging));
     document.getElementById("box-"+dragging).classList.remove("dragging");
   }
