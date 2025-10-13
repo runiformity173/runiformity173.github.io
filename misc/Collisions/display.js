@@ -41,9 +41,15 @@ function updateDrag(e) {
     dragY = y;
   }
 }
-function stopDragging() {
+function stopDragging(event,caller=null) {
   if (!dragStatic) {staticCircles.delete(dragging);}
   dragging = -1;
+  if (caller) {
+    document.querySelector(".btn-light").classList.add("btn-outline-light");
+    document.querySelector(".btn-light").classList.remove("btn-light");
+    caller.classList.add("btn-light");
+    caller.classList.remove("btn-outline-light");
+  }
 }
 document.getElementById("output").addEventListener("mousemove",updateDrag);
 document.getElementById("output").addEventListener("mouseleave",stopDragging);
