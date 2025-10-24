@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Circle Collision | Runiformity's Websites</title>
+  <title>Collision Simulator</title>
   <meta name="description" content="A rudimentary interactive collision simulator">
   <meta name="author" content="runiformity173">
   <link href="style.css" rel="stylesheet" type="text/css" />
@@ -15,15 +15,20 @@
   <canvas id="output" width="0" height="0"></canvas>
   <div id="sidebar">
     <p>FPS: <span id="fps">?</span></p>
+    <h4>Click <strong>Dispense</strong> to see things in action!<br></h4>
+    <button class="btn btn-outline-light" onclick="DISPENSING=!DISPENSING;this.innerHTML={'Dispense':'Stop Dispensing','Stop Dispensing':'Dispense'}[this.innerHTML];">Dispense</button><br><br>
     <button class="btn btn-outline-light" onclick="PAUSED=!PAUSED;this.innerHTML={'Pause':'Unpause','Unpause':'Pause'}[this.innerHTML];" id="pauseButton">Pause</button><br><br>
-    <button class="btn btn-light" onclick="MODE=0;stopDragging(event,this);">Add Mode</button><br>
-    <button class="btn btn-outline-light" onclick="MODE=3;stopDragging(event,this);">Drag Mode</button><br>
-    <button class="btn btn-outline-light" onclick="MODE=1;stopDragging(event,this);">Static Mode</button><br>
-    <button class="btn btn-outline-light" onclick="MODE=2;stopDragging(event,this);">Link Mode</button><br>
-    Link Length: <input type="range" value="1" min="1" max="10" step="1" onchange="LINK_DISTANCE = ((this.nextElementSibling.checked)?-1:(this.value*32));"><br>
-    <label for="adaptiveLengthCheckbox">Links Preserve Current Length: </label><input id="adaptiveLengthCheckbox" type="checkbox" onchange="LINK_DISTANCE=((this.checked)?-1:(this.previousElementSibling.value*32));"><br><br>
+    <h4>Click Modes</h4>
+    <button class="btn btn-light" onclick="MODE=0;stopDragging(event,this);">Add Circles</button><br>
+    <button class="btn btn-outline-light" onclick="MODE=3;stopDragging(event,this);">Drag Circles</button><br>
+    <button class="btn btn-outline-light" onclick="MODE=1;stopDragging(event,this);">Add or Remove Physics from Circle</button><br>
+    <button class="btn btn-outline-light" onclick="MODE=2;stopDragging(event,this);">Link Circles Together</button><br>
+    Link Length: <input id="lengthSlider" type="range" value="1" min="1" max="10" step="1" onchange="LINK_DISTANCE = ((this.nextElementSibling.checked)?-1:(this.value*32));"><br>
+    <label for="adaptiveLengthCheckbox">Links Preserve Current Length: </label><input id="adaptiveLengthCheckbox" type="checkbox" onchange="LINK_DISTANCE=((this.checked)?-1:(this.previousElementSibling.value*32));enableOrDisableSlider()"><br><br>
     <br>
-        <button class="btn btn-outline-light" onclick="DISPENSING=!DISPENSING;this.innerHTML={'Dispense':'Stop Dispensing','Stop Dispensing':'Dispense'}[this.innerHTML];">Dispense</button><br>
+        
+
+    <br>
 
     <!-- <input type="file" accept="image/png" id="imageInput"> -->
   </div>

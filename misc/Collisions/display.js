@@ -183,3 +183,13 @@ function handleFileSelect(event) {
 
   reader.readAsDataURL(file);
 }
+function enableOrDisableSlider() {
+  const isChecked = document.getElementById("adaptiveLengthCheckbox").checked;
+  const slider = document.getElementById("lengthSlider");
+  if (isChecked) {
+    slider.setAttribute("disabled","true");
+  } else {
+    slider.removeAttribute("disabled");
+  }
+}
+enableOrDisableSlider();
