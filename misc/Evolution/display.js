@@ -2,6 +2,7 @@ const DISPLAY_WIDTH = 1024;
 const DISPLAY_HEIGHT = 1024;
 
 let UPDATES = document.getElementById("speedCheckbox").checked?40:1;
+let SURVIVAL_OVERLAY = document.getElementById("survivalOverlayCheckbox").checked;
 
 const CREATURE_RADIUS = DISPLAY_WIDTH/WIDTH/2;
 const WIDTH_MULTIPLIER = DISPLAY_WIDTH/WIDTH;
@@ -48,4 +49,25 @@ function frame() {
   frames++;
   requestAnimationFrame(frame);
 }
+const canvas2 = document.getElementById("survivesOverlay");
+canvas2.width = DISPLAY_WIDTH;
+canvas2.height = DISPLAY_HEIGHT;
+const ctx2 = canvas2.getContext("2d");
+function updateOverlay() {
+  ctx2.clearRect(0, 0, canvas.width, canvas.height);
+  if (!SURVIVAL_OVERLAY) {return;}
+  if (["Spread Out","1-2 Neighbors Each"].includes(SURVIVAL_CONDITION)) return;
+  ctx2.fillStyle = `rgba(255,0,0,0.5)`;
+  for (let i = 0;i<HEIGHT;i++) {
+    for (let j = 0;j<WIDTH;j++) {
+      if (survives({x:j,y:i})) {
+        ctx2.beginPath();
+        ctx2.arc(j*WIDTH_MULTIPLIER+CREATURE_RADIUS, i*HEIGHT_MULTIPLIER+CREATURE_RADIUS, CREATURE_RADIUS, 0, 2*Math.PI);
+        ctx2.closePath();
+        ctx2.fill();
+      }
+    }
+  }
+}
+updateOverlay()
 requestAnimationFrame(frame);

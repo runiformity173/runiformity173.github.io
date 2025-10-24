@@ -95,14 +95,14 @@ function survives(creature, board) {
   const x = creature.x;
   
   return {
-    "Cross": ()=>Math.abs(WIDTH-x-y) < 7 || Math.abs(x-y) < 7,
+    "In a Cross Shape": ()=>Math.abs(WIDTH-x-y) < 7 || Math.abs(x-y) < 7,
     "Change Sides Halfway Through": ()=>creature.midX < WIDTH/2 && creature.x > WIDTH / 2,
     "Spread Out": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))) < 1,
-    "1-2 Neighbors": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-1.5)+0.5 < 2,
-    "Sloped Line": ()=>Math.abs(x/2-y+HEIGHT/4) < 7,
-    "Right Wall": ()=>x > 120, // Right wall
+    "1-2 Neighbors Each": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-1.5)+0.5 < 2,
+    "In a Sloped Line": ()=>Math.abs(x/2-y+HEIGHT/4) < 7,
+    "Go to Right Wall": ()=>x > 120, // Right wall
     // "Diagonal": ()=>Math.abs(WIDTH-x-y) < 7, // Diagonal
-    "Plus Sign": ()=>(x >= 48 && x <= 80) || (y >= 48 && y <= 80), // Plus
-    "Vertical Line": ()=>x >= 48 && x <= 80, // Vertical line
+    "In a Plus Shape": ()=>(x >= 52 && x <= 76) || (y >= 52 && y <= 76), // Plus
+    "In a Vertical Line": ()=>x >= 48 && x <= 80, // Vertical line
   }[SURVIVAL_CONDITION]();
 }

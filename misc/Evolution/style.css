@@ -5,10 +5,18 @@ html {
   /* overflow: hidden; */
 }
 * {
-  font-family: monospace, monospace;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 #output {
   position:absolute;
+  top:0px;
+  left:0px;
+  width:100vh;
+  height:100%;
+}
+#survivesOverlay {
+  position:absolute;
+  z-index: 5;
   top:0px;
   left:0px;
   width:100vh;
@@ -23,4 +31,12 @@ html {
 }
 .accordion-body br::after {
   content: "<span style='width:1rem;'>";
+}
+label, input {
+  cursor: pointer;
+}
+strong {
+  border: 1px white solid;
+  border-radius: 3px;
+  padding: 2px;
 }
