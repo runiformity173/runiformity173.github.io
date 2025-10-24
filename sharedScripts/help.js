@@ -65,7 +65,7 @@ if (window.portfolioText && window.location.hash == "#portfolio") {
   </div>`;
   container.innerHTML = `<div style="z-index:999999;border-radius:20px;background-color:#212529;width:max(50vw,min(100vw,400px));height:90%;position:fixed;left:50%;top:5%;transform:translateX(-50%);overflow-y: scroll;">
     <div style="margin:10px">${window.portfolioText}
-    <div class="text-center"><button class="btn btn-outline-light" onclick="document.getElementById('blur-screen-instructions').remove();this.closest('#portfolio-instructions-container').remove();document.getElementById('container').style.filter = ''">Close</button></div>
+    <div class="text-center"><button class="btn btn-outline-light" onclick="document.getElementById('blur-screen-instructions').remove();this.closest('#portfolio-instructions-container').remove();try{document.getElementById('container').style.filter = ''} catch {}">Close</button></div>
     </div>
   </div>`;
   document.body.appendChild(blur);
