@@ -14,7 +14,7 @@
 <body class="bg-dark text-light">
   <div id="sidebar">
     Press me! -----&gt;<button onclick="start()" class="btn btn-outline-light"><strong>Sort</button></strong><br>
-    <select class="btn btn-outline-light" id="sortMethod">
+    Sorting Algorithm: <select class="btn btn-outline-light" id="sortMethod">
       <option>Quick Sort</option>
       <option>Anytime Quick Sort</option>
       <option>Merge Sort</option>
@@ -65,6 +65,8 @@
       </details>
       
     </div>
+    <br><br><br><br><br><br>
+    <label for="sounds">Audio Enabled:&nbsp;</label><input id="sounds" type="checkbox" checked onchange="SOUNDS=this.checked;if (SOUNDS) {audioCtx.resume()} else {audioCtx.suspend()}">
   </div>
   
   <canvas id="output" class="unpixelated">

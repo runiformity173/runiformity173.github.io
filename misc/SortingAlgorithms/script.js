@@ -227,3 +227,5 @@ function playSweep(i) {
 function playFinalAnimation() {
   playSweep(0);
 }
+const options = [...document.getElementById("sortMethod").children].map(o=>o.value);
+document.getElementById("sortMethod").value = options[Math.floor(Math.random()*options.length)];

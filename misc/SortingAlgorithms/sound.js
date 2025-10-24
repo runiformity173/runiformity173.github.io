@@ -1,4 +1,6 @@
+let SOUNDS = document.getElementById("sounds").checked;
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+if (!SOUNDS) audioCtx.suspend();
 function noteNormalize(note) {
   return 1000*(note/SIZE)+200;
 }
