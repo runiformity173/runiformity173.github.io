@@ -10,6 +10,14 @@ html {
   button {
       cursor:pointer;
   }
+  #overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    top:50vh;
+    left:50vh;
+    transform: translate(-50%,-50%);
+  }
   #output {
     height:100%;
     width:100vh;
@@ -58,4 +66,14 @@ html {
     top:10px;
     right:100px;
     width:200px;
+  }
+  #circle {
+    position: absolute;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+    left:0px;
+    top:0px;
+    background-color: rgba(255,0,0,0.5);
+    pointer-events: none;
+    z-index: 14;
   }

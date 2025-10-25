@@ -44,6 +44,9 @@ const ctx = canvas.getContext("2d");
 function setBrush(val) {
   BRUSH = (DEBUG||val<0)?val:ALIAS[val];
   THICKNESS = ([24].includes(BRUSH))?1:document.getElementById("thicknessSlider").value;
+  const circle = document.getElementById("circle");
+  circle.style.width = (canvas.offsetWidth/WIDTH)*(THICKNESS*2-1)+"px";
+  circle.style.height = (canvas.offsetHeight/HEIGHT)*(THICKNESS*2-1)+"px";
   document.getElementById("thicknessValue").innerHTML = THICKNESS;
   document.getElementById("current").innerHTML = BRUSH+1?NAMES[BRUSH]:"Heat Gun";
 }
@@ -122,7 +125,6 @@ function getMousePos(event) {
   const rect = canvas.getBoundingClientRect();
   const x = Math.floor((event.clientX - rect.left) * (canvas.width / rect.width));
   const y = Math.floor((event.clientY - rect.top) * (canvas.height / rect.height));
-  console.log(y,x)
   return [y, x];
 }
 
@@ -134,8 +136,10 @@ canvas.addEventListener("mousedown", (event) => {
   const [y,x] = getMousePos(event);
   if (event.shiftKey) {
     setBrush(board.board[y][x].type);
+    document.getElementById("brushSelect").value = NAMES[BRUSH];
     return;
   }
+  if (document.getElementById("overlay")) document.getElementById("overlay").remove();
   IS_DOWN = true;
   draw(x,y,x,y);
   LAST_POS = [y,x];
@@ -150,6 +154,9 @@ canvas.addEventListener("mousemove", (event) => {
     LAST_POS = [CURRENT_POS[0],CURRENT_POS[1]];
     CURRENT_POS = [y,x];
   }
+  const circle = document.getElementById("circle");
+  circle.style.left = event.x+"px";
+  circle.style.top = event.y+"px";
 });
 function draw2() {
 
@@ -171,7 +178,11 @@ canvas.addEventListener("mouseup", (event) => {
 });
 canvas.addEventListener("mouseleave", (event) => {
   if (lastInterval != -1) {clearInterval(lastInterval);lastInterval = -1;}
+  document.getElementById("circle").style.display = "none";
   IS_DOWN = false;
+});
+canvas.addEventListener("mouseenter", (event) => {
+  document.getElementById("circle").style.display = "block";
 });
 var t = false;
 let frames = 0;
@@ -194,7 +205,7 @@ function addHeat(rgb, heat, isFire) {
 function loop() {
   if (t && !PAUSED) {
     // WIND = Number(document.getElementById("windSlider").value);
-  board.update();
+    board.update();
     if (FASTER) {
       board.update();
     }
@@ -245,4 +256,5 @@ function loop() {
   frames++;
   requestAnimationFrame(loop);
 }
+setBrush(NAMES.indexOf(document.getElementById("brushSelect").value))
 requestAnimationFrame(loop);

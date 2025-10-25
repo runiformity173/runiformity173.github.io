@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Particle Sim</title>
+  <title>Falling Sand Game</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>
@@ -13,10 +13,12 @@
   <div id="container">
   <img id="freedom" src="freedom.png">
   <canvas height="0" width="0" id="output" draggable="false"></canvas>
+  <p id="overlay">Click and hold here!</p>
+  <div id="circle"></div>
   <div id="sidebar">
     <p>Current: <span id="current">Sand</span></p><br>
     <button onclick="PAUSED = !PAUSED" class="btn btn-outline-light">Pause/Unpause</button><br><br>
-    <select id="brushSelect" class="btn btn-outline-light">
+    Brush Material: <select id="brushSelect" class="btn btn-outline-light">
       <optgroup label="Solids" id="4Options">
       </optgroup>
       <optgroup label="Powders" id="3Options">
@@ -31,12 +33,13 @@
     </select><br>
     <button onclick="setBrush(0);" class="btn btn-outline-light">Erase</button>
 <br><button onclick="setBrush(-1);" class="btn btn-outline-light">Heat Gun</button><br>
+<span>Brush Thickness: <span id="thicknessValue">3</span></span><br><input id="thicknessSlider" type="range" min="1" max="10" step="1" value="3" oninput="setBrush(BRUSH);">
+<br><br>
 <br><button onclick="if (confirm('Are you sure you want to reset everything?')) {const oldBrush = BRUSH;BRUSH = 0;fill();BRUSH = oldBrush;}" class="btn btn-outline-light">Clear All</button><br>
 <button  class="btn btn-outline-light" onclick="const oldBrush2 = BRUSH;BRUSH = 0;fill(false,oldBrush2);BRUSH = oldBrush2;">Clear Current Brush</button><br>
 <button onclick="fill()" class="btn btn-outline-light">Fill All with Current Brush</button><br>
 <button onclick="fill(true)" class="btn btn-outline-light">Fill Air with Current Brush</button><br>
   <br><br>
-    <span>Brush Thickness: <span id="thicknessValue">3</span></span><br><input id="thicknessSlider" type="range" min="1" max="10" step="1" value="3" oninput="setBrush(BRUSH);">
   </div><p id="fps">FPS: 0</p>
 </div>
   <script src="help.js"></script>
