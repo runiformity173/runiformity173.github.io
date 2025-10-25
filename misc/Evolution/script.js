@@ -100,7 +100,7 @@ function survives(creature, board) {
     "Spread Out": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))) < 1,
     "1-2 Neighbors Each": ()=>Math.abs(((board[y-1] && board[y-1][x] != -1) + (board[y+1] && board[y+1][x] != -1) + (board[y][x-1] != -1) + (board[y][x+1] != -1) + (board[y-1] && board[y-1][x-1] != -1) + (board[y-1] && board[y-1][x+1] != -1) + (board[y+1] && board[y+1][x-1] != -1) + (board[y+1] && board[y+1][x+1] != -1))-1.5)+0.5 < 2,
     "In a Sloped Line": ()=>Math.abs(x/2-y+HEIGHT/4) < 7,
-    "Go to Right Wall": ()=>x > 120, // Right wall
+    "Go to Right Wall": ()=>x > 119, // Right wall
     // "Diagonal": ()=>Math.abs(WIDTH-x-y) < 7, // Diagonal
     "In a Plus Shape": ()=>(x >= 52 && x <= 76) || (y >= 52 && y <= 76), // Plus
     "In a Vertical Line": ()=>x >= 48 && x <= 80, // Vertical line
