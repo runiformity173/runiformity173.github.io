@@ -54,7 +54,6 @@ help.addEventListener("click",function(){
 // document.body.appendChild(help);
 window.addEventListener("load",function(){document.body.appendChild(overlay)});
 if (window.portfolioText && window.location.hash == "#portfolio") {
-  console.log("AYYYY");
   const container = document.createElement("div");
   const blur = document.createElement("div");
   try {document.getElementById("container").style.filter = "blur(2px)";}
