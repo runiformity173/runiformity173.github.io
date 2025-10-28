@@ -441,6 +441,6 @@ for (const i of DATA) {
   BURN_TEMP.push(i.burnTemp?i.burnTemp:1000);
   EXPLOSION.push(i.explosion?i.explosion:0);
   FUEL.push(i.fuel?i.fuel:0);
-  document.getElementById(i.hidden?"hiddenBrushes":(i.state+"Options")).innerHTML += `<option>${i.name}</option>`;
+  document.getElementById(i.hidden?"hiddenBrushes":(i.state+"Options")).innerHTML += `<option${i.hidden?" class='hiddenBrush' style='display:none;'":""}>${i.name}</option>`;
 }
 document.getElementById("3Options").firstElementChild.selected = true;

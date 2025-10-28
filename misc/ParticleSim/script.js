@@ -167,6 +167,7 @@ function draw2() {
 window.addEventListener("keydown",function(e) {
   if (e.altKey && e.keyCode == 78) {
     document.getElementById("hiddenBrushes").style.display = "block";
+    [...document.getElementsByClassName("hiddenBrush")].forEach(o=>o.style.display = "block");
     DEBUG = !DEBUG;
   } else if (e.altKey && e.keyCode == 79) {
       FASTER = !FASTER;
