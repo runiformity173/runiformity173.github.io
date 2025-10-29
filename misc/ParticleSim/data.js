@@ -441,7 +441,7 @@ for (const i of DATA) {
   BURN_TEMP.push(i.burnTemp?i.burnTemp:1000);
   EXPLOSION.push(i.explosion?i.explosion:0);
   FUEL.push(i.fuel?i.fuel:0);
-  document.getElementById(i.hidden?"hiddenBrushes":(i.state+"Options")).innerHTML += `<option${i.hidden?" class='hiddenBrush' style='display:none;'":""} value=${i.name}>${i.name}</option>`;
+  document.getElementById(i.hidden?"hiddenBrushes":(i.state+"Options")).innerHTML += `<option${i.hidden?" class='hiddenBrush' style='display:none;'":""} value="${i.name}">${i.name}</option>`;
 }
 document.getElementById("3Options").firstElementChild.selected = true;
 document.querySelector("option[value='Soil']").parentNode.insertBefore(document.querySelector("option[value='Soil']"), document.querySelector("option[value='Gunpowder']"));
