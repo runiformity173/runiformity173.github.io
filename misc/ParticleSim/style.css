@@ -36,8 +36,10 @@ html {
     position:absolute;
     right:10px;
     top:60px;
+    height: calc(100% - 60px);
     width:30%;
     text-align:right;
+    overflow-y: scroll;
   }
   @keyframes eagleFly {
     from {
@@ -77,3 +79,6 @@ html {
     pointer-events: none;
     z-index: 14;
   }
+ul {
+  list-style-position: inside;
+}
