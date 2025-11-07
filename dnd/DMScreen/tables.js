@@ -114,12 +114,11 @@ function roll(dice) {
 function rollTable(box,die) {
   const body = document.querySelector(`#${box.id} .tableBody`).children;
   const selected = roll(die);
-  console.log(selected);
   for (const row of body) {
     const i = row.firstElementChild.innerHTML.replace("00","100");
     let correct = false;
-    if (i.includes("-")) {
-      let [lower,upper] = i.split(/\-/g);
+    if (i.includes("-") || i.includes("–")) {
+      let [lower,upper] = i.split(/[\-\–]/g);
       correct=(Number(lower)<=selected&&Number(upper)>=selected);
     } else {
       correct = String(selected) == i;
