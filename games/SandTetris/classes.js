@@ -63,7 +63,7 @@ function addSquare(y,x,color) {
   }
 }
 class Shape {
-  constructor() { // IOTSZJL
+  constructor() {
     this.board = [
       [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
       [[1,1],[1,1]],
@@ -86,8 +86,6 @@ class Shape {
     this.el.height = 8*this.height;
     this.el.classList.add("piece");
     this.el.style.height = (canvas.offsetHeight*8*this.height/128)+"px";
-    this.el.style.left = "0px";
-    this.el.style.top = "0px";
     this.elCtx = this.el.getContext("2d");
     const el2 = document.createElement("div");
     el2.classList.add("preview");
@@ -151,7 +149,7 @@ class Shape {
     this.el.style.left = (canvas.offsetWidth*this.left/100)+"px";
     return true;
   }
-  moveRight() { //  MAKE IT RIGHT
+  moveRight() {
     for (var i = 0;i<this.height*8;i++) {
       for (var j = 1;j<=this.width*8;j++) {
         const b = this.board[Math.floor(i/8)][Math.floor((j-1)/8)];
@@ -220,16 +218,16 @@ class Board {
       }
     }
   }
-    // alert("about to swap");
 
     // lastTurnChunks = thisTurnChunks;
     // thisTurnChunks = Array.from({length:Math.floor(CHUNK_AMOUNT*CHUNK_AMOUNT)},()=>false);
-    // alert("ending update");
   updateShapes(updateNum) {
     if (updateNum % 2 == 0 || MOVING_DOWN) {
+      if (updateNum % 2 == 1) SCORE++;
       if (!currentShape.moveDown()) {
         if (currentShape.rasterize()) {
           alert("YOU LOSE");
+          return;
         }
         currentShape = nextShape;
         currentShape.el.parentElement.classList.remove("preview");
@@ -274,6 +272,7 @@ class Board {
         for (let i = 0; i < this.height;i++) {
           if (this.board[i][j] > -1 && baleeted.has(neighbors.get(i*this.width+j))) {
             toBeRemoved.add(i*this.width+j);
+            SCORE++;
           }
         }
       }
@@ -283,7 +282,6 @@ class Board {
     if (PAUSED && !ONE_STEP) return;
     if (updateNum % 2 == 0) this.updateBoard(updateNum);
     this.updateShapes(updateNum);
-    this.checkForLineClears()
     ONE_STEP = false;
   }
 }

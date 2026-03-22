@@ -5,6 +5,8 @@
 const WIDTH = 100;
 const HEIGHT = 128;
 const overallLength = WIDTH*HEIGHT;
+let SCORE = 0;
+let DISPLAYED_SCORE = 0;
 let PAUSED = false;
 let ONE_STEP = false;
 let FASTER = false;
@@ -90,6 +92,10 @@ function loop() {
       }
       toBeRemoved = [];
     }
+  }
+  if (DISPLAYED_SCORE < SCORE) {
+    DISPLAYED_SCORE += Math.min(SCORE-DISPLAYED_SCORE,9);
+    document.getElementById("scoreDisplay").innerHTML = DISPLAYED_SCORE;
   }
   frames++;
   requestAnimationFrame(loop);

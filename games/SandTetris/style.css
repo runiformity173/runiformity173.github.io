@@ -56,3 +56,19 @@ html {
   left: calc(100vh * 100 / 128 + 50px) ;
   border: solid white 2px;
 }
+.preview canvas {
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+}
+#score {
+  position:absolute;
+  right:10px;
+  top:50px;
+  text-align: center;
+}
+#scoreDisplay {
+  display: inline-block;
+  width: 10rem;
+}
