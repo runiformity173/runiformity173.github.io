@@ -81,6 +81,9 @@ class Shape {
     this.drawShape();
   }
   drawShape() {
+    if (this.el) {
+      this.el.parentElement.remove()
+    }
     this.el = document.createElement("canvas");
     this.el.width = 8*this.width;
     this.el.height = 8*this.height;
@@ -164,6 +167,48 @@ class Shape {
     this.el.style.left = (canvas.offsetWidth*this.left/100)+"px";
     return true;
   }
+  rotateShapeClockwise() {
+    for (let i = 0; i < this.board.length; i++) {
+        for (let j = i; j < this.board[0].length; j++) {
+            const temp = this.board[i][j];
+            this.board[i][j] = this.board[j][i];
+            this.board[j][i] = temp;
+        }
+    }
+    this.board.forEach(row => row.reverse());
+  }
+  checkForPushes() {
+    for (var i = 0;i<this.height*8;i++) {
+      if (this.top+i < 0) continue
+      if (this.top+i >= HEIGHT) return "up";
+      for (var j = 0;j<this.width*8;j++) {
+        const b = this.board[Math.floor(i/8)][Math.floor(j/8)];
+        if (b > 0) {
+          if (this.left+j >= WIDTH) return "left";
+          if (this.left+j < 0) return "right";
+          if (board.board[this.top+i][this.left+j] > -1) return "up";
+        }
+      }
+    }
+    return false;
+  }
+  rotate() {
+    // rotate internal
+    this.rotateShapeClockwise();
+    // check
+    let push = this.checkForPushes();
+    while (push) {
+      if (push == "up") this.top--;
+      else if (push == "left") this.left--;
+      else if (push == "right") this.left++;
+      push = this.checkForPushes();
+    }
+    // display stuff
+    this.drawShape();
+    this.el.parentElement.classList.remove("preview");
+    this.el.style.left = (canvas.offsetWidth*this.left/100)+"px";
+    this.el.style.top = (canvas.offsetHeight*this.top/128)+"px";
+  }
 }
 class Board {
   constructor(width,height) {
@@ -240,6 +285,10 @@ class Board {
     LEFT_MOVE = MOVING_LEFT;
     if (RIGHT_MOVE) currentShape.moveRight();
     RIGHT_MOVE = MOVING_RIGHT;
+    if (ROTATING) {
+      ROTATING = false;
+      currentShape.rotate()
+    }
     this.checkForLineClears()
   }
   checkForLineClears() {

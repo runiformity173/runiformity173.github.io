@@ -33,6 +33,8 @@ let LEFT_MOVE = false;
 let MOVING_RIGHT = false;
 let RIGHT_MOVE = false;
 let MOVING_DOWN = false;
+let ROTATING = false;
+let ROTATING_POSSIBLE = true;
 window.addEventListener("keydown",function(e) {
   if (e.code == "ArrowLeft") {
     MOVING_LEFT = true;
@@ -45,6 +47,10 @@ window.addEventListener("keydown",function(e) {
   if (e.code == "ArrowDown") {
     MOVING_DOWN = true;
   }
+  if (e.code == "ArrowUp" && ROTATING_POSSIBLE) {
+    ROTATING_POSSIBLE = false;
+    ROTATING = true;
+  }
 });
 window.addEventListener("keyup",function(e) {
   if (e.code == "ArrowLeft") {
@@ -55,6 +61,9 @@ window.addEventListener("keyup",function(e) {
   }
   if (e.code == "ArrowDown") {
     MOVING_DOWN = false;
+  }
+  if (e.code == "ArrowUp") {
+    ROTATING_POSSIBLE = true;
   }
 });
 let frames = 0;
