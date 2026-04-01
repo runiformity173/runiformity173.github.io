@@ -109,9 +109,8 @@ class Shape {
     }
     this.elCtx.putImageData(imgData, 0, 0);
   }
-  rasterize() {
-    this.el.parentElement.remove();
-    let minI = 1;
+  rasterize() { // returns true if fails to rasterize
+    let minI = 0;
     for (let i = 0;i<this.board.length;i++) {
       for (let j = 0;j<this.board[0].length;j++) {
         if (this.board[i][j] > 0) {
@@ -120,7 +119,8 @@ class Shape {
         }
       }
     }
-    return minI < 1;
+    if (minI == 0) this.el.parentElement.remove();
+    return minI < 0;
   }
   moveDown() {
     for (var i = 1;i<=this.height*8;i++) {
@@ -272,7 +272,7 @@ class Board {
       if (!currentShape.moveDown()) {
         if (currentShape.rasterize()) {
           alert("YOU LOSE");
-          return;
+          return true;
         }
         currentShape = nextShape;
         currentShape.el.parentElement.classList.remove("preview");
@@ -330,12 +330,12 @@ class Board {
   update(updateNum) {
     if (PAUSED && !ONE_STEP) return;
     if (updateNum % 2 == 0) this.updateBoard(updateNum);
-    this.updateShapes(updateNum);
+    if (this.updateShapes(updateNum)) return true;
     ONE_STEP = false;
   }
 }
 let highestID = -1;
-const reuseIDs = [];
+let reuseIDs = [];
 function getSandID() {
   if (reuseIDs.length == 0) {return ++highestID}
   return reuseIDs.pop();
