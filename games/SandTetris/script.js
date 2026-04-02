@@ -74,11 +74,9 @@ const c = setInterval(function(){document.getElementById("fps").innerHTML = `FPS
 const clamp=o=>Math.max(o,1);
 function loop() {
   frames++;
-  if (animationFrames == 0) {
+  if (animationFrames == 0 && !GAME_OVER) {
     if (board.update(numberOfUpdates) || (FASTER && board.update(++numberOfUpdates))) {
-      GAME_OVER = true;
-      newGame();
-      return;
+      gameOver();
     }
   }
   numberOfUpdates++
@@ -118,6 +116,11 @@ function loop() {
   }
   requestAnimationFrame(loop);
 }
+function gameOver() {
+  GAME_OVER = true;
+  window.localStorage.setItem("SandTetrisHighscore",Math.max(SCORE,Number(window.localStorage.getItem("SandTetrisHighscore") || "0")));
+  alert("the game is over")
+}
 function newGame() {
   SCORE = 0;
   DISPLAYED_SCORE = 0;
@@ -140,6 +143,7 @@ function newGame() {
   MOVING_DOWN = false;
   ROTATING = false;
   ROTATING_POSSIBLE = true;
+  GAME_OVER = false;
   requestAnimationFrame(loop);
 }
 newGame();

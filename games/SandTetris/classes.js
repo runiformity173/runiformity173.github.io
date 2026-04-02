@@ -271,7 +271,6 @@ class Board {
       if (updateNum % 2 == 1) SCORE++;
       if (!currentShape.moveDown()) {
         if (currentShape.rasterize()) {
-          alert("YOU LOSE");
           return true;
         }
         currentShape = nextShape;
