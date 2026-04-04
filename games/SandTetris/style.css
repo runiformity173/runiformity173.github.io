@@ -72,3 +72,36 @@ html {
   display: inline-block;
   width: 10rem;
 }
+.blurred {
+  filter: blur(3px);
+}
+#gameOverScreen {
+  border-radius: 10px;
+  background-color: #313539;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  width: 50vh;
+  height: 80%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(3px 3px 5px black);
+  display: default;
+}
+@keyframes popOut {
+  0% {
+    transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+#newHighscore {
+  transition: 1s;
+  animation: popOut 0.8s normal infinite ease-in-out;
+}
+.hidden {
+  display: none;
+}

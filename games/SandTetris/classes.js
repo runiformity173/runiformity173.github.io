@@ -93,7 +93,7 @@ class Shape {
     const el2 = document.createElement("div");
     el2.classList.add("preview");
     el2.appendChild(this.el);
-    document.body.appendChild(el2);
+    document.getElementById("container").appendChild(el2);
     var imgData = this.elCtx.createImageData(this.width*8, this.height*8);
     var data = imgData.data;
     for (var i = 0;i<this.height*8;i++) {

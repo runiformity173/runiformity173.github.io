@@ -10,13 +10,23 @@
 </head>
 
 <body class="bg-dark text-light">
-  <div id="container"></div>
-  <canvas height="0" width="0" id="output" draggable="false"></canvas>
-  <div id="circle"></div>
-  <div id="sidebar">
-   <p id="fps">FPS: 0</p>
-   <div id="score"><h2>Score<hr><span id="scoreDisplay">0</span></h2></div>
-</div>
+  <div id="container">
+    <canvas height="0" width="0" id="output" draggable="false"></canvas>
+    <div id="sidebar">
+    <p id="fps">FPS: 0</p>
+    <div id="score"><h2>Score<hr><span id="scoreDisplay">0</span></h2></div>
+    </div>
+  </div>
+  <div id="gameOverScreen" class="hidden">
+    <center><h1>Game Over!</h1></center>
+    <br>
+    <center><h2>Score<hr><span id="finalScoreDisplay"></span></h2></center>
+    <center><h2 id="newHighscore">New Highscore!</h2></center>
+    <br>
+    <center>
+      <button class="btn btn-outline-light" onclick="newGame()">New Game</button>
+    </center>
+  </div>
   <script src="help.js"></script>
   <script src="/sharedScripts/help.js"></script>
   <script src="lib.js"></script>

@@ -117,11 +117,20 @@ function loop() {
   requestAnimationFrame(loop);
 }
 function gameOver() {
+  document.getElementById("container").classList.add("blurred");
+  document.getElementById("gameOverScreen").classList.remove("hidden");
+  document.getElementById("finalScoreDisplay").innerHTML = SCORE;
   GAME_OVER = true;
-  window.localStorage.setItem("SandTetrisHighscore",Math.max(SCORE,Number(window.localStorage.getItem("SandTetrisHighscore") || "0")));
-  alert("the game is over")
+  const previousHighscore = Number(window.localStorage.getItem("SandTetrisHighscore") || "0");
+  window.localStorage.setItem("SandTetrisHighscore",Math.max(SCORE,previousHighscore));
+  document.getElementById("newHighscore").classList.add("hidden");
+  if (SCORE > previousHighscore) {
+    document.getElementById("newHighscore").classList.remove("hidden");
+  } // new highscore
 }
 function newGame() {
+  document.getElementById("container").classList.remove("blurred");
+  document.getElementById("gameOverScreen").classList.add("hidden");
   SCORE = 0;
   DISPLAYED_SCORE = 0;
   document.getElementById("scoreDisplay").innerHTML = DISPLAYED_SCORE;
@@ -144,6 +153,6 @@ function newGame() {
   ROTATING = false;
   ROTATING_POSSIBLE = true;
   GAME_OVER = false;
-  requestAnimationFrame(loop);
 }
+requestAnimationFrame(loop);
 newGame();
