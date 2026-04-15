@@ -9,7 +9,18 @@ body {
 #my-canvas {
   height:100%;
   position:absolute;
-  right:0px;
+  left: 0;
+  top: 0;
   /* left:50%;
   transform:translateX(-50%); */
+}
+#sidebar {
+  text-align: right;
+  height:100%;
+  position:absolute;
+  right: 0;
+  top: 0;
+}
+button {
+  cursor: pointer;
 }

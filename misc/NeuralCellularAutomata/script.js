@@ -1,8 +1,8 @@
 const defaultSave = {"Worms":[[0.68,-0.9,0.68,-0.9,-0.66,-0.9,0.68,-0.9,0.68],"worm"],"Mitosis":[[-0.939,0.88,-0.939,0.88,0.4,0.88,-0.939,0.88,-0.939],"mitosis"],"Waves":[[0.565,-0.716,0.565,-0.716,0.627,-0.716,0.565,-0.716,0.565],"waves"]};
 
-const canvas = document.getElementById("my-canvas")
-let w = 800;
-let h = 800;
+const canvas = document.getElementById("my-canvas");
+let w = canvas.clientHeight;
+let h = w;
 canvas.height = w;
 canvas.width = h;
 const ctx = canvas.getContext("2d");
@@ -28,79 +28,43 @@ function makeRandomMatrix() {
   }
   return rows;
 }
-
-function worm(x) {return -1/Math.pow(2, (0.6*Math.pow(x, 2)))+1;}
-function mitosis(x) {return -1/(0.9*Math.pow(x, 2)+1)+1;}
-function waves(x) {return Math.abs(1.2*x);}
-function identity(x) {return x;}
-let activation = waves;//function(val) {return Math.abs(1.2*val);}
+function randomRules() {
+  matrix = makeRandomMatrix();
+  activationF = Object.keys(functions)[Math.floor(Math.random()*Object.keys(functions).length)]
+  activation = functions[activationF];
+  for (let i = 0;i<overallLength;i++) {board[i] = Math.random();}
+}
+const functions = {
+  worm: (x)=>(-1/Math.pow(2, (0.6*Math.pow(x, 2)))+1),
+  mitosis: (x)=>(-1/(0.9*Math.pow(x, 2)+1)+1),
+  waves: (x)=>(Math.abs(1.2*x)),
+  identity: (x)=>(x),
+}
+let activation = functions[activationF];//function(val) {return Math.abs(1.2*val);}
 function normalize2(val) {return (val<-1)?-1:((val>1)?1:val)}
-function normalizeCoord(val) {return (val<0)?val+overallLength:((val>=overallLength)?val-overallLength:val)}
-const newBoard = new Float32Array(overallLength);
+// this is incorrect. Wraps around to the next row instead of over to the left.
+function normalizeY(val) {return (val+h)%h;}
+function normalizeX(val) {return (val+w)%w;}
+let newBoard = new Float32Array(overallLength);
 function updateBoard() {
-  for (let i = 0;i<overallLength;i++) {
-    newBoard[i] = normalize2(activation(board[normalizeCoord(i-(w)-1)]*matrix[0]+board[normalizeCoord(i-(w))]*matrix[1]+board[normalizeCoord(i-(w)+1)]*matrix[2]+board[normalizeCoord(i-1)]*matrix[3]+board[i]*matrix[4]+board[normalizeCoord(i+1)]*matrix[5]+board[normalizeCoord(i+(w)-1)]*matrix[6]+board[normalizeCoord(i+(w))]*matrix[7]+board[normalizeCoord(i+(w)+1)]*matrix[8]));
+  for (let i = 0;i<h;i++) {
+    for (let j = 0;j < w;j++) {
+      newBoard[i*w+j] = normalize2(activation(board[normalizeY(i-1)*w+normalizeX(j-1)]*matrix[0]+board[normalizeY(i-1)*w+normalizeX(j)]*matrix[1]+board[normalizeY(i-1)*w+normalizeX(j+1)]*matrix[2]+board[normalizeY(i)*w+normalizeX(j-1)]*matrix[3]+board[normalizeY(i)*w+normalizeX(j)]*matrix[4]+board[normalizeY(i)*w+normalizeX(j+1)]*matrix[5]+board[normalizeY(i+1)*w+normalizeX(j-1)]*matrix[6]+board[normalizeY(i+1)*w+normalizeX(j)]*matrix[7]+board[normalizeY(i+1)*w+normalizeX(j+1)]*matrix[8]));
+    }
   }
   board = newBoard;
+  newBoard = new Float32Array(overallLength);
 }
-// function updateBoard() {
-//   // const newBoard = new Float32Array(w * h);
-
-//   const width = w;
-//   const height = h;
-//   const boardLength = board.length;
-//   const normalizedCoord = normalizeCoord;
-
-//   const matrix0 = matrix[0];
-//   const matrix1 = matrix[1];
-//   const matrix2 = matrix[2];
-//   const matrix3 = matrix[3];
-//   const matrix4 = matrix[4];
-//   const matrix5 = matrix[5];
-//   const matrix6 = matrix[6];
-//   const matrix7 = matrix[7];
-//   const matrix8 = matrix[8];
-
-//   const activationFn = activation;
-//   const normalize2Fn = normalize2;
-
-//   for (let i = 0; i < boardLength; i++) {
-//     const x = i % width;
-//     const y = (i / width) | 0;
-
-//     const topLeft = normalizedCoord(i - width - 1);
-//     const top = normalizedCoord(i - width);
-//     const topRight = normalizedCoord(i - width + 1);
-//     const left = normalizedCoord(i - 1);
-//     const center = normalizedCoord(i);
-//     const right = normalizedCoord(i + 1);
-//     const bottomLeft = normalizedCoord(i + width - 1);
-//     const bottom = normalizedCoord(i + width);
-//     const bottomRight = normalizedCoord(i + width + 1);
-
-//     const newValue =
-//       activationFn(board[topLeft] * matrix0 + board[top] * matrix1 + board[topRight] * matrix2 + board[left] * matrix3 + board[center] * matrix4 + board[right] * matrix5 + board[bottomLeft] * matrix6 + board[bottom] * matrix7 + board[bottomRight] * matrix8);
-
-//     newBoard[i] = normalize2Fn(newValue);
-//   }
-//   board = newBoard;
-// }
-
 
 
 
 function loop() {
-  //update
   updateBoard();updateBoard();
-  var imgData = ctx.createImageData(w, h); // width x height
+  var imgData = ctx.createImageData(w, h);
   var data = imgData.data;
-  
-  // copy img byte-per-byte into our ImageData
   for (var i = 0, len = overallLength*4; i < len; i+=4) {
       data[i] = board[i/4]*255;data[i+1] = 0;data[i+2] = 0;data[i+3] = 255;
   }
-  
-  // now we can draw our imagedata onto the canvas
   ctx.putImageData(imgData, 0, 0);
   requestAnimationFrame(loop);
 }
@@ -132,7 +96,7 @@ function save() {
   let saved = JSON.parse(getCookie("saved"));
   if (saved === null) {saved = defaultSave;}
   console.log(saved);
-  saved[name] = matrix;
+  saved[name] = [matrix, activationF];
   setCookie("saved",JSON.stringify(saved));
 }
 function load() {
@@ -142,10 +106,8 @@ function load() {
   while (!(name in saved)) {name=prompt("What to load? You currently have "+Object.keys(saved).join(", ")+".");if(name=="none"||name==""){return}}
   matrix = saved[name][0];
   let tt = saved[name][1];
-  if (tt == "identity") activation = (val)=>(val);
-  else if (tt == "mitosis") activation = function(val) {return -1/(0.9*Math.pow(val, 2)+1)+1;}
-  else if (tt == "worm") activation = worm;
-  else if (tt=="waves") activation = waves;
+  activation = functions[tt];
+  activationF = tt;
   for (let i = 0;i<overallLength;i++) {board[i] = Math.random();}
 }
 function delet() {}
