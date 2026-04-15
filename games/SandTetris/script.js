@@ -68,6 +68,13 @@ window.addEventListener("keyup",function(e) {
     ROTATING_POSSIBLE = true;
   }
 });
+function goFasterAlert() {
+  FASTER = true;
+  MOVING_DOWN = false;
+  MOVING_LEFT = false;
+  MOVING_RIGHT = false;
+  alert("The game is about to speed up....");
+}
 let frames = 0;
 let numberOfUpdates = 0;
 const c = setInterval(function(){document.getElementById("fps").innerHTML = `FPS: ${frames}`;frames = 0;},1000)
@@ -79,7 +86,10 @@ function loop() {
       gameOver();
     }
   }
-  numberOfUpdates++
+  numberOfUpdates++;
+  if (SCORE > 25000 && !FASTER) {
+    goFasterAlert();
+  }
   var imgData = ctx.createImageData(WIDTH, HEIGHT);
   var data = imgData.data;
   for (var i = 0;i<HEIGHT;i++) {
@@ -144,6 +154,8 @@ function newGame() {
   currentShape.el.style.top = (canvas.offsetHeight*currentShape.top/128)+"px";
   nextShape = new Shape();
   highestID = -1;
+  numberOfUpdates = 0;
+  FASTER = false;
   reuseIDs = [];
   MOVING_LEFT = false;
   LEFT_MOVE = false;
