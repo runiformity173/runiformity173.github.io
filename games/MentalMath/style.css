@@ -1,0 +1,35 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin:0;
+  height: 100%;
+  background-color: darkgray;
+  overflow:hidden;
+}
+button {
+    cursor:pointer;
+}
+#container {
+  max-width: 512px;
+}
+.input-btn {
+  cursor: text;
+  color: rgba(var(--bs-light-rgb));
+  background-color: rgba(var(--bs-dark-rgb));
+  border-color: rgba(var(--bs-light-rgb));
+  border-radius: 0.375rem;
+  border: 1px solid rgba(var(--bs-light-rgb));
+}
+#answerBox {
+  position: relative;
+  top:calc(100vh - 6em);
+}
+#submitButton {
+  position: absolute;
+  top:30%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+}
