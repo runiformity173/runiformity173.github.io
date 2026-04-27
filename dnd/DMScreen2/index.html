@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>DM Screen | Runiformity's Websites</title>
+  <meta name="description" content="A configurable Dungeon Master's Screen for resources and keeping track of combat">
+  <meta name="author" content="runiformity173">
+  <link href="/bootstrap.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+
+<body class="bg-dark text-light" onload="load()">
+  <template id="popoutWindowTemplate">
+    <div class="floating-box-container">
+      <div class="floating-box-movebar" 
+      onmousedown="
+      dragging = Number(this.nextElementSibling.id.split('-')[1]);
+      this.nextElementSibling.classList.add('dragging');
+      dragStartPos = [event.y-Number(window.getComputedStyle(this.parentElement).top.replace('px','')),event.x-Number(window.getComputedStyle(this.parentElement).left.replace('px',''))];"
+      onmouseup="stopDragging(event);">
+      </div>
+      <div class="box floating-box"></div>
+    </div>
+  </template>
+  <template id="conditionTemplate">
+    <div class="identifier d-none" id="condition"></div>
+    <h2 class="title"></h2>
+    <p class="content"></p>
+  </template>
+  <template id="monsterTemplate">
+    <div class="identifier d-none" id="monster"></div>
+    <iframe></iframe>
+  </template>
+  <template id="spellTemplate">
+    <div class="identifier d-none" id="spell"></div>
+    <iframe></iframe>
+  </template>
+  <template id="tableTemplate">
+    <div class="identifier d-none" id="table"></div>
+    <table>
+      <tr>
+        <th class="tableName" colspan="6"></th>
+        <tr>
+          <td colspan="6">
+            <table class="w-100 stripe-odd-table">
+              <!-- <caption class="tableCaption"></caption> -->
+              <thead>
+                <tr class="tableLabels">
+                  
+                </tr>
+              </thead>
+              <tbody class="tableBody">
+                
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tr>
+    </table>
+  </template>
+  <template id="initiative">
+    <div class="initiativeRow row">
+      <div class="col">
+        <p contenteditable="true" oninput="save(this.closest('.box'));">Click to Edit</p>
+      </div>
+      <div class="col align-self-center">
+        <input type="number" style="width:1.75em;" onchange="sortInitiative(this.closest('.box .wrapper'));save(this.closest('.box'));">
+        <button class="btn btn-danger" onclick="
+          if (confirm('Are you sure you want to delete this row?')) {
+            const box = this.closest('.box')
+            this.parentElement.parentElement.remove();
+            save(box);
+          }
+          ">-</button>
+      </div>
+    </div>
+  </template>
+  <template id="health">
+    <div class="healthRow row">
+      <div class="col">
+        <p contenteditable="true" oninput="save(this.closest('.box'));">Click to Edit</p>
+      </div>
+      <div class="col">
+        <input type="number" style="width:2.5em;" onchange="save(this.closest('.box'));">
+        <button class="btn btn-danger" onclick="
+          if (confirm('Are you sure you want to delete this row?')) {
+            const box = this.closest('.box')
+            this.parentElement.parentElement.remove();
+            save(box);
+          }
+          ">-</button>
+      </div>
+    </div>
+  </template>
+  <template id="initiativeTrackerTemplate">
+    <div class="identifier d-none" id="initiativeTracker"></div>
+    <div class="row">
+      <div class="col"><strong>Name</strong></div>
+      <div class="col"><strong>Roll</strong></div>
+
+    </div>
+    <div class="wrapper"></div>
+    <div class="bottomRow">
+      <button class="btn btn-outline-light" onclick="this.parentElement.previousElementSibling.appendChild(document.getElementById('initiative').content.cloneNode(true));save(this.closest('.box'));">Add Entry</button>
+      <button class="btn btn-outline-light" onclick="if (confirm('Are you sure you want these names to be the default?')) saveInitiative(this.parentElement.previousElementSibling);">Save to Default</button>
+      <button class="btn btn-outline-light" onclick="if (confirm('Are you sure you want to reset to the default?')) addModule('initiativeTracker',this.closest('.box'))">Reset to Default</button>
+    </div>
+  </template>
+  <template id="healthTrackerTemplate">
+    <div class="identifier d-none" id="healthTracker"></div>
+    <div class="row">
+      <div class="col"><strong>Name</strong></div>
+      <div class="col"><strong>Health</strong></div>
+    </div>
+    <div class="wrapper"></div>
+    <div class="bottomRow">
+      <button class="btn btn-outline-light" onclick="this.parentElement.previousElementSibling.appendChild(document.getElementById('health').content.cloneNode(true));save(this.closest('.box'));">Add Entry</button>
+    </div>
+    
+  </template>
+  <template id="notesTemplate">
+    <div class="identifier d-none" id="notes"></div>
+    <textarea class="notesArea" oninput="save(this.parentElement);"></textarea>
+  </template>
+  <template id="conditionSelectTemplate">
+    <div class="addConditionContainer">
+      <input type="text" list="conditionsDatalist" oninput="datalistInput(this)">
+      <button class="btn btn-outline-light d-none" onclick="addModule('Condition',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="tableSelectTemplate">
+    <div class="addTableContainer">
+      <input type="text" list="tablesDatalist" oninput="datalistInput(this)">
+      <button class="btn btn-outline-light d-none" onclick="addModule('Table',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="spellSelectTemplate">
+    <div class="addSpellContainer">
+      <input type="text" list="spellsDatalist" oninput="datalistInput(this)">
+      <button class="btn btn-outline-light d-none" onclick="addModule('spell',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="monsterSelectTemplate">
+    <div class="addMonsterContainer">
+      <input type="text" list="monstersDatalist" oninput="datalistInput(this)">
+      <button class="btn btn-outline-light d-none" onclick="addModule('monster',this.closest('.box'),true,{name:this.previousElementSibling.value})">
+        +
+      </button>
+    </div>
+  </template>
+  <template id="popoutButtonTemplate">
+    <div class="popoutModuleContainer">
+      <button class="popoutButton" onclick="
+        document.body.appendChild(document.getElementById('popoutWindowTemplate').content.cloneNode(true));
+        const floating = document.body.lastElementChild;
+        let n = 13;
+        while (document.getElementById('box-'+n)) {n += 1;}
+        floating.lastElementChild.id = 'box-'+n;
+        const i  = this.parentElement.parentElement;
+        while (i.firstChild) floating.lastElementChild.appendChild(i.firstChild);
+        save(floating.lastElementChild);
+        i.innerHTML = '';
+        save(i);
+        i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
+        ">
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="lightblue" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+</svg></span>
+      </button>
+    </div>
+  </template>
+  <template id="closeButtonTemplate">
+    <div class="closeModuleContainer">
+      <button class="closeButton" onclick="
+        const i = this.parentElement.parentElement;
+        if (i.closest('.floating-box-container')) {
+          i.innerHTML = '';
+          i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
+          i.closest('.floating-box-container').remove();
+          eraseCookie(i.id);
+          save();
+        } else {
+          i.innerHTML = '';
+          i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
+          save(i);
+        }
+        ">
+        ×
+      </button>
+    </div>
+  </template>
+  <template id="plusButtonTemplate">
+    <div class="addModuleContainer">
+      <select class="btn btn-outline-light" oninput="addModule(this.value,this.closest('.box'))">
+        <option disabled selected>--Select What to Add--</option>
+        <option>Initiative Tracker</option>
+        <option>Health Tracker</option>
+        <option>Condition Select</option>
+        <option>Spell Select</option>
+        <option>Monster Select</option>
+        <option>Table Select</option>
+        <option>Notes</option>
+      </select>
+      <!-- <button class="btn btn-outline-light" onclick="addModule(this.previousElementSibling.value,this.closest('.box'))">
+        +
+      </button> -->
+    </div>
+  </template>
+  <datalist id="tablesDatalist"></datalist>
+  <datalist id="spellsDatalist"></datalist>
+  <datalist id="monstersDatalist"></datalist>
+  <datalist id="conditionsDatalist"></datalist>
+  <!-- <div id="container" class="container-fluid p-0">
+    <div class="box static-box" id="box-1"></div>
+  </div> -->
+  <div id="viewport">
+    <div id="windows">
+        <div class="window" style="left:calc(16 * 32px); top:128px;">A</div>
+        <div class="window" style="left:800px; top:512px;">B</div>
+    </div>
+  </div>
+  <script src="data.js"></script>
+  <script src="tables.js"></script>
+  <script src="spells.js"></script>
+  <script src="monsters.js"></script>
+  <script src="conditions.js"></script>
+  <script src="names.js"></script>
+  <script src="display.js"></script>
+  <script src="script.js"></script>
+  <script src="help.js"></script>
+  <script src="/sharedScripts/help.js"></script>
+
+</body>
+
+</html>
