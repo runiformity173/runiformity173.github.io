@@ -20,7 +20,7 @@ const burnColors = {}; // {14:[255,255,255]};
 
 const board = new Board(WIDTH,HEIGHT);
 const plantMap = Array.from({ length: HEIGHT },() => Array.from({ length: WIDTH }, a=>(0)));
-function hslToRgb(t,a,r){console.log(t,a,r);var o=t/60,t=(1-Math.abs(2*r-1))*a,a=t*(1-Math.abs(o%2-1)),r=r-t/2;let n,d,h;return[n,d,h]=0<=o&&o<1?[t,a,0]:1<=o&&o<2?[a,t,0]:2<=o&&o<3?[0,t,a]:3<=o&&o<4?[0,a,t]:4<=o&&o<5?[a,0,t]:[t,0,a],[Math.round(255*(n+r)),Math.round(255*(d+r)),Math.round(255*(h+r))]}
+function hslToRgb(t,a,r){var o=t/60,t=(1-Math.abs(2*r-1))*a,a=t*(1-Math.abs(o%2-1)),r=r-t/2;let n,d,h;return[n,d,h]=0<=o&&o<1?[t,a,0]:1<=o&&o<2?[a,t,0]:2<=o&&o<3?[0,t,a]:3<=o&&o<4?[0,a,t]:4<=o&&o<5?[a,0,t]:[t,0,a],[Math.round(255*(n+r)),Math.round(255*(d+r)),Math.round(255*(h+r))]}
 function rgbToHsl(a,c,e){a/=255,c/=255,e/=255;const f=Math.max(a,c,e),i=Math.min(a,c,e);let j,k,m=(f+i)/2;if(f===i)j=k=0;else{const b=f-i;k=.5<m?b/(2-f-i):b/(f+i);f===a?j=(c-e)/b+(c<e?6:0):f===c?j=(e-a)/b+2:f===e?j=(a-c)/b+4:void 0;j/=6}return{h:Math.round(360*j),s:Math.round(100*k),l:Math.round(100*m)}}
 const randomColorBoard = Array.from({ length: WIDTH*HEIGHT }, function() {
   const everything = Math.floor(Math.random()*31) - 15;
@@ -155,8 +155,8 @@ canvas.addEventListener("mousemove", (event) => {
     CURRENT_POS = [y,x];
   }
   const circle = document.getElementById("circle");
-  circle.style.left = event.x+"px";
-  circle.style.top = event.y+"px";
+  circle.style.left = event.pageX+"px";
+  circle.style.top = event.pageY+"px";
 });
 function draw2() {
 
@@ -251,6 +251,32 @@ function loop() {
       //   data[t+1] = 0;
       //   data[t+2] = 0;
       // }
+    }
+  }
+  for (const i of particles) {
+    if (i === null) continue;
+    const t = 4*(Math.floor(i.x)+(Math.floor(i.y)*WIDTH));
+    const b = i.particle;
+    let theColor = null;
+    if (b.type == 7) {
+      if (b.lastType in burnColors) {
+        theColor = burnColors[b.lastType];
+      } else {
+      theColor = [reds[b.type],greens[b.type],blues[b.type]];}
+    } else {
+      theColor = [reds[b.type],greens[b.type],blues[b.type]];}
+    theColor = addHeat(theColor,b.nextHeat,b.type==7);
+    const shading = randomColorBoard[b.id];
+    data[t] = theColor[0]+shading[0];data[t+1] = theColor[1]+shading[1];data[t+2] = theColor[2]+shading[2];data[t+3] = 255;
+    if (b.type == 11) {
+      data[t] = reds[11]+shading[0];
+      data[t+1] = greens[11]+shading[1];
+      data[t+2] = blues[11]+shading[2];
+    }
+    else if (b.state < 2 && b.type != 7) {
+      data[t] = reds[b.type];
+      data[t+1] = greens[b.type];
+      data[t+2] = blues[b.type];
     }
   }
   ctx.putImageData(imgData, 0, 0);

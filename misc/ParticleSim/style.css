@@ -1,84 +1,87 @@
 html {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin:0;
+  background-color: darkgray;
+  overflow:hidden;
+}
+button {
+    cursor:pointer;
+}
+#overlay {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  top:50vh;
+  left:50vh;
+  transform: translate(-50%,-50%);
+}
+#output {
+  height:100%;
+  width:100vh;
+  position: absolute;
+  top:0;
+  left:0;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+  box-shadow: 2px 0px 0 #ffffff;
+}
+#fps {
+  position:absolute;
+  right:10px;
+  top:10px;
+}
+#sidebar {
+  position:absolute;
+  right:10px;
+  top:60px;
+  height: calc(100% - 60px);
+  width:30%;
+  text-align:right;
+  overflow-y: scroll;
+}
+@keyframes eagleFly {
+  from {
+    transform: translateX(calc(100vw + 200px));
   }
-  body {
-    margin:0;
-    background-color: darkgray;
-    overflow:hidden;
+  to {
+    transform: translateX(-200px);
   }
-  button {
-      cursor:pointer;
-  }
-  #overlay {
-    position: absolute;
-    z-index: 10;
-    pointer-events: none;
-    top:50vh;
-    left:50vh;
-    transform: translate(-50%,-50%);
-  }
-  #output {
-    height:100%;
-    width:100vh;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-    -ms-interpolation-mode: nearest-neighbor;
-    box-shadow: 2px 0px 0 #ffffff;
-  }
-  #fps {
-    position:absolute;
-    right:10px;
-    top:10px;
-  }
-  #sidebar {
-    position:absolute;
-    right:10px;
-    top:60px;
-    height: calc(100% - 60px);
-    width:30%;
-    text-align:right;
-    overflow-y: scroll;
-  }
-  @keyframes eagleFly {
-    from {
-      transform: translateX(calc(100vw + 200px));
-    }
-    to {
-      transform: translateX(-200px);
-    }
-  }
-  #freedom {
-    visibility:hidden;
-    position:fixed;
-    top:0px;
-    left:-200px;
-    width:200px;
-    height:200px;
-  }
-  .flyingFreedom {
-    visibility:visible !important;
-    animation-name:eagleFly;
-    animation-duration:5s;
-    animation-iteration-count: 1;
-  }
-  #devWarning {
-    position:absolute;
-    top:10px;
-    right:100px;
-    width:200px;
-  }
-  #circle {
-    position: absolute;
-    border-radius: 100%;
-    transform: translate(-50%,-50%);
-    left:0px;
-    top:0px;
-    background-color: rgba(255,0,0,0.5);
-    pointer-events: none;
-    z-index: 14;
-  }
+}
+#freedom {
+  visibility:hidden;
+  position:fixed;
+  top:0px;
+  left:-200px;
+  width:200px;
+  height:200px;
+}
+.flyingFreedom {
+  visibility:visible !important;
+  animation-name:eagleFly;
+  animation-duration:5s;
+  animation-iteration-count: 1;
+}
+#devWarning {
+  position:absolute;
+  top:10px;
+  right:100px;
+  width:200px;
+}
+#circle {
+  position: absolute;
+  border-radius: 100%;
+  transform: translate(-50%,-50%);
+  left:0px;
+  top:0px;
+  background-color: rgba(255,0,0,0.5);
+  pointer-events: none;
+  z-index: 14;
+}
 ul {
   list-style-position: inside;
 }

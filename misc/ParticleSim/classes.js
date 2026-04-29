@@ -47,7 +47,7 @@ function updateChunk(row,col) {
 }
 function interact(p2,p1,turn2) {
   if (!p1) {return false;}
-  if (p2.type === 7 && (p1.state > 1 && p1.type !== 8 && p1.type !== 20)) {return false;}
+  if (p2.type === 7 && (p1.type === 1)) {return false;} // exception so that sand turns to glass before falling through fire
   if (p1.type === 7 && p2.type === 7) {
     [p1.id,p2.id] = [p2.id,p1.id];
     return false;
@@ -106,19 +106,25 @@ class Particle {
   }
   explode(board,row2,col2,height,width,radius2) {
     const explodeStack = new PriorityQueue((a,b) => a[0] > b[0]);
-    explodeStack.push([radius2,row2,col2]);
+    explodeStack.push([radius2,row2,col2,row2,col2]);
     const explodedThisTime = new Set();
     while (explodeStack.size() > 0) {
-      let [radius,row,col] = explodeStack.pop();
+      let [radius,row,col,centerX,centerY] = explodeStack.pop();
       const cur = board[row][col];
+      let isAnExplosive = false;
       if (cur.type === 0 || cur.type === 21) {cur.become(7);}
       else if (EXPLOSION[cur.type]) {
         radius = EXPLOSION[cur.type];
+        isAnExplosive = true;
         cur.become(7);
         cur.heat = 100;
         cur.nextHeat = 100;
       } else if (radius >= radius2-2 && STATES[cur.type]>3) {
         cur.become(0);
+      }
+      if (STATES[cur.type] == 2 || STATES[cur.type] == 3) {
+        addDynamicParticle(col,row,cur).applyVelocity(Math.atan2(centerY-row,col-centerX)+(-Math.PI/6+Math.random()*Math.PI/3),radius*2);
+        board[row][col] = new Particle(cur.id,0);
       }
       cur.nextHeat = Math.max(50,cur.nextHeat);
       if (radius<=0){continue;}
@@ -134,8 +140,7 @@ class Particle {
             explodedThisTime.add(p);
             const newRadius = (radius-((Math.abs(i)+Math.abs(j)==2)?1.414:1))*(Math.random()*0.4+0.8);
             if (newRadius > 0)
-              explodeStack.push([newRadius,row+i,col+j]);
-
+              explodeStack.push([newRadius,row+i,col+j,isAnExplosive?col:centerX,isAnExplosive?row:centerY]);
           }
         }
       }
@@ -248,7 +253,6 @@ class Particle {
     }
     // Molten glass freezing
     if (this.type == 10 && this.heat <= 0 && (this.isFalling >= 10)) {
-      console.log("glass froze");
       this.become(9);
     }
     if (this.type == 20 && this.heat <= 0 && (this.isFalling >= 10)) {
@@ -455,6 +459,11 @@ class Board {
   }
   update() {
     // alert("starting update");
+    for (const i of particles) {
+      if (i) {
+        i.update();
+      }
+    }
     let t = [];
     for (var i = 0;i!==this.width;i++) {t.push(i)}
     this.turn = 1-this.turn;
