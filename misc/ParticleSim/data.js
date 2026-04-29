@@ -9,7 +9,10 @@ const DATA = [
       33,
       37,
       41
-    ]
+    ],
+    "spread": {
+      31:[30,0,1,[0]],
+    },
   },
   {
     "index": 1,
@@ -408,7 +411,57 @@ const DATA = [
     "fuel": 100,
     "explosion":5,
     "hidden":true
-  }
+  },
+  {
+    "index": 29,
+    "name": "Ash Bomb",
+    "density": 50,
+    "state": 4,
+    "color": [
+      230,
+      230,
+      200
+    ],
+    "burnTemp": 1,
+    "fuel": 100,
+    "explosion":5,
+  },
+  {
+    "index": 30,
+    "name": "Pebbles",
+    "density": 20,
+    "state": 3,
+    "color": [
+      128,
+      128,
+      128
+    ],
+    "spread": {
+      30:[31,31,0.00001,[0,1,2,3]],
+      4:[4,31,0.0001,[0,1,2,3]]
+    },
+    "hidden":true,
+    "alias":4,
+  },
+  {
+    "index": 31,
+    "name": "Loose Rock",
+    "density": 90,
+    "state": 4,
+    "color": [
+      128,
+      128,
+      128
+    ],
+    "spread": {
+      30:[31,31,0.01,[0,1,2,3]],
+      31:[4,4,0.00001,[0,1,2,3]],
+      4:[4,4,0.01,[0,1,2,3]],
+    },
+    "friction":0.5,
+    "hidden":true,
+    "alias":4,
+  },
 ];
 const NAMES = [];
 const STATES = [];

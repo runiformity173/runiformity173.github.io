@@ -104,6 +104,14 @@ class Particle {
     this.age = 0;
     this.special = 0;
   }
+  burn(row,col) {
+    if (this.type == 29) { // Sand bomb
+      addDynamicParticle(col,row,new Particle(1,8)).applyVelocity(Math.random()*Math.PI*2,3);
+      addDynamicParticle(col,row,new Particle(1,8)).applyVelocity(Math.random()*Math.PI*2,3);
+      addDynamicParticle(col,row,new Particle(1,8)).applyVelocity(Math.random()*Math.PI*2,3);
+    }
+    this.become(7);
+  }
   explode(board,row2,col2,height,width,radius2) {
     const explodeStack = new PriorityQueue((a,b) => a[0] > b[0]);
     explodeStack.push([radius2,row2,col2,row2,col2]);
@@ -114,15 +122,15 @@ class Particle {
       let isAnExplosive = false;
       if (cur.type === 0 || cur.type === 21) {cur.become(7);}
       else if (EXPLOSION[cur.type]) {
-        radius = EXPLOSION[cur.type];
+        radius = radius*0.4 + EXPLOSION[cur.type];
         isAnExplosive = true;
-        cur.become(7);
+        cur.burn(row,col);
         cur.heat = 100;
         cur.nextHeat = 100;
-      } else if (radius >= radius2-2 && STATES[cur.type]>3) {
+      } else if (radius >= radius2-2 && STATES[cur.type]>3 && ALIAS[cur.type] != 4) {
         cur.become(0);
       }
-      if (STATES[cur.type] == 2 || STATES[cur.type] == 3) {
+      if (STATES[cur.type] == 2 || STATES[cur.type] == 3 || ALIAS[cur.type] == 4) {
         addDynamicParticle(col,row,cur).applyVelocity(Math.atan2(centerY-row,col-centerX)+(-Math.PI/6+Math.random()*Math.PI/3),radius*2);
         board[row][col] = new Particle(cur.id,0);
       }
@@ -280,7 +288,7 @@ class Particle {
       if (EXPLOSION[this.type]) {
         this.explode(board,row,col,height,width,EXPLOSION[this.type]);
       }
-      this.become(7);
+      this.burn(row,col);
     }
     // Fire going out
     if (this.type == 7 && ((this.age>60 && Math.random()<0.2) || (this.lastType == 12 && this.heat < 55))) {

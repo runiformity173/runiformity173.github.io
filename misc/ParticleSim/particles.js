@@ -63,5 +63,6 @@ class DynamicParticle {
 }
 
 function addDynamicParticle(x,y,particle) {
+    if (ALIAS[particle.type] == 4) particle.become(30);
     return new DynamicParticle(particle, x+0.5, y+0.5);
 }
