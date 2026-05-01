@@ -13,19 +13,11 @@ function eraseCookie(name) {
   if (name in prev) delete prev[name];
   localStorage.setItem("DMScreen2", JSON.stringify(prev));
 }
-if (!("type" in getCookie("box-1"))) {
-  for (let i = 1;i<=12;i++) {
-    setCookie(`box-${i}`,{
-      type:"blank",
-      data:{}
-    });
-  }
-}
 if (!Array.isArray(getCookie("defaultPlayerList"))) {
   setCookie("defaultPlayerList",[]);
 }
-if (!Array.isArray(getCookie("floatingBoxes"))) {
-  setCookie("floatingBoxes",[]);
+if (!Array.isArray(getCookie("windows"))) {
+  setCookie("windows",[]);
 }
 function datalistInput(element) {
     var val = element.value;
@@ -38,16 +30,10 @@ function datalistInput(element) {
     }
   }
 function load() {
-  const floatingBoxes = [];
-  for (const i of getCookie("floatingBoxes")) {
-    document.body.appendChild(document.getElementById("popoutWindowTemplate").content.cloneNode(true));
-    const d = document.body.lastElementChild.lastElementChild;
-    d.id = i;
-    floatingBoxes.push(d);
-  }
-  [...Array.from(document.getElementsByClassName("static-box")),...floatingBoxes].forEach(function(i) {
+  getCookie("windows").forEach(function(j) {
+    const i = createWindow(j.windowData[0],j.windowData[1],j.windowData[2],j.windowData[3],j.windowData[4]);
     i.appendChild(document.getElementById("plusButtonTemplate").content.cloneNode(true));
-    const entry = getCookie(i.id);
+    const entry = j;
     if (entry.type != "blank") {
       const data = entry.data;
       addModule(entry.type,i,false);
@@ -80,13 +66,6 @@ function load() {
       } else if (entry.type == "monster") {
         i.children[1].src = data.link;
       }
-      
-      if (i.classList.contains("floating-box")) {
-        i.parentElement.style.left = data.left;
-        i.parentElement.style.top = data.top;
-      }
-    } else if (i.classList.contains("floating-box")) {
-      i.parentElement.remove();
     }
   });
   
@@ -125,7 +104,6 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
   Array.from(box.children).forEach(i=>i.remove());
   box.appendChild(document.getElementById(module+"Template").content.cloneNode(true));
   box.appendChild(document.getElementById("closeButtonTemplate").content.cloneNode(true));
-  box.appendChild(document.getElementById("popoutButtonTemplate").content.cloneNode(true));
   if (module == "initiativeTracker") {
     if (addDefault) {
       for (const item of getCookie("defaultPlayerList")) {
@@ -191,11 +169,6 @@ function sortInitiative(box) {
 }
 function save(box=null) {
   if (box) {
-    if (Number(box.id.split("-")[1]) > 12) {
-      if (!getCookie("floatingBoxes").includes(box.id)) {
-        setCookie("floatingBoxes",[...getCookie("floatingBoxes"),box.id]);
-      }
-    }
     const type = (box?.firstElementChild?.id) || "blank";
     const data = {};
     if (type == "initiativeTracker") {
@@ -221,13 +194,13 @@ function save(box=null) {
     } else if (type == "monster") {
       data["link"] = box.children[1].src;
     }
-    if (box.classList.contains("floating-box")) {
-      data["left"] = box.parentElement.style.left;
-      data["top"] = box.parentElement.style.top;
-    }
-    setCookie(box.id,{type:type,data:data});
-  } else if (box === null) {
-    setCookie("floatingBoxes",Array.from(document.getElementsByClassName("floating-box")).map(e => e.id));
+    const newWindows = getCookie("windows");
+    const boxIndex = newWindows.findIndex(i=>i.name == box.id);
+    if (boxIndex > -1)
+      newWindows[boxIndex] = {name:box.id,type:type,data:data,windowData:box.closest(".window").getData()};
+    else
+      newWindows.push({name:box.id,type:type,data:data,windowData:box.closest(".window").getData()});
+    setCookie("windows",newWindows);
   } else {
     console.log(box);
     alert("didn't pass box to 'save()' correctly");
@@ -239,56 +212,4 @@ function saveInitiative(box) {
     list.push(row.firstElementChild.firstElementChild.innerHTML);
   }
   setCookie("defaultPlayerList",list);
-}
-
-
-let dragging = -1;
-let dragStartPos = [0,0];
-let maxDragPos = [];
-function setMaxDragPos() {
-  maxDragPos = [
-    document.body.clientWidth-document.getElementById("box-1").clientWidth-2,
-    document.body.clientHeight-document.getElementById("box-1").clientHeight-22
-  ];
-}
-setMaxDragPos();
-window.addEventListener("resize",setMaxDragPos)
-function getHoveredBox(e) {
-  return Array.from(document.elementsFromPoint(e.clientX, e.clientY)).filter(o=>o.classList.contains("static-box"))[0];
-}
-document.addEventListener("mousemove", e => {
-  if (dragging < 0) return;
-  const dragged = document.getElementById("box-"+dragging).parentElement;
-  dragged.style.left = Math.min(maxDragPos[0],Math.max(0,e.clientX-dragStartPos[1]))+"px";
-  dragged.style.top = Math.min(maxDragPos[1],Math.max(0,e.clientY-dragStartPos[0]))+"px";
-  const box = getHoveredBox(e);
-  [...document.querySelectorAll(".hovered-box")].forEach(o=>o.classList.remove("hovered-box"));
-  if (box && box.querySelector(".addModuleContainer")) {
-    box.classList.add("hovered-box");
-  }
-});
-window.addEventListener("mouseout", e => {
-  if (e.x < 0 || e.y < 0 || e.x > window.innerWidth || e.y > window.innerHeight) {
-    stopDragging(e);
-  }
-});
-window.addEventListener("mouseup",e => {
-  stopDragging(e);
-});
-function stopDragging(e) {
-  if (dragging === -1) return;
-  [...document.querySelectorAll(".hovered-box")].forEach(o=>o.classList.remove("hovered-box"));
-  const box = getHoveredBox(e);
-  if (box && box.querySelector(".addModuleContainer")) {
-    const from = document.getElementById("box-"+dragging);
-    box.innerHTML = "";
-    while (from.firstChild) box.appendChild(from.firstChild);
-    from.closest(".floating-box-container").remove();
-    save(box);
-    save(null);
-  } else {
-    save(document.getElementById("box-"+dragging));
-    document.getElementById("box-"+dragging).classList.remove("dragging");
-  }
-  dragging = -1;
 }

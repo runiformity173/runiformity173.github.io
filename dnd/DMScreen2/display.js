@@ -1,85 +1,212 @@
-const viewport = document.getElementById("viewport");
-const windows = document.getElementById("windows");
+const viewport = document.getElementById('viewport');
+const windows = document.getElementById('windows');
 
-let dragging2 = false;
-let lastX = 0;
-let lastY = 0;
+const windowList = [];
+
+const minWidths = {
+    "initiativeTracker":8,
+    "healthTracker":8,
+};
+const minHeights = {
+    "initiativeTracker":6,
+    "healthTracker":5,
+};
+
+const SNAP = 32;
+const MIN_ZOOM = 0.5;
+const MAX_ZOOM = 2.5;
+const ZOOM_STEP = 0.1;
+
+let ID = 0;
 
 let cameraX = 0;
 let cameraY = 0;
 let zoom = 1;
 
-const MIN_ZOOM = 1;
-const MAX_ZOOM = 3;
-const ZOOM_SPEED = 0.05;
+let panning = false;
+let lastX = 0;
+let lastY = 0;
 
-function render() {
-    viewport.style.transformOrigin = "center center";
-    viewport.style.transform = `scale(${zoom})`;
-    windows.style.transform = `translate(${cameraX}px, ${cameraY}px)`;
-
-    viewport.style.backgroundPosition =
-        `${cameraX - 16}px ${cameraY - 16}px`;
-
-    viewport.style.backgroundSize =
-        `${gridSize}px ${gridSize}px`;
+function snap(value) {
+    return Math.round(value / SNAP) * SNAP;
 }
 
-viewport.addEventListener("mousedown", (e) => {
-    dragging2 = true;
+function renderCamera() {
+    windows.style.transform = `translate(${cameraX}px, ${cameraY}px) scale(${zoom})`;
+
+    const rect = viewport.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const bgSize = SNAP * zoom;
+
+    const bgX = centerX + cameraX;
+    const bgY = centerY + cameraY;
+
+    viewport.style.backgroundSize = `${bgSize}px ${bgSize}px`;
+    viewport.style.backgroundPosition = `${bgX}px ${bgY}px`;
+}
+
+function createWindow(title, x, y, w, h) {
+    const el = document.createElement('div');
+    el.className = 'window';
+    let ID = 1;
+    while (document.getElementById("box-"+ID)) ID++;
+    el.innerHTML = `
+    <div class="titlebar">${title}</div>
+    <div class="box" id="box-${ID}">
+    </div>
+    <div class="resize"></div>
+    `;
+
+    windows.appendChild(el);
+
+    document.getElementById("box-"+ID).appendChild(document.getElementById("plusButtonTemplate").content.cloneNode(true))
+
+    let posX = x;
+    let posY = y;
+    let width = w*32;
+    let height = h*32;
+
+    const titlebar = el.querySelector('.titlebar');
+    const resize = el.querySelector('.resize');
+
+    let dragging = false;
+    let resizing = false;
+    let startX = 0;
+    let startY = 0;
+
+    function renderWindow() {
+        const rect = viewport.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        el.style.left = `${snap(posX)+centerX}px`;
+        el.style.top = `${snap(posY)+centerY}px`;
+        el.style.width = `${Math.max(SNAP*minWidths[el.querySelector(".identifier")?.id]||192, snap(width))}px`;
+        el.style.height = `${Math.max(SNAP*minHeights[el.querySelector(".identifier")?.id]||96, snap(height))}px`;
+    }
+
+    renderWindow();
+
+    titlebar.addEventListener('mousedown', (e) => {
+        dragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        titlebar.style.cursor = 'grabbing';
+        e.stopPropagation();
+    });
+
+    resize.addEventListener('mousedown', (e) => {
+        resizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        e.stopPropagation();
+    });
+    el.renderFunction = renderWindow;
+    el.getData = function() {
+        return [el.querySelector(".titlebar").innerHTML, posX,posY,width/32,height/32];
+    };
+    window.addEventListener('mousemove', (e) => {
+        const dx = (e.clientX - startX) / zoom;
+        const dy = (e.clientY - startY) / zoom;
+
+
+        if (dragging) {
+            posX += dx;
+            posY += dy;
+            startX = e.clientX;
+            startY = e.clientY;
+            renderWindow();
+        }
+
+        if (resizing) {
+            width += dx;
+            height += dy;
+            startX = e.clientX;
+            startY = e.clientY;
+            renderWindow();
+        }
+    });
+
+    window.addEventListener('mouseup', () => {
+        dragging = false;
+        resizing = false;
+        width = Math.max(SNAP*minWidths[el.querySelector(".identifier")?.id]||192,snap(width));
+        height = Math.max(SNAP*minHeights[el.querySelector(".identifier")?.id]||96,snap(height));
+        save(el.querySelector(".box"));
+        titlebar.style.cursor = 'grab';
+    });
+    windowList.push(el);
+    return el.querySelector(".box");
+}
+function closeWindow(box) {
+    windowList.splice(windowList.findIndex((i)=>(i.querySelector(".box").id === box.id)),1);
+    const newWindows = getCookie("windows");
+    const boxIndex = newWindows.findIndex(i=>i.name == box.id);
+    if (boxIndex > -1) newWindows.splice(boxIndex,1);
+    setCookie("windows",newWindows);
+    box.closest(".window").remove();
+}
+
+viewport.addEventListener('mousedown', (e) => {
+    if (e.target !== viewport) return;
+    panning = true;
     lastX = e.clientX;
     lastY = e.clientY;
-    viewport.style.cursor = "grabbing";
+    viewport.style.cursor = 'grabbing';
 });
 
-window.addEventListener("mouseup", () => {
-    dragging2 = false;
-    viewport.style.cursor = "grab";
-});
-
-window.addEventListener("mousemove", (e) => {
-    if (!dragging2) return;
+window.addEventListener('mousemove', (e) => {
+    if (!panning) return;
 
     const dx = e.clientX - lastX;
     const dy = e.clientY - lastY;
 
+    cameraX += dx;
+    cameraY += dy;
+
     lastX = e.clientX;
     lastY = e.clientY;
 
-    cameraX += dx/zoom;
-    cameraY += dy/zoom;
-
-    render();
+    renderCamera();
 });
 
-viewport.addEventListener("wheel", (e) => {
+window.addEventListener('mouseup', () => {
+    panning = false;
+    viewport.style.cursor = 'grab';
+});
+
+viewport.addEventListener('wheel', (e) => {
     e.preventDefault();
 
     const rect = viewport.getBoundingClientRect();
-
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const relativeX = (mouseX - centerX) / zoom;
-    const relativeY = (mouseY - centerY) / zoom;
-
     const oldZoom = zoom;
-
     const direction = e.deltaY > 0 ? -1 : 1;
-    zoom *= (Math.pow(1.07,direction));
 
-    if (zoom < MIN_ZOOM) zoom = MIN_ZOOM;
-    if (zoom > MAX_ZOOM) zoom = MAX_ZOOM;
+    zoom += direction * ZOOM_STEP;
+    zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom));
 
-    const scale = zoom / oldZoom;
+    if (zoom === oldZoom) return;
 
-    cameraX -= relativeX * (scale - 1);
-    cameraY -= relativeY * (scale - 1);
+    const worldX = (mouseX - centerX - cameraX) / oldZoom;
+    const worldY = (mouseY - centerY - cameraY) / oldZoom;
 
-    render();
+    cameraX = mouseX - centerX - worldX * zoom;
+    cameraY = mouseY - centerY - worldY * zoom;
+
+    renderCamera();
 }, { passive: false });
+window.addEventListener("resize", function() {
+    renderCamera();
+    for (const i of windowList) {
+        i.renderFunction();
+    }
+})
 
-render();
+renderCamera();

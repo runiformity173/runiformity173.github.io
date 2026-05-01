@@ -12,19 +12,7 @@
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 
-<body class="bg-dark text-light" onload="load()">
-  <template id="popoutWindowTemplate">
-    <div class="floating-box-container">
-      <div class="floating-box-movebar" 
-      onmousedown="
-      dragging = Number(this.nextElementSibling.id.split('-')[1]);
-      this.nextElementSibling.classList.add('dragging');
-      dragStartPos = [event.y-Number(window.getComputedStyle(this.parentElement).top.replace('px','')),event.x-Number(window.getComputedStyle(this.parentElement).left.replace('px',''))];"
-      onmouseup="stopDragging(event);">
-      </div>
-      <div class="box floating-box"></div>
-    </div>
-  </template>
+<body onload="load()">
   <template id="conditionTemplate">
     <div class="identifier d-none" id="condition"></div>
     <h2 class="title"></h2>
@@ -157,28 +145,6 @@
       </button>
     </div>
   </template>
-  <template id="popoutButtonTemplate">
-    <div class="popoutModuleContainer">
-      <button class="popoutButton" onclick="
-        document.body.appendChild(document.getElementById('popoutWindowTemplate').content.cloneNode(true));
-        const floating = document.body.lastElementChild;
-        let n = 13;
-        while (document.getElementById('box-'+n)) {n += 1;}
-        floating.lastElementChild.id = 'box-'+n;
-        const i  = this.parentElement.parentElement;
-        while (i.firstChild) floating.lastElementChild.appendChild(i.firstChild);
-        save(floating.lastElementChild);
-        i.innerHTML = '';
-        save(i);
-        i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
-        ">
-        <span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="lightblue" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
-  <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
-</svg></span>
-      </button>
-    </div>
-  </template>
   <template id="closeButtonTemplate">
     <div class="closeModuleContainer">
       <button class="closeButton" onclick="
@@ -225,10 +191,11 @@
   </div> -->
   <div id="viewport">
     <div id="windows">
-        <div class="window" style="left:calc(16 * 32px); top:128px;">A</div>
-        <div class="window" style="left:800px; top:512px;">B</div>
+        <!-- <div class="window" id="windowA" style="left:calc(16 * 32px); top:128px;">A</div>
+        <div class="window" id="windowB" style="left:800px; top:512px;">B</div> -->
     </div>
   </div>
+  <script src="tapspace.js"></script>
   <script src="data.js"></script>
   <script src="tables.js"></script>
   <script src="spells.js"></script>
