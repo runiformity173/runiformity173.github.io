@@ -145,43 +145,6 @@
       </button>
     </div>
   </template>
-  <template id="closeButtonTemplate">
-    <div class="closeModuleContainer">
-      <button class="closeButton" onclick="
-        const i = this.parentElement.parentElement;
-        if (i.closest('.floating-box-container')) {
-          i.innerHTML = '';
-          i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
-          i.closest('.floating-box-container').remove();
-          eraseCookie(i.id);
-          save();
-        } else {
-          i.innerHTML = '';
-          i.appendChild(document.getElementById('plusButtonTemplate').content.cloneNode(true))
-          save(i);
-        }
-        ">
-        ×
-      </button>
-    </div>
-  </template>
-  <template id="plusButtonTemplate">
-    <div class="addModuleContainer">
-      <select class="btn btn-outline-light" oninput="addModule(this.value,this.closest('.box'))">
-        <option disabled selected>--Select What to Add--</option>
-        <option>Initiative Tracker</option>
-        <option>Health Tracker</option>
-        <option>Condition Select</option>
-        <option>Spell Select</option>
-        <option>Monster Select</option>
-        <option>Table Select</option>
-        <option>Notes</option>
-      </select>
-      <!-- <button class="btn btn-outline-light" onclick="addModule(this.previousElementSibling.value,this.closest('.box'))">
-        +
-      </button> -->
-    </div>
-  </template>
   <datalist id="tablesDatalist"></datalist>
   <datalist id="spellsDatalist"></datalist>
   <datalist id="monstersDatalist"></datalist>
@@ -193,6 +156,17 @@
     <div id="windows">
         <!-- <div class="window" id="windowA" style="left:calc(16 * 32px); top:128px;">A</div>
         <div class="window" id="windowB" style="left:800px; top:512px;">B</div> -->
+    </div>
+  </div>
+  <div class="fab-menu">
+    <button class="main-btn">
+      <span>+</span>
+    </button>
+
+    <div class="menu-items">
+      <button onclick="addWindow('notes')">Notes</button><br>
+      <button>Option 2</button><br>
+      <button>Option 3</button>
     </div>
   </div>
   <script src="tapspace.js"></script>

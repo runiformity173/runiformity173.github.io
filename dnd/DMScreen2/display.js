@@ -6,11 +6,18 @@ const windowList = [];
 const minWidths = {
     "initiativeTracker":8,
     "healthTracker":8,
+    "notes":6,
 };
 const minHeights = {
     "initiativeTracker":6,
     "healthTracker":5,
+    "notes":4,
 };
+const defaultNames = {
+    "initiativeTracker":"Initiative Tracker",
+    "healthTracker": "Health Tracker",
+    "notes":"Notes",
+}
 
 const SNAP = 32;
 const MIN_ZOOM = 0.5;
@@ -53,7 +60,7 @@ function createWindow(title, x, y, w, h) {
     let ID = 1;
     while (document.getElementById("box-"+ID)) ID++;
     el.innerHTML = `
-    <div class="titlebar">${title}</div>
+    <div class="titlebar"><span class="windowName">${title}</span><span class="closeButton">×</span></div>
     <div class="box" id="box-${ID}">
     </div>
     <div class="resize"></div>
@@ -61,14 +68,13 @@ function createWindow(title, x, y, w, h) {
 
     windows.appendChild(el);
 
-    document.getElementById("box-"+ID).appendChild(document.getElementById("plusButtonTemplate").content.cloneNode(true))
-
     let posX = x;
     let posY = y;
     let width = w*32;
     let height = h*32;
 
     const titlebar = el.querySelector('.titlebar');
+    const closeButton = el.querySelector('.closeButton');
     const resize = el.querySelector('.resize');
 
     let dragging = false;
@@ -84,11 +90,19 @@ function createWindow(title, x, y, w, h) {
         el.style.top = `${snap(posY)+centerY}px`;
         el.style.width = `${Math.max(SNAP*minWidths[el.querySelector(".identifier")?.id]||192, snap(width))}px`;
         el.style.height = `${Math.max(SNAP*minHeights[el.querySelector(".identifier")?.id]||96, snap(height))}px`;
+        const textArea = el.querySelector(".notesArea");
+        if (textArea) {
+            textArea.style.height = Math.max(snap(height)-32,96) + "px";
+        }
     }
 
     renderWindow();
-
+    closeButton.addEventListener("click",function () {
+        closeWindow(el.querySelector(".box"));
+        e.stopPropagation();
+    });
     titlebar.addEventListener('mousedown', (e) => {
+        if (e.target.classList.contains("closeButton")) {return;}
         dragging = true;
         startX = e.clientX;
         startY = e.clientY;
@@ -104,7 +118,7 @@ function createWindow(title, x, y, w, h) {
     });
     el.renderFunction = renderWindow;
     el.getData = function() {
-        return [el.querySelector(".titlebar").innerHTML, posX,posY,width/32,height/32];
+        return [el.querySelector(".titlebar .windowName").innerHTML, posX,posY,width/32,height/32];
     };
     window.addEventListener('mousemove', (e) => {
         const dx = (e.clientX - startX) / zoom;
@@ -210,3 +224,7 @@ window.addEventListener("resize", function() {
 })
 
 renderCamera();
+function addWindow(type) {
+    const box = createWindow(defaultNames[type],0,0,minWidths[type],minHeights[type]);
+    addModule(type,box);
+}

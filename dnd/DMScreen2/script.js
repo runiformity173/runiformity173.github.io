@@ -32,7 +32,6 @@ function datalistInput(element) {
 function load() {
   getCookie("windows").forEach(function(j) {
     const i = createWindow(j.windowData[0],j.windowData[1],j.windowData[2],j.windowData[3],j.windowData[4]);
-    i.appendChild(document.getElementById("plusButtonTemplate").content.cloneNode(true));
     const entry = j;
     if (entry.type != "blank") {
       const data = entry.data;
@@ -103,7 +102,6 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
   const module = moduleMap[addedModule];
   Array.from(box.children).forEach(i=>i.remove());
   box.appendChild(document.getElementById(module+"Template").content.cloneNode(true));
-  box.appendChild(document.getElementById("closeButtonTemplate").content.cloneNode(true));
   if (module == "initiativeTracker") {
     if (addDefault) {
       for (const item of getCookie("defaultPlayerList")) {
@@ -161,6 +159,7 @@ function addModule(addedModule,box,addDefault=true,extraData={}) {
     }
   }
   if (addDefault) save(box);
+  box.closest(".window").renderFunction();
 }
 function sortInitiative(box) {
   [...box.children]

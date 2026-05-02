@@ -84,7 +84,6 @@ input {
 .notesArea {
   font-size:24px;
   width:100%;
-  height:100%;
   background-color:#111111;
   border:0;
   cursor:text;
@@ -98,13 +97,22 @@ div.indentation {
 }
 .closeButton {
   z-index:10;
-  position:absolute;
+  height: 31px;
+  width: 31px;
+  border: none;
+  position: absolute;
+  right: 0;
   top:0;
-  right:0;
-  border:none;
-  background:none;
-  color:red;
-  border-radius: 30px;
+  border-top-right-radius: 50%;
+  background: #2a2a2a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.2s ease;
 }
 .rollLink {
   color: #614dff;
@@ -170,6 +178,7 @@ html, body {
 }
 
 .titlebar {
+  text-wrap: nowrap;
   height: 32px;
   background: #2a2a2a;
   display: flex;
@@ -198,3 +207,75 @@ html, body {
   background-color: #2a2a2a;
   clip-path: polygon(100% 100%, 100% 0, 0 100%);
 }
+
+.fab-menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.main-btn {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.main-btn:hover {
+  transform: scale(1.05);
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+
+  opacity: 0;
+  display: none;
+  transform: translateY(-10px);
+  pointer-events: none;
+
+  transition: 0.25s ease;
+}
+
+.fab-menu:hover .menu-items {
+  opacity: 1;
+  display: inline-block;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menu-items button {
+  /* min-width: 160px; */
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+  background: #2a2a2a;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+
+.menu-items button:hover {
+  background: #444;
+}
+/*
+I HATE CSS
+This file is getting so long
+I should really learn tailwind
+*/
