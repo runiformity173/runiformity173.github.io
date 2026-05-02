@@ -105,14 +105,17 @@ div.indentation {
   top:0;
   border-top-right-radius: 50%;
   background: #2a2a2a;
-  color: white;
+  color: #ffaaaa;
   font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  transition: transform 0.2s ease;
+  transition: color 0.1s ease-out;
+}
+.closeButton:hover {
+  color: #ff7777;
 }
 .rollLink {
   color: #614dff;
