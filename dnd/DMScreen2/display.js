@@ -7,22 +7,34 @@ const minWidths = {
     "initiativeTracker":8,
     "healthTracker":8,
     "notes":6,
+    "table":8,
+    "monster":16,
+    "spell":8,
+    "condition":9,
 };
 const minHeights = {
     "initiativeTracker":6,
     "healthTracker":5,
     "notes":4,
+    "table":6,
+    "monster":10,
+    "spell":10,
+    "condition":6,
 };
 const defaultNames = {
     "initiativeTracker":"Initiative Tracker",
     "healthTracker": "Health Tracker",
     "notes":"Notes",
+    "table":"Table",
+    "monster":"Monster",
+    "spell":"Spell",
+    "condition":"Condition",
 }
 
 const SNAP = 32;
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 2.5;
-const ZOOM_STEP = 0.1;
+const ZOOM_STEP = 1.05;
 
 let ID = 0;
 
@@ -54,11 +66,12 @@ function renderCamera() {
     viewport.style.backgroundPosition = `${bgX}px ${bgY}px`;
 }
 
-function createWindow(title, x, y, w, h) {
+function createWindow(title, x, y, w, h, id=null) {
     const el = document.createElement('div');
     el.className = 'window';
     let ID = 1;
-    while (document.getElementById("box-"+ID)) ID++;
+    if (id) ID = Number(id.split("-")[1]);
+    else {while (document.getElementById("box-"+ID)) ID++;}
     el.innerHTML = `
     <div class="titlebar"><span class="windowName">${title}</span><span class="closeButton">×</span></div>
     <div class="box" id="box-${ID}">
@@ -97,7 +110,7 @@ function createWindow(title, x, y, w, h) {
     }
 
     renderWindow();
-    closeButton.addEventListener("click",function () {
+    closeButton.addEventListener("click",function (e) {
         closeWindow(el.querySelector(".box"));
         e.stopPropagation();
     });
@@ -114,6 +127,7 @@ function createWindow(title, x, y, w, h) {
         resizing = true;
         startX = e.clientX;
         startY = e.clientY;
+        console.log("clicked")
         e.stopPropagation();
     });
     el.renderFunction = renderWindow;
@@ -143,11 +157,11 @@ function createWindow(title, x, y, w, h) {
     });
 
     window.addEventListener('mouseup', () => {
+        if (dragging || resizing) save(el.querySelector(".box"));
         dragging = false;
         resizing = false;
         width = Math.max(SNAP*minWidths[el.querySelector(".identifier")?.id]||192,snap(width));
         height = Math.max(SNAP*minHeights[el.querySelector(".identifier")?.id]||96,snap(height));
-        save(el.querySelector(".box"));
         titlebar.style.cursor = 'grab';
     });
     windowList.push(el);
@@ -203,7 +217,7 @@ viewport.addEventListener('wheel', (e) => {
     const oldZoom = zoom;
     const direction = e.deltaY > 0 ? -1 : 1;
 
-    zoom += direction * ZOOM_STEP;
+    zoom *= Math.pow(ZOOM_STEP,direction);
     zoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoom));
 
     if (zoom === oldZoom) return;
@@ -224,7 +238,18 @@ window.addEventListener("resize", function() {
 })
 
 renderCamera();
-function addWindow(type) {
+function addWindow(type, data) {
     const box = createWindow(defaultNames[type],0,0,minWidths[type],minHeights[type]);
-    addModule(type,box);
+    addModule(type,box,true,data);
+}
+
+function openModal(modalName, adding=false) {
+    if (document.getElementById(modalName+"Modal").classList.contains("hidden")) {
+        [...document.getElementsByClassName("addWindowInput")].forEach((o)=>o.classList.add("hidden"))
+        document.getElementById(modalName+"Modal").classList.remove("hidden");
+        document.querySelector(".fab-menu").classList.add("forcedOpen");
+    } else {
+        document.getElementById(modalName+"Modal").classList.add("hidden");
+        document.querySelector(".fab-menu").classList.remove("forcedOpen");
+    }
 }

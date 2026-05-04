@@ -24,14 +24,16 @@ function datalistInput(element) {
     var opts = element.list.children;
     for (var i = 0; i < opts.length; i++) {
       if (opts[i].value === val) {
-        element.parentElement.lastElementChild.click();
+        element.parentElement.nextElementSibling.click();
+        addWindow(element.name,{name:element.value});
+        element.value = "";
         break;
       }
     }
   }
 function load() {
   getCookie("windows").forEach(function(j) {
-    const i = createWindow(j.windowData[0],j.windowData[1],j.windowData[2],j.windowData[3],j.windowData[4]);
+    const i = createWindow(j.windowData[0],j.windowData[1],j.windowData[2],j.windowData[3],j.windowData[4],id=j.name);
     const entry = j;
     if (entry.type != "blank") {
       const data = entry.data;

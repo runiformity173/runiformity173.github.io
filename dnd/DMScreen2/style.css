@@ -30,6 +30,7 @@ body {
   background-color: #131313;
   box-sizing: border-box;
   overflow:hidden;
+  height: 100%;
   /* -ms-overflow-style: none;
   scrollbar-width: none;  */
 }
@@ -96,7 +97,6 @@ div.indentation {
   display:inline-block;
 }
 .closeButton {
-  z-index:10;
   height: 31px;
   width: 31px;
   border: none;
@@ -111,7 +111,6 @@ div.indentation {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
   transition: color 0.1s ease-out;
 }
 .closeButton:hover {
@@ -242,7 +241,6 @@ html, body {
 }
 
 .menu-items {
-  display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
@@ -253,9 +251,10 @@ html, body {
   pointer-events: none;
 
   transition: 0.25s ease;
+  background-color: rgba(255,255,255,0.1);
 }
 
-.fab-menu:hover .menu-items {
+.fab-menu:hover .menu-items, .fab-menu.forcedOpen .menu-items {
   opacity: 1;
   display: inline-block;
   transform: translateY(0);
@@ -266,9 +265,13 @@ html, body {
   /* min-width: 160px; */
   padding: 12px 18px;
   border: none;
+  width: 100%;
   border-radius: 12px;
   background: #2a2a2a;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
   cursor: pointer;
   text-align: left;
   transition: background 0.2s ease;
@@ -282,3 +285,14 @@ I HATE CSS
 This file is getting so long
 I should really learn tailwind
 */
+.addWindowInput {
+  height: calc(0.75rem + 36px);
+  position: absolute;
+  right:100%;
+}
+.addWindowInput input {
+  height: 100%;
+}
+.hidden {
+  display: none;
+}
