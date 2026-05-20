@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Precision 64-Bit Mandelbrot Explorer</title>
+    <style>
+        /* Modern CSS Reset & Core Layout Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Crucial: Prevents double scrollbars during canvas wheel events */
+            background-color: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #fff;
+        }
+
+        /* Fullscreen WebGL Canvas positioning */
+        #glCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            z-index: 1;
+        }
+
+        /* Minimal HUD UI overlay wrapper */
+        .ui-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            pointer-events: none; /* Allows mouse interactions to pass straight through to the canvas */
+        }
+
+        #info {
+            background: rgba(10, 10, 15, 0.75);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px); /* Subtle glassmorphism effect */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            pointer-events: auto; /* Ensures text selection or future button clicks work if added */
+            min-width: 280px;
+        }
+
+        /* Clean highlight adjustments for technical info output */
+        #info br + span {
+            color: #888;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WebGL Canvas Context Source -->
+    <canvas id="glCanvas"></canvas>
+
+    <!-- Interactive HUD Readout Overlay -->
+    <div class="ui-container">
+        <div id="info">Initializing high-precision matrices...</div>
+    </div>
+
+    <!-- The WebGL2 Fractal Engine Script Container -->
+    <script>
+         const canvas = document.getElementById('glCanvas'); 
+         const gl = canvas.getContext('webgl2'); 
+         const info = document.getElementById('info'); 
+
+         if (!gl) { 
+             info.textContent = "WebGL 2 not supported by your browser/GPU."; 
+             throw new Error("WebGL2 unsupported"); 
+         } 
+
+         // --- Helper functions for JS side 64-bit math splitting --- 
+         function split64(val) { 
+             const hi = Math.fround(val); 
+             const lo = Math.fround(val - hi); 
+             return [hi, lo]; 
+         } 
+
+         const vsSource = `#version 300 es 
+             in vec2 position; 
+             void main() { 
+                 gl_Position = vec4(position, 0.0, 1.0); 
+             } 
+         `; 
+
+         const fsSource = `#version 300 es 
+             precision highp float; 
+             precision highp int; 
+              
+             out vec4 fragColor; 
+              
+             uniform highp vec2 center;
+            uniform highp vec3 viewh;
+            uniform highp vec3 viewl;
+              
+             vec4 fractal(float xh, float xl, float yh, float yl) { 
+                highp float zrh = 0.0;
+                highp float zrl = 0.0;
+                highp float zih = 0.0;
+                highp float zil = 0.0;
+                float zrsq_h = 0.0;
+                float zrsq_l = 0.0;
+                
+                float zisq_h = 0.0;
+                float zisq_l = 0.0;
+                float m = 0.0;
+                int n;
+                for (n = 0; n < 2048; n++) {
+                    zil = (zrh*zil + zrl*zih + zrl*zil)*2.0 + yl;
+                    zih = zrh*zih*2.0 + yh;
+                    
+                    zrh = zrsq_h - zisq_h + xh;
+                    zrl = zrsq_l - zisq_l + xl;
+                    
+                    if (zrh > 2.0 || zrh < -2.0) {
+                        float totalr = zrh + zrl;
+                        zrl = zrl - (totalr - zrh);
+                        zrh = totalr;
+                    }
+                    
+                    if (zih > 2.0 || zih < -2.0) {
+                        float totali = zih + zil;
+                        zil = zil - (totali - zih);
+                        zih = totali;
+                    }
+                    
+                    zrsq_h = zrh*zrh;
+                    zrsq_l = zrh*zrl*2.0 + zrl*zrl;
+                    
+                    zisq_h = zih*zih;
+                    zisq_l = zih*zil*2.0 + zil*zil;
+                    
+                    m = zrsq_h + zrsq_l + zisq_h + zisq_l;
+                    if (m > 4.0) {break;}
+			    }
+
+                 if (n < 2048) { 
+                     float log_zn = log(zrh + zih) / 2.0; 
+                     float nu = log(log_zn / log(2.0)) / log(2.0); 
+                     float iterSmooth = float(n) + 1.0 - nu; 
+
+                     float r = sin(0.03 * iterSmooth + 0.0) * 0.5 + 0.5; 
+                     float g = sin(0.04 * iterSmooth + 1.5) * 0.5 + 0.5; 
+                     float b = sin(0.06 * iterSmooth + 3.0) * 0.5 + 0.5; 
+                      
+                     return vec4(r, g, b, 1.0); 
+                 } else { 
+                     return vec4(0.0, 0.0, 0.0, 1.0); 
+                 } 
+             }
+            void main(void) {
+                vec4 w = vec4(0.0, 0.0, 0.0, 0.0);
+                vec2 tz = gl_FragCoord.xy;
+                highp float xh = viewh.x;
+                highp float xl = viewl.x + (tz.x - center.x)*viewh.z;
+                highp float yh = viewh.y;
+                highp float yl = viewl.y + (tz.y - center.y)*viewh.z;
+                fragColor = fractal(xh, xl, yh, yl);
+            }
+         `; 
+         function toFloatPair(n) {
+            n = parseFloat(n);
+            var f = parseFloat(n.toPrecision(5));
+            return [f, n - f];
+        }
+         function createShader(gl, type, source) { 
+             const shader = gl.createShader(type); 
+             gl.shaderSource(shader, source); 
+             gl.compileShader(shader); 
+             if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) { 
+                 console.error(gl.getShaderInfoLog(shader)); 
+                 gl.deleteShader(shader); 
+                 return null; 
+             } 
+             return shader; 
+         } 
+
+         const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource); 
+         const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource); 
+         const program = gl.createProgram(); 
+         gl.attachShader(program, vertexShader); 
+         gl.attachShader(program, fragmentShader); 
+         gl.linkProgram(program); 
+
+         if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { 
+             throw new Error("Link failed"); 
+         } 
+
+         const uViewL = gl.getUniformLocation(program, 'u_viewWidth'); 
+         const uViewH = gl.getUniformLocation(program, 'u_viewHeight'); 
+         const uCenter = gl.getUniformLocation(program, 'u_center'); 
+
+         const positions = new Float32Array([ 
+             -1.0, -1.0,   1.0, -1.0,  -1.0,  1.0, 
+             -1.0,  1.0,   1.0, -1.0,   1.0,  1.0, 
+         ]); 
+         const buffer = gl.createBuffer(); 
+         gl.bindBuffer(gl.ARRAY_BUFFER, buffer); 
+         gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW); 
+
+         const positionLoc = gl.getAttribLocation(program, 'position'); 
+         gl.enableVertexAttribArray(positionLoc); 
+         gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0); 
+
+         gl.useProgram(program); 
+
+         let view = { xMin: -2.0, xMax: 0.5, yMin: -1.25, yMax: 1.25 }; 
+         let isRenderPending = false; 
+
+         function getAdjustedBounds() { 
+             const aspect = canvas.width / canvas.height; 
+             const xCenter = (view.xMin + view.xMax) / 2; 
+             const xRange = view.xMax - view.xMin; 
+             const yRange = xRange / aspect; 
+             const yCenter = (view.yMin + view.yMax) / 2; 
+
+             return { 
+                 yMin: yCenter - yRange / 2, 
+                 yMax: yCenter + yRange / 2, 
+                 xRange: xRange, 
+                 yRange: yRange 
+             }; 
+         } 
+
+         function updateCanvasSize() { 
+             if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) { 
+                 canvas.width = window.innerWidth; 
+                 canvas.height = window.innerHeight; 
+                 gl.viewport(0, 0, canvas.width, canvas.height); 
+             } 
+         } 
+
+         function drawScene() { 
+             isRenderPending = false; 
+             updateCanvasSize(); 
+
+             const bounds = getAdjustedBounds(); 
+	
+            var sp = toFloatPair((view.xMax-view.xMin)/canvas.width);
+            
+            var xp = toFloatPair((view.xMax+view.xMin)/2);
+            var yp = toFloatPair((view.yMax+view.yMin)/2);
+            
+            gl.uniform3f(uViewH, xp[0], yp[0], sp[0]);
+            gl.uniform3f(uViewL, xp[1], yp[1], sp[1]);
+            gl.uniform2f(uCenter, canvas.width/2, canvas.height/2);
+
+             gl.drawArrays(gl.TRIANGLES, 0, 6); 
+
+             info.innerHTML = `Zoom Level: ${(1 / bounds.xRange).toExponential(4)}x<br><span>Scroll to zoom under cursor.</span>`; 
+         } 
+
+         function requestRender() { 
+             if (!isRenderPending) { 
+                 isRenderPending = true; 
+                 requestAnimationFrame(drawScene); 
+             } 
+         } 
+
+         window.addEventListener('wheel', (e) => { 
+             e.preventDefault(); 
+
+             updateCanvasSize(); 
+             const bounds = getAdjustedBounds(); 
+
+             const mouseX = e.clientX / canvas.width; 
+             const mouseY = (canvas.height - e.clientY) / canvas.height; 
+
+             const mouseCr = view.xMin + mouseX * bounds.xRange; 
+             const mouseCi = bounds.yMin + mouseY * bounds.yRange; 
+
+             const zoomFactor = e.deltaY < 0 ? 0.85 : 1.15; 
+
+             if (bounds.xRange * zoomFactor < 1e-14 && e.deltaY < 0) { 
+                 info.innerHTML = `Zoom Level: Maxed Out<br><span>Reached deep emulated 64-bit boundary accuracy.</span>`; 
+                 return; 
+             } 
+
+             view.xMin = mouseCr - mouseX * (bounds.xRange * zoomFactor); 
+             view.xMax = mouseCr + (1 - mouseX) * (bounds.xRange * zoomFactor); 
+              
+             const targetYRange = bounds.yRange * zoomFactor; 
+             const rawYMin = mouseCi - mouseY * targetYRange; 
+             const rawYMax = mouseCi + (1 - mouseY) * targetYRange; 
+
+             const aspect = canvas.width / canvas.height; 
+             const rawYCenter = (rawYMin + rawYMax) / 2; 
+             const rawXRange = view.xMax - view.xMin; 
+              
+             view.yMin = rawYCenter - (rawXRange / 2); 
+             view.yMax = rawYCenter + (rawXRange / 2); 
+
+             requestRender(); 
+         }, { passive: false }); 
+
+         window.addEventListener('resize', requestRender); 
+          
+         requestRender(); 
+    </script>
+</body>
+</html>

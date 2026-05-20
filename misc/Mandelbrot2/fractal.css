@@ -1,0 +1,397 @@
+/* Ice Fractal Main CSS */
+/* Copyright (c) www.icefractal.com */
+
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	font-size: 16px;
+	background: #C9F0FE;
+}
+
+h1 {
+	font: 45px "Ice Fractal", Arial, sans-serif;
+	margin: 0;
+	text-align: center;
+	overflow-wrap: break-word;
+	
+	font-weight: normal;
+	width: 100%;
+	color: #47C;
+	color: #ACFA;
+	text-shadow: 0.05em 0.03em 0 #0030BBD0, 0.04em 0.04em 0.09em #AFF;
+}
+h2 {
+	overflow-wrap: break-word;
+	margin: 0;
+	font: 32px "Ice Fractal", Arial, sans-serif;
+	text-align: center;
+	font-weight: bold;
+}
+
+#header {
+	width: 100%;
+	border-bottom: 1px solid #9CF;
+	box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+	position: relative;
+}
+#header .logo {
+	height: 60px;
+	border: none !important;
+}
+
+#header a {
+	display:inline-block;
+	height: 100%;
+}
+
+#header .menubar .menu {
+	display:inline-block;
+	padding: 35px 0 0 0;
+	text-align:center;
+	width: 80px;
+	box-sizing:border-box;
+	cursor: pointer;
+	height: 64px;
+	vertical-align: top;
+	position: relative;
+}
+
+#header .menu span {
+	font-size: 18px;
+	color:#5C92D8;
+}
+
+#header .menubar .menu > a {
+	background: none !important;
+	font-size: 18px;
+	color:#5C92D8;
+}
+
+#header .menubar .menu .items a {
+	text-align:left;
+	display: block;
+	padding: 6px 20px 6px 10px;
+}
+
+#header .menubar .menu .items a.curpage {
+	background: #50C0FF30;
+	cursor: default;
+	color: black;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+#header .menubar .menu .items a.curpage::before {
+	content:'\2022';
+	position: absolute;
+	margin-left: -7px;
+}
+
+#header .menubar .menu .items a.curpage:hover {
+	text-shadow: none;
+}
+
+#header .menubar .menu .items {
+	background-color: #C9F0FE;
+	background-image: url("SnowfractalTile2.jpg");
+	background-size: 768px;
+	background-position: 100px 0;
+	position: absolute;
+	z-index: 100;
+	top: 100%;
+	left: 0px;
+	white-space: nowrap;
+	display: none;
+	box-sizing: border-box;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+	overflow-y: auto;
+	max-height: 225px;
+}
+
+#header .menubar .menu .items div {
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.3);
+	margin: 0 8px 8px 8px;
+}
+
+#header a:hover, #header .menu:hover {
+	background: #50C0FF30;
+}
+#header .menu:hover span, #header .menu:hover > a {
+	color: #2C62C8;
+}
+#header .menu:hover > a {
+	color: #00F !important;
+	text-shadow: 0 0 6px #4FF;
+}
+
+#header .menu:hover .items {
+	display: block;
+}
+
+.mainmenubutton {
+	float: right;
+	width: 35px;
+	padding: 10px 10px 18px 10px;
+	position: relative;
+	cursor: pointer;
+	right: 20px;
+	margin-right: -20px;
+	display: none;
+}
+.mainmenubutton:hover {
+	background: #00A0FF30;
+}
+
+.mainmenubutton div {
+	width: 34px;
+	height: 3px;
+	border-radius: 10px;
+	background: rgba(41,101,187,0.7);
+	margin-top: 9px;
+}
+
+@media screen and (max-width: 700px) {
+	h1 {font-size: 40px;}
+	
+	.mainmenubutton {display: block;}
+	
+	#header .menubar {display: none;}
+	
+	#header.showmenu .menubar {display:block;}
+	#header.showmenu .menubar .menu {background: #50C0FF30; display: block; width: 100%; height: auto;padding: 0;}
+	#header.showmenu .menubar .menu span, #header.showmenu .menubar .menu > a {color: #2C62C8; line-height: 40px; width: 100%; display:block;height: 40px;border-top: 2px solid rgba(0,128,255,0.3);border-bottom: 2px solid rgba(0,128,255,0.3);}
+	#header.showmenu .menubar .menu .items {
+		white-space: normal;
+		position: static;
+		display: block;
+		box-shadow: 0 0 0 black;
+		overflow: visible;
+		max-height: none;
+		padding: 0 8px 0 8px;
+	}
+	#header.showmenu .menubar .menu .items div {
+		margin: 0;
+	}
+
+	#header.showmenu .menubar .menu .items {display:none;}
+	#header.showmenu .menubar .menu span {margin-bottom: 5px;}
+	
+	#header.showmenu .menubar .menu.open .items {display:block;}
+	#header.showmenu .menubar .menu.open span {margin-bottom: 0;}
+	
+}
+
+.snowfractalbg {
+	background: url("SnowfractalTile2.jpg");
+	background-size: 768px;
+}
+
+@media screen and (min-width: 1200px) {
+	.snowfractalbg {
+		background-size: 64%;
+	}
+}
+
+.pagebg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -10;
+}
+
+.facetbg {
+	background: #EEE;
+	background: #F0F0F0C0;
+}
+
+div.frame {
+	box-shadow: 0px 0px 5px #aaa;
+	margin: 40px 12.5% 0 12.5%;
+	box-sizing: border-box;
+	position: relative;
+	padding: 40px;
+	
+}
+@media screen and (max-width: 600px) {
+	.facetbg {background-size: 384px;}
+	
+	#header {text-align:center;}
+	
+	div.frame {
+		margin: 40px 6.6vw 0 6.6vw;
+		padding: 6.6vw;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	h1 {font-size: 32px;}
+
+	div.frame {
+		margin: 30px 3.3vw 0 3.3vw;
+	}
+}
+div.frame.attached {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+div.content {
+	background: #F5FFFF;
+	background: rgba(245, 250, 250, 0.9);
+	padding: 30px 10px 10px 10px;
+	position: relative;
+}
+#footer {
+	text-align:center;
+	color: #325FA1;
+	font-size: 14px;
+	font-family: "Ice Fractal", Arial, sans-serif;
+	margin-bottom: 15px;
+	text-shadow: #FFF 0px 0px 30px, #FFF 0px 0px 30px, #FFF 0px 0px 20px, #FFF 0px 0px 20px;
+	cursor: default;
+	margin-top: 100px;
+	
+}
+#footer a {
+	margin: 5px 5px 5px 5px;
+	display: inline-block;
+	text-decoration: none;
+	color: #2F6CFF;
+}
+#footer a:hover {
+	color: #00F;
+}
+
+.icebutton {
+	position: relative;
+	border-top: 3px solid #F0FFFF;
+	border-left: 3px solid #F0FFFF;
+	border-right: 3px solid #9BE;
+	border-bottom: 3px solid #9BE;
+	border-radius: 4px;
+	background: #E8F8FF;
+	
+	padding: 0.15em 0.3em 0.15em 0.3em;
+	//padding: 0;
+	
+	box-shadow: 0 0 2px rgba(0,0,0,0.25);
+	cursor: pointer;
+	display: inline-block;
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	user-select: none;
+	-webkit-user-select: none;
+}
+.icebutton:hover {
+	background:#A5E8FF;
+	
+	border-top: 3px solid #BEF;
+	border-left: 3px solid #BEF;
+	border-right: 3px solid #8BE;
+	border-bottom: 3px solid #8BE;
+}
+.icebutton:active, .icebutton.pressed {
+	top: 2px;
+	left: 2px;
+	box-shadow: 0 0 0 !important;
+	background: #86DFFD;
+	
+	border-bottom: 3px solid #BEF;
+	border-right: 3px solid #BEF;
+	border-left: 3px solid #9CF;
+	border-top: 3px solid #9CF;
+}
+
+.icebutton:disabled {
+	background: #F8FEFF !important;
+	border-top: 3px solid #FFFFFF !important;
+	border-left: 3px solid #FFFFFF !important;
+	border-right: 3px solid #ABD !important;
+	border-bottom: 3px solid #ABD !important;
+	
+	color: #888;
+	top: 0 !important;
+	left: 0 !important;
+	
+	box-shadow: 0 0 0 !important;
+	cursor: default;
+}
+
+.icebutton.large {font-size: 17px;}
+.icebutton.help {border-radius: 30px; font-weight:bold; padding: 0.1em; line-height: 0; height: 1.5em; width: 1.5em;}
+
+a {text-decoration: none; color: #00F;}
+a:hover {text-shadow: 0 0 6px #4FF; /*text-decoration: underline; text-decoration-color: #88F;*/}
+a:active {text-shadow: 0 0 6px #44F;}
+
+.iceinput {
+	background: #FFF;
+	border: 1px solid #457;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+}
+
+code {
+	font-family: "Lucida Console", monospace, sans-serif;
+	font-size: 14px;
+	white-space: pre;
+	overflow-x: auto;
+	width: 100%;
+	display:block;
+	background: white;
+	padding: 5px;
+	box-sizing: border-box;
+	border-top: 2px solid rgba(0,64,128,0.2);
+	border-bottom: 2px solid rgba(0,64,128,0.2);
+}
+
+code .keyword {color: #00F;}
+code .number {color: #008080;}
+code .comment {color: #008000;}
+code .help {cursor: help; text-decoration: underline; text-decoration-color: #0FF; text-decoration-style: dashed;}
+
+.iceimg, .activeimg img {
+	margin: 5px 0 5px 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	border: 1px solid gray;
+}
+
+.iceframe {
+	margin: 5px 0 5px 0;
+	box-sizing: border-box;
+	border: 1px solid gray;
+	height: 500px;
+	width: 500px;
+	max-width: 100%;
+}
+
+.activeimg {
+	display: inline-block;
+	margin: 5px 0 5px 0;
+	cursor: pointer;
+}
+
+.activeimg img {
+	margin-bottom: 0 !important;
+	display: block;
+}
+
+.activeimg div {
+	width: 100%;
+	background: rgba(0,0,0,0.2);
+	box-sizing: border-box;
+	padding: 2px;
+}
+
+button:hover + .license-codesnippet:after,
+button:focus + .license-codesnippet:after,
+button:active + .license-codesnippet:after   {
+	content: "(All code snippets are free for personal and business uses.)";
+	margin-left:5px;
+	font-size: 10pt;
+	color: #6C6C6C;
+}

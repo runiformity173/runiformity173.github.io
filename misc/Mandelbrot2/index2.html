@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="Double-Precision WebGL Mandelbrot Viewer">
+<title>Online Mandelbrot Viewer - Ice Fractal</title>
+
+<style id="fontcss"></style>
+<link rel="stylesheet" href="fractal.css">
+<script src="fractal.js"></script>
+<script src="view.js"></script>
+<script src="gif.js"></script>
+
+<style>
+body {font-family:Arial,sans-serif;}
+#glcanvas {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width:100%;
+	height:100%;
+	user-select: none;
+	-webkit-user-select: none;
+}
+#tbar {
+	position:relative;
+	top: -30px;
+	padding-bottom: 40px;
+}
+#tbar:hover {
+	top: 0;
+}
+.menubtn {
+	display:inline-block;
+	vertical-align:middle;
+	background: rgba(16, 32, 64, 0.5);
+	width: 39px;
+	height: 39px;
+	padding: 6px;
+	margin-bottom: 5px;
+	border-radius: 32px;
+	border: 2px solid rgba(41,101,187,1);
+	cursor: pointer;
+}
+#mainbar.canhover .menubtn:hover {
+	background: rgba(16, 128, 255, 0.5);
+	border-color: rgb(130,200,255);
+}
+#mainbar.canhover .menubtn:hover div {
+	background: rgb(130,200,255);
+}
+.menubtn div {
+	width: 33px;
+	height: 9px;
+	border-radius: 10px;
+	background: rgba(41,101,187,1);
+	border: 2px solid rgba(8,16,32,1);
+	box-sizing: border-box;
+	margin: 3px;
+}
+#mainbar {
+	padding: 5px 0 5px 5px;
+	position: fixed;
+	color: white;
+	font-size: 13px;
+	box-sizing:border-box;
+}
+#mainbar.open {
+	background: rgba(0,0,32,0.5);
+	width: 100%;
+}
+#mainbar .menu {
+	display:none;
+	vertical-align:middle;
+}
+#mainbar.open .menu {
+	display:inline;
+}
+#homelink {
+	display:inline-block;
+	margin-top: -5px;
+	margin-bottom: -5px;
+	height: 65px;
+	line-height: 55px;
+	vertical-align:top;
+}
+#mainbar.canhover #homelink:hover {
+	background: rgba(100,200,255,0.75);
+}
+.leftpadder {padding-left: 70px}
+
+#maintext {
+	color:#BDF;
+	font-size: 18px;
+	vertical-align:middle;
+	display: inline-block;
+	width: calc(100vw - 250px);
+}
+
+@media screen and (max-width: 550px) {
+.leftpadder {padding-left: 0;}
+	#maintext {
+		display: block;
+		width: auto;
+		margin: 5px;
+	}
+	.blocker{display:block;}
+	#homelink {text-align:center;width: calc(100% - 130px);}
+	#mainbar.open .menu {
+		height: 100%;
+	}
+	.iceinput {max-width: calc(50vw - 40px);}
+}
+
+#animdivouter {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background: #0008;
+}
+
+#animdiv {
+	margin-top: 120px;
+	text-align: left;
+	display: inline-block;
+	width: 90vw;
+	max-width: 300px;
+	background: #000A;
+	box-shadow: 0 0 9px #38F;
+	border-radius: 6px;
+	color:#BDF;
+	position: relative;
+	font-size: 14px;
+}
+
+@media screen and (max-height: 760px) {
+#animdiv {
+	margin-top: 10vh;
+}
+}
+
+@media screen and (max-width: 500px), screen and (max-height: 650px) {
+#animdivouter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#animdiv {
+	display: block;
+	margin: 0;
+}
+}
+
+.closebtn {
+	position: absolute !important;
+	left: auto !important;
+	bottom: auto !important;
+	top: 0 !important;
+	right: 0 !important;
+}
+.titlebar {
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	background: #000A;
+	padding: 4px 8px;
+	font-weight: bold;
+}
+
+.dialogcontent {
+	padding: 15px;
+	// text-align: center;
+}
+
+.animtable {display: inline-block; text-align: left;}
+
+.animtable .iceinput, .animtable .icebutton {
+	width: 130px;
+	max-width: unset;
+}
+
+</style>
+</head>
+<body>
+
+<canvas id="glcanvas" tabindex="0" aria-label="Interactive fractal drawing. Use the arrow keys to pan, &lt to zoom out, and &gt; to zoom in." width="1280" height="960"></canvas>
+
+<div id="mainbar" class="canhover" ontouchstart="mainbar.classList.add('canhover');" onmouseover="mainbar.classList.add('canhover');">
+
+<div class="menubtn" tabindex="0" onclick="this.setAttribute('aria-expanded',mainbar.classList.toggle('open'))" onkeydown="if (event.keyCode == 10 || event.keyCode == 13 || event.keyCode == 32) {this.click(); event.preventDefault();}" role="button" aria-label="Menu" aria-expanded="false" aria-controls="mainbar"><div></div><div></div><div></div></div>
+
+<span class="menu" role="main">
+
+<a id="homelink" href='..'><img src='../IceFractalBanner.png' alt="ice Fractal" style='height: 45px; vertical-align:middle;'></a>&nbsp;&nbsp;
+<span class='blocker'></span>
+
+<span id="maintext"><span style='font-family:"Ice Fractal",Arial,sans-serif; position: relative; top: 2px;' role="heading">Mandelbrot Viewer</span> <span style='font-size: 14px;  position: relative; top: 1px; font-weight:normal;'>- The <a href='../articles/mandelbrot/' style='color:#0DF;text-decoration:underline;' target="_blank">Mandelbrot set</a> is drawn in real time using the GPU, with emulated double-precision so you can zoom to 10<sup>13</sup>.</span></span>
+
+<div class='leftpadder'>
+<button class='icebutton' style="min-width: 90px" onclick="CopyText(GetURL());">Copy URL</button> 
+<button class='icebutton' style="min-width: 90px" onclick="saveImage();">Save Image</button>
+<button id="savegifpbtn" class='icebutton' style="min-width: 90px" onclick="giflogbox.innerText = ''; animdivouter.style.display = null; gifwidthbox.focus();" aria-haspopup="dialog">Save GIF</button>
+<span style='display:inline-block;padding: 5px;'><label for="cbox">Colors:</label> <select id='cbox' oninput="setView();render();">
+<option value='0'>Grayscale</option>
+<option value='2' selected>Ice Fractal</option>
+<option value='3'>Ice Fractal 2</option>
+<option value='9'>Ice Fractal 3</option>
+<option value='13'>Ice Fractal 4</option>
+<option value='4'>Fire Fractal</option>
+<option value='1'>Rainbow</option>
+<option value='8'>Dark Rainbow</option>
+<option value='12'>Inner Rainbow</option>
+<option value='5'>Blue-Purple</option>
+<option value='6'>Blue-Green</option>
+<option value='7'>Red-Green</option>
+</select></span>
+<span style='display:inline-block;padding: 5px;'><label for="nbox">Iterations:</label> <input id='nbox' type='number' title="Fractal equation iterations." value='128' max='2048' min='0' style='width: 70px;' class='iceinput' oninput="setView();render();"/></span>
+<span style='display:inline-block;padding: 5px;'><label for="xbox">&nbsp;X:</label> <input id='xbox' value='0' style='width: 120px;' title="X Coordinate" class='iceinput' oninput="glview.pos.x = +xbox.value; setView();render();"/></span>
+<span style='display:inline-block;padding: 5px;'><label for="ybox">&nbsp;Y:</label> <input id='ybox' value='0' style='width: 120px;' title="Y Coordinate" class='iceinput' oninput="glview.pos.y = +ybox.value; setView();render();"/></span>
+<span style='display:inline-block;padding: 5px;'><label for="zbox">Zoom:</label> <input id='zbox' value='1' style='width: 70px;' title="Scale factor." class='iceinput' oninput="glview.scale = +zbox.value; setView();render();"/></span>
+<span style='display:inline-block;padding: 5px;'><label for="aabox">Anti-Alias:</label> <input id='aabox' title="Smooth out flickering pixels." type="number" value='0' step="1" min="0" max="15" style='width: 50px;' class='iceinput' oninput="render();"/></span>
+<span id="dpiopt" style="display:inline-block;padding: 5px;"><input id="dpicb" type="checkbox" oninput="resizeCanvas(); render();"/><label for="dpicb">High DPI</label></span>
+</div>
+</span>
+
+</div>
+
+<div style='font-family:"Ice Fractal",Arial,sans-serif; position:absolute; top:-1000px; left:-1000px; opacity: 0; pointer-events: none;' aria-hidden="true">M<!-- Pre-load the Ice Fractal font--></div>
+
+<div id="animdivouter" style="display:none" onclick="if (!gif) animdivouter.style.display = 'none';">
+<div id="animdiv" role="dialog" aria-labelledby="animdlgtitle" aria-describedby="animdlgdesc" onclick="event.stopPropagation()">
+<div class="titlebar"><span id="animdlgtitle">Save Animated GIF</span><button class="closebtn icebutton" onclick="if (gif) saveGIF(); animdivouter.style.display = 'none'; savegifpbtn.focus()">X</button></div>
+<div class="dialogcontent">
+<div id="animdlgdesc" style="margin-bottom: 15px">Create a GIF animation, zooming from the outer view of the fractal to the current point where you are.</div>
+<table class="animtable">
+<tbody>
+
+<tr><td style="text-align: right"><label for="gifwidthbox">Width:</label></td><td><input id="gifwidthbox" class="iceinput" type="number" min="1" value="400"></td></tr>
+<tr><td style="text-align: right"><label for="gifheightbox">Height:</label></td><td><input id="gifheightbox" class="iceinput" type="number" min="1" value="400"></td></tr>
+<tr><td style="text-align: right"><label for="gifspeedbox">Zoom Speed:</label></td><td><input id="gifspeedbox" class="iceinput" type="number" min="1" step="0.01" value="1.1"></td></tr>
+<tr><td style="text-align: right"><label for="giffpsbox">Frame Rate:</label></td><td><input id="giffpsbox" class="iceinput" type="number" min="1" value="10"></td></tr>
+<tr><td style="height:10px"></td></tr>
+<tr><td></td><td><button id="gifgenbutton" class="icebutton" aria-label="Rendering a GIF will take a minute or more. It will automatically download when finished." onclick="saveGIF();">Generate GIF</button></td></tr>
+<tr><td>&nbsp;</td><td id="giflogbox"></td></tr>
+
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+<script>
+/*
+Double-Precision Mandelbrot Viewer
+(c) Ice Fractal 2022 - www.icefractal.com
+
+This code is open-source under the MIT License.
+
+You must include this copyright notice in anything that includes this code or modified parts of it.
+
+Additionally, you must put a visible link to icefractal.com on anything that uses this code or modified parts of it.
+*/
+
+// https://icefractal.com/mandelbrot/#x=-0.8021929132420496,y=0.1795698852352164,z=2.45e6
+
+if (window.devicePixelRatio <= 1) dpiopt.style.display = "none";
+
+var canvas = document.querySelector('#glcanvas');
+
+var gif = null;
+
+var HWIDTH=0, HHEIGHT=0;
+
+var gl = canvas.getContext('webgl', {antialias:false,alpha:false});
+if (!gl) alert('Unable to initialize WebGL! Your browser may not support it.');
+
+resizeCanvas();
+
+gl.clearColor(0.0, 0.0, 0.0, 1.0); // RGBA
+gl.disable(gl.DEPTH_TEST);
+
+gl.enable(gl.BLEND);
+gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+//gl.enable(gl.ALPHA_TEST);
+//gl.alphaFunc(gl.GREATER, 0);
+
+// Vertex Shader
+var vShaderCode = `
+	attribute vec4 aVertexPosition;
+	void main(void) {
+		gl_Position = aVertexPosition;
+	}
+`;
+
+// Pixel Shader
+var pShaderCode = `
+	precision highp float;
+	
+	uniform highp vec2 center;
+	uniform highp vec3 viewh;
+	uniform highp vec3 viewl;
+	uniform highp int nmax;
+	uniform highp int colorscheme;
+	uniform highp float aanum;
+	
+	vec4 fractal(float xh, float xl, float yh, float yl) {
+		highp float m = 0.0;
+		int en = 2048;
+		
+		/*if (viewh.z > 1.0e-7) {
+			xh += xl;
+			yh += yl;
+			
+			highp float zr = 0.0;
+			highp float zi = 0.0;
+			
+			highp float zrsq = 0.0;
+			highp float zisq = 0.0;
+
+			for (int n = 0; n < 2048; n++) {
+				zi = 2.0 * zr * zi + yh;
+				zr = zrsq - zisq + xh;
+				
+				zrsq = zr*zr;
+				zisq = zi*zi;
+				
+				m = zrsq + zisq;
+				if (m > 4.0) {en = n; break;}
+			}
+			//en -= 20;
+		} else {*/
+			highp float zrh = 0.0;
+			highp float zrl = 0.0;
+			highp float zih = 0.0;
+			highp float zil = 0.0;
+			float zrsq_h = 0.0;
+			float zrsq_l = 0.0;
+			
+			float zisq_h = 0.0;
+			float zisq_l = 0.0;
+			
+			for (int n = 0; n < 2048; n++) {
+				zil = (zrh*zil + zrl*zih + zrl*zil)*2.0 + yl;
+				zih = zrh*zih*2.0 + yh;
+				
+				zrh = zrsq_h - zisq_h + xh;
+				zrl = zrsq_l - zisq_l + xl;
+				
+				if (zrh > 2.0 || zrh < -2.0) {
+					float totalr = zrh + zrl;
+					zrl = zrl - (totalr - zrh);
+					zrh = totalr;
+				}
+				
+				if (zih > 2.0 || zih < -2.0) {
+					float totali = zih + zil;
+					zil = zil - (totali - zih);
+					zih = totali;
+				}
+				
+				zrsq_h = zrh*zrh;
+				zrsq_l = zrh*zrl*2.0 + zrl*zrl;
+				
+				zisq_h = zih*zih;
+				zisq_l = zih*zil*2.0 + zil*zil;
+				
+				m = zrsq_h + zrsq_l + zisq_h + zisq_l;
+				if (m > 4.0) {en = n; break;}
+				if (n == nmax) {en = n; break;}
+			}
+		//}
+		vec4 pcolor;
+		
+		lowp float v = float(en);
+		if (colorscheme == 0) { // Grayscale
+			v = v / float(nmax);
+			pcolor = vec4(v, v, v, 255.0);
+		
+		} else if (colorscheme == 12) { // Inner Rainbow
+			if (m >= 4.0) {
+				v = v / float(nmax) * 2.5;
+				pcolor = vec4(v, v - 1.0, v - 1.0, 1.0);
+				return pcolor;
+			}
+			#define M_PI		3.1415926535897932384626433832795
+			#define M_2PI		6.2831853071795864769252867665590
+			
+			highp float mag = sqrt(m);
+			v = (atan(zih + zil, -zrh - zrl) + M_PI)*(1.0/M_2PI);
+			
+			if (v < 0.1666666666666666)
+				pcolor = vec4(1.0, v*6.0, 0.0, 1.0);
+			else if (v < 0.33333333333333)
+				pcolor = vec4(1.0 - (v - 0.1666666666666)*6.0, 1.0, 0.0, 1.0);
+			else if (v < 0.5)
+				pcolor = vec4(0.0, 1.0, (v - 0.33333333333)*6.0, 1.0);
+			else if (v < 0.66666666666666666)
+				pcolor = vec4(0.0, 1.0 - (v - 0.5)*6.0, 1.0, 1.0);
+			else if (v < 0.83333333333333333)
+				pcolor = vec4((v - 0.666666666666)*6.0, 0.0, 1.0, 1.0);
+			else
+				pcolor = vec4(1.0, 0.0, 1.0 - (v - 0.83333333333333333)*6.0, 1.0);
+			
+			if (mag > 1.0) {
+				mag = 1.0;//pcolor.rgb = vec3(1.0, 1.0, 1.0) - (vec3(1.0, 1.0, 1.0) - pcolor.rgb)*max(2.0 - mag, 0.0);
+			}
+				pcolor.rgb *= mag;
+			return pcolor;
+		} else if (colorscheme == 1 || colorscheme == 8) { // Rainbow
+			if (m > 4.0) v += 6.0 / (m + 0.5);
+			//v = v / float(nmax);
+			
+			if (v >= float(nmax) || v >= 2048.0) {
+				pcolor = vec4(0,0,0,1);
+			} else {
+				v = v / 64.0;
+				v = mod(v, 1.0);
+				
+				if (v < 0.1666666666666666)
+					pcolor = vec4(1.0, v*6.0, 0.0, 1.0);
+				else if (v < 0.33333333333333)
+					pcolor = vec4(1.0 - (v - 0.1666666666666)*6.0, 1.0, 0.0, 1.0);
+				else if (v < 0.5)
+					pcolor = vec4(0.0, 1.0, (v - 0.33333333333)*6.0, 1.0);
+				else if (v < 0.66666666666666666)
+					pcolor = vec4(0.0, 1.0 - (v - 0.5)*6.0, 1.0, 1.0);
+				else if (v < 0.83333333333333333)
+					pcolor = vec4((v - 0.666666666666)*6.0, 0.0, 1.0, 1.0);
+				else
+					pcolor = vec4(1.0, 0.0, 1.0 - (v - 0.83333333333333333)*6.0, 1.0);
+				
+				if (colorscheme == 8) {
+					//v = 2.0*v - 1.0;
+					//v = 1.0 - v*v;
+					v = float(en)/30.0 - 0.1;
+					if (v < 0.0) v = 0.0;
+					else if (v > 1.0) v = 1.0;
+					pcolor.r *= v;
+					pcolor.g *= v;
+					pcolor.b *= v;
+				}
+				
+			}
+			
+			
+		} else {
+			if (m > 4.0) v += 6.0 / (m + 0.5);
+			v = v * (128.0 / 96.0);
+			
+			if (colorscheme == 9) { // Ice Fractal 3
+				v *= 0.003;
+				if (en == nmax) {
+					pcolor = vec4(0,0,0,1);
+				} else {
+					v = log(v + 1.0);
+					v = v*2.0;
+					v = mod(v, 1.0);
+					
+					highp vec3 color;
+					
+					if (v < 0.1666666666666666)
+						color = mix(vec3(0.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), (v - 0.0)*6.0);
+					else if (v < 0.33333333333333)
+						color = mix(vec3(0.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0), (v - 0.1666666666666666)*6.0);
+					else if (v < 0.5)
+						color = mix(vec3(0.0, 1.0, 1.0), vec3(1.0, 1.0, 1.0), (v - 0.33333333333333)*6.0);
+					else if (v < 0.66666666666666666)
+						color = mix(vec3(1.0, 1.0, 1.0), vec3(0.0, 0.0, 0.0), (v - 0.5)*6.0);
+					else if (v < 0.83333333333333333)
+						color = mix(vec3(0.0, 0.0, 0.0), vec3(1.0, 0.0, 0.0), (v - 0.66666666666666666)*6.0);
+					else
+						color = mix(vec3(1.0, 0.0, 0.0), vec3(1.0, 1.0, 0.0), (v - 0.83333333333333333)*6.0);
+					
+					pcolor = vec4(color, 1.0);
+					
+					//pcolor.rgb *= clamp((v - 0.5)*(v - 0.5)*5.0, 0.0, 1.0);
+				}
+				return pcolor;
+			}
+			
+			v = v / float(nmax) - 0.3333333333;
+			
+			if (colorscheme == 3) { // Invert
+				v = 1.0 - v;
+			}
+			
+			if (colorscheme == 4) { // Fire
+				
+				pcolor = vec4(v*10.0, v*1.5, v, 255.0);
+			} else if (colorscheme == 5) { // Blue-Purple
+				
+				pcolor = vec4(v*1.5, v, v*10.0, 255.0);
+			} else if (colorscheme == 6) { // Blue-Green
+				
+				pcolor = vec4(v*v, v*1.5, (v*3.0-1.0)*(v*3.0-1.0)*(v*3.0-1.0) - v*2.0 + 1.0, 255.0);
+			} else if (colorscheme == 7) { // Red-Green
+				
+				pcolor = vec4((v*3.0-1.0)*(v*3.0-1.0)*(v*3.0-1.0) - v*2.0 + 1.0, v*1.5, v*v, 255.0);
+			} else if (colorscheme == 13) { // Ice Fractal 4
+				if (m >= 4.0) {
+					v += 0.2;
+					pcolor = vec4(v, v*1.5, v*10.0, 255.0);
+				} else {
+					highp float mag = sqrt(m);
+					pcolor = vec4(mag, mag*1.5, mag*10.0, 255.0);
+				}
+			} else { // Ice Fractal
+				pcolor = vec4(v, v*1.5, v*10.0, 255.0);
+			}
+		}
+		return pcolor;
+	}
+	
+	void main(void) { // Use a pair of single-precision floats to approximate double-precision math.
+		
+		vec4 w = vec4(0.0, 0.0, 0.0, 0.0);
+		for (float a = 0.0; a < 16.0; a++) {
+			if (a >= aanum) break;
+			vec2 tz = gl_FragCoord.xy;
+			if (a > 0.0) tz += mod(vec2((sin(tz.x*tz.y)+a)*(14.4+a), (sin(tz.x*(1.0 + tz.y))+a + 1.3)*(19.4-a)), 1.0);
+			
+			highp float xh = viewh.x;
+			highp float xl = viewl.x + (tz.x - center.x)*viewh.z;
+			highp float yh = viewh.y;
+			highp float yl = viewl.y + (tz.y - center.y)*viewh.z;
+			
+			w += clamp(fractal(xh, xl, yh, yl), 0.0, 1.0);
+		}
+		
+		w /= aanum;
+		gl_FragColor = w;
+	}
+`;
+
+// Fire: https://icefractal.com/mandelbrot/#x=-1.1339427141279603,y=0.2730235027075661,z=4.27e4,n=170
+
+// creates a shader of the given type, uploads the source and compiles it.
+function loadShader(gl, type, source) {
+	var shader = gl.createShader(type);
+	gl.shaderSource(shader, source);
+	gl.compileShader(shader);
+	
+	// See if it compiled successfully
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
+		gl.deleteShader(shader);
+		return null;
+	}
+	
+	return shader;
+}
+
+var vertexShader = loadShader(gl, gl.VERTEX_SHADER, vShaderCode);
+var fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, pShaderCode);
+
+// Create the shader program
+var shader = gl.createProgram();
+gl.attachShader(shader, vertexShader);
+gl.attachShader(shader, fragmentShader);
+gl.linkProgram(shader);
+
+// If creating the shader program failed, alert
+if (!gl.getProgramParameter(shader, gl.LINK_STATUS)) alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shader));
+
+var aVertexPos = gl.getUniformLocation(shader, 'aVertexPosition');
+var uViewH = gl.getUniformLocation(shader, 'viewh');
+var uViewL = gl.getUniformLocation(shader, 'viewl');
+var uCenter = gl.getUniformLocation(shader, 'center');
+var uNMax = gl.getUniformLocation(shader, 'nmax');
+var uColorScheme = gl.getUniformLocation(shader, 'colorscheme');
+var uAANum = gl.getUniformLocation(shader, 'aanum');
+
+gl.useProgram(shader);
+
+//var x = -0.02283816309144337, y = 0.7581199884780249, scale = 1148845090.3312595;
+//var x = 0, y = 0.1, scale = 50;
+var glview = new IceView(glcanvas);
+glview.disableRightClick = true;
+glview.pos = {x: 0, y: 0.1};
+glview.scale = 50.0;
+glview.ondown = function() {mainbar.classList.remove('canhover'); if (document.activeElement) document.activeElement.blur();}
+glview.onchange = function() {
+	render();
+};
+
+function toFloatPair(n) {
+	n = parseFloat(n);
+	//var fa = new Float32Array([n]);
+	//return [fa[0], n - fa[0]];
+	
+	var f = parseFloat(n.toPrecision(5));
+	
+	return [f, n - f];
+}
+
+function setView() {
+	var dpi = dpicb.checked ? window.devicePixelRatio : 1;
+	
+	var sp = toFloatPair(1.0 / (glview.scale*dpi));
+	
+	var xp = toFloatPair(glview.pos.x);
+	var yp = toFloatPair(glview.pos.y);
+	
+	gl.uniform3f(uViewH, xp[0], yp[0], sp[0]);
+	gl.uniform3f(uViewL, xp[1], yp[1], sp[1]);
+	gl.uniform2f(uCenter, HWIDTH, HHEIGHT);
+	
+	gl.uniform1i(uNMax, nbox.value);
+	gl.uniform1i(uColorScheme, cbox.value);
+}
+
+var posBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,0, 1,-1,0, 1,1,0, -1,1,0]), gl.STATIC_DRAW);
+
+var doSave = false;
+
+function render() {
+	var c = GetCoords();
+	xbox.value = c[0];
+	ybox.value = c[1];
+	zbox.value = c[2];
+	
+	gl.clear(gl.COLOR_BUFFER_BIT);
+	
+	gl.uniform1f(uAANum, Math.max(1, (+aabox.value)+1));
+	
+	setView();
+	
+	gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+	gl.vertexAttribPointer(
+		aVertexPos,
+		3,				// Number of Components
+		gl.FLOAT,		// Data Type
+		false,			// Normalize
+		0,				// Stride
+		0				// Offset
+	);
+	gl.enableVertexAttribArray(aVertexPos);
+	
+	gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+	
+	if (doSave) {
+		doSave = false;
+		downloadURL(glcanvas.toDataURL("image/png"), "Mandelbrot," + GetCoords() + ".png");
+	}
+	if (gif) {
+		// Add another frame to the GIF animation.
+		
+		gif.addFrame(glcanvas, {copy: true, delay: 1000 / giffpsbox.value});
+	}
+	
+	gl.finish(); // Firefox drops frames without this synchronous wait.
+}
+
+function saveImage() {
+	doSave = true;
+	render();
+}
+
+var gifendscale = 0;
+
+function saveGIF() {
+	if (gif) {
+		gif = null;
+		gifgenbutton.innerText = "Generate GIF";
+		giflogbox.innerText = "";
+		glview.scale = gifendscale;
+		resizeCanvas();
+		render();
+		return;
+	}
+	if (gifspeedbox.value <= 1) {
+		giflogbox.style.color = "red";
+		giflogbox.innerText = "Error!\nThe zoom speed factor must be greater than 1.";
+		return;
+	}
+	
+	gifgenbutton.innerText = "Stop";
+	
+	var zoomspeed = +gifspeedbox.value;
+	
+	resizeCanvas(gifwidthbox.value, gifheightbox.value);
+	
+	// Generate the GIF.
+	gif = new GIF({
+		workers: navigator.hardwareConcurrency || 2,
+		quality: 10
+	});
+	
+	gifendscale = glview.scale;
+	glview.scale = 40;
+	
+	render();
+	
+	giflogbox.style.color = null;
+	giflogbox.innerText = "Drawing Frames...";
+	
+	function renderFrame() {
+		render();
+		if (!gif) return; // The operation was canceled.
+		glview.scale *= zoomspeed;
+		if (glview.scale > gifendscale) {
+			giflogbox.style.color = "#0F0";
+			giflogbox.innerHTML = "Compressing GIF...";
+			gifgenbutton.innerText = "(Please Wait)";
+			gifgenbutton.disabled = true;
+			gif.render();
+		} else {
+			setTimeout(renderFrame, 80);
+		}
+	}
+	
+	setTimeout(renderFrame, 80);
+
+	gif.on('finished', function(blob) {
+		if (!gif) return;
+		downloadURL(URL.createObjectURL(blob), "Mandelbrot-Zoom," + GetCoords() + ".gif");
+		gif = null;
+		gifgenbutton.disabled = false;
+		gifgenbutton.innerText = "Generate GIF";
+		giflogbox.innerText = "Done!";
+		resizeCanvas();
+		render();
+	});
+	
+}
+
+function resizeCanvas(width, height) {
+	if (gif) return; // Do not change the canvas size if GIF is being rendered.
+	if (width === undefined) {
+		var dpi = dpicb.checked ? window.devicePixelRatio : 1;
+		width = canvas.clientWidth*dpi;
+		height = canvas.clientHeight*dpi;
+	}
+	
+	if (HWIDTH == width/2.0 || HHEIGHT == height/2.0) return;
+	
+	HWIDTH = width/2.0;
+	HHEIGHT = height/2.0;
+	
+	canvas.width = width;
+	canvas.height = height;
+	gl.viewport(0, 0, width, height);
+}
+
+window.onresize = function() {
+	resizeCanvas();
+	render();
+}
+
+function dezero(s) {
+	if (s.toLowerCase().indexOf("e") == -1) {
+		while (s.length > 1 && s[s.length-1] == '0') s = s.substr(0, s.length-1);
+	}
+	return s;
+}
+
+function GetCoords() {
+	var cprec = Math.round(Math.log10(glview.scale));
+	return [dezero(glview.pos.x.toPrecision(cprec)), dezero(glview.pos.y.toPrecision(cprec)), (""+glview.scale.toPrecision(3)).replace("+", "")];
+}
+
+function GetURL() {
+	var coords = GetCoords();
+	return window.location.origin + window.location.pathname + "#" + "x=" + coords[0] + ",y=" + coords[1] + ",z=" + coords[2] + (nbox.value == 128 ? "" : ',n=' + nbox.value) + (cbox.value == 2 ? "" : ',c=' + cbox.value);
+}
+
+function LoadHash() {
+	var h = window.location.hash;
+	if (h[0] == '#') h = h.substr(1);
+	
+	if (h.indexOf(',') == -1) return;
+	
+	h = splitQuery(h.replace(/\,/g, "&"));
+	
+	console.log(h);
+	
+	if (h.x) glview.pos.x = parseFloat(h.x);
+	if (h.y) glview.pos.y = parseFloat(h.y);
+	if (h.z) glview.scale = parseFloat(h.z);
+	if (h.n) nbox.value = h.n; else nbox.value = 128;
+	if (h.c) cbox.value = h.c; else cbox.value = 2;
+}
+
+window.onhashchange = function() {
+	LoadHash();
+	render();
+}
+
+LoadHash();
+
+render();
+
+document.getElementsByTagName("title")[0].innerHTML = "Mandelbrot Viewer - Ice Fractal";
+glcanvas.focus();
+
+</script>
+
+</body></html>
