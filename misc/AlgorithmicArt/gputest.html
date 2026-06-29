@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3">
+  <title>Algorithmic Art | Runiformity's Websites</title>
+  <meta name="description" content="A configurable Dungeon Master's Screen for resources and keeping track of combat">
+  <meta name="author" content="runiformity173">
+  <link href="/bootstrap.css" rel="stylesheet" type="text/css" />
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+
+<body>
+  <img id="output" draggable="false">
+  <script src="/bootstrap.js"></script>
+  <script src="libs/alea.js"></script>
+  <script src="libs/simplex.js"></script>
+  <script src="libs/gpu.js"></script>
+  <script src="helpers.js"></script>
+
+  <script>
+    function BENCH() {
+        function multiplyNaive(a,b) {
+            const out = [];
+            for (let y = 0; y < a.length; y++) {
+                out.push([])
+                for (let x = 0; x < a[0].length; x++) {
+                    let sum = 0;
+                    for (let i = 0; i < a.length; i++) {
+                        sum += a[y][i] * b[i][x];
+                    }
+                    out[y][x] = sum;
+                }
+            }
+            return out;
+        }
+    const generateMatrices = () => {
+        const matrices = [[], []]
+        for (let y = 0; y < 512; y++){
+        matrices[0].push([])
+        matrices[1].push([])
+        for (let x = 0; x < 512; x++){
+            matrices[0][y].push(Math.random())
+            matrices[1][y].push(Math.random())
+        }
+        }
+        return matrices
+    }
+     const gpu = new GPU.GPU();
+  const multiplyMatrix = gpu.createKernel(function(a, b) {
+    let sum = 0;
+    for (let i = 0; i < 512; i++) {
+      sum += a[this.thread.y][i] * b[i][this.thread.x];
+    }
+    return sum;
+  }).setOutput([512, 512])
+   const matrices = generateMatrices()
+  const out = multiplyMatrix(matrices[0], matrices[1]);
+  multiplyNaive(matrices[0],matrices[1]);
+    console.log("DONE")
+}
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+html {
+  width: 100%;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  --bs-body-color: var(--bs-light);
+  --bs-body-bg: var(--bs-dark);
+  overscroll-behavior: none;
+}
+#output {
+  height: 100%;
+  width: auto;
+}
