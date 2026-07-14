@@ -1,9 +1,13 @@
+COMMAND = "Most Used Edges" # SCC, Longest Path, Pagerank, Most Used Edges
 INCLUDE_PARENTS = True
+ROOT_NAME = "D&D"
 import json
 with open("graph.json","r") as fl:
     data = json.load(fl)
 names = {}
 graph = {}
+graph["root"] = []
+names["root"] = ROOT_NAME
 for node in data["edges"]:
     names[node] = data["names"][node]
     graph[node] = data["edges"][node]
@@ -12,6 +16,10 @@ for node in data["edges"]:
         graph[data["parents"][node]].append(node)
         if INCLUDE_PARENTS:
             graph[node].append(data["parents"][node])
+    else:
+        graph["root"].append(node)
+        if INCLUDE_PARENTS:
+            graph[node].append("root")
 
 ids = {v:k for k,v in names.items()}
 
@@ -109,20 +117,65 @@ def pagerank(g, d=0.85, tol=1e-9, max_iter=100):
         if err < tol:
             break
     return rank
-sccs = []
-scc(graph,lambda x:sccs.append(x))
+from collections import deque, defaultdict
+
+def edge_betweenness_centrality(graph):
+    nodes = set(graph)
+    for neighbors in graph.values():
+        nodes.update(neighbors)
+    graph = {v: graph.get(v, []) for v in nodes}
+    edge_bc = defaultdict(float)
+    for s in nodes:
+        stack = []
+        pred = {v: [] for v in nodes}
+        sigma = {v: 0 for v in nodes}
+        sigma[s] = 1
+        dist = {v: -1 for v in nodes}
+        dist[s] = 0
+        queue = deque([s])
+        while queue:
+            v = queue.popleft()
+            stack.append(v)
+            for w in graph[v]:
+                if dist[w] < 0:
+                    dist[w] = dist[v] + 1
+                    queue.append(w)
+                if dist[w] == dist[v] + 1:
+                    sigma[w] += sigma[v]
+                    pred[w].append(v)
+        delta = {v: 0.0 for v in nodes}
+        while stack:
+            w = stack.pop()
+            for v in pred[w]:
+                c = (sigma[v] / sigma[w]) * (1 + delta[w])
+                edge_bc[(v, w)] += c
+                delta[v] += c
+    return dict(edge_bc)
 dists = apsp(graph)
+if COMMAND == "SCC":
+    sccs = []
+    scc(graph,lambda x:sccs.append(x))
+    l = 0
+    for s in sorted(sccs,key=len,reverse=True):
+        if len(s) < 2:break
+        print(len(s),[names[i] for i in s])
+        l += 1
+    print(len(sccs)-l)
 
-longest = []
+elif COMMAND == "Longest Path":
+    longest = []
 
-for i in dists:
-    for j in dists[i]:
-        if dists[i][j]+1 > len(longest):
-            longest = getPath(i,j)
-print([names[i] for i in longest])
-
-pageRanks = pagerank(graph)
-
-rankSort = list(sorted(pageRanks.items(),key=lambda x:x[1],reverse=True))
-print([(names[k],v) for k,v in rankSort[:10]])
-print([names[i] for i in getPath(ids["The Bleaklands"],ids["The Elemental Council of Three"])])
+    for i in dists:
+        for j in dists[i]:
+            if dists[i][j]+1 > len(longest):
+                longest = getPath(i,j)
+    print([names[i] for i in longest])
+elif COMMAND == "Pagerank":
+    pageRanks = pagerank(graph)
+    rankSort = list(sorted(pageRanks.items(),key=lambda x:x[1],reverse=True))
+    print([(names[k],v) for k,v in rankSort[:10]])
+    print([names[i] for i in getPath(ids["The Bleaklands"],ids["The Elemental Council of Three"])])
+elif COMMAND == "Most Used Edges":
+    bc = edge_betweenness_centrality(graph)
+    for edge, score in sorted(bc.items(), key=lambda x: -x[1]):
+        print(names[edge[0]],names[edge[1]], score)
