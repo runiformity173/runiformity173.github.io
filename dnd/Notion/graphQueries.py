@@ -1,15 +1,19 @@
+INCLUDE_PARENTS = True
 import json
 with open("graph.json","r") as fl:
     data = json.load(fl)
 names = {}
 graph = {}
-for node in data["nodes"]:
-    name = node["data"]["name"].rsplit(" ",1)[0]
-    graph[name] = []
-    names[node["data"]["id"]] = name
-for edge in data["edges"]:
-    graph[names[edge["data"]["source"]]].append(names[edge["data"]["target"]])
+for node in data["edges"]:
+    names[node] = data["names"][node]
+    graph[node] = data["edges"][node]
+for node in data["edges"]:
+    if data["parents"][node]:
+        graph[data["parents"][node]].append(node)
+        if INCLUDE_PARENTS:
+            graph[node].append(data["parents"][node])
 
+ids = {v:k for k,v in names.items()}
 
 from sys import setrecursionlimit
 from collections import deque
@@ -115,9 +119,10 @@ for i in dists:
     for j in dists[i]:
         if dists[i][j]+1 > len(longest):
             longest = getPath(i,j)
-print(longest)
+print([names[i] for i in longest])
 
 pageRanks = pagerank(graph)
 
-rankSort = sorted(pageRanks.items(),key=lambda x:x[1],reverse=True)
-print(rankSort[:10])
+rankSort = list(sorted(pageRanks.items(),key=lambda x:x[1],reverse=True))
+print([(names[k],v) for k,v in rankSort[:10]])
+print([names[i] for i in getPath(ids["The Bleaklands"],ids["The Elemental Council of Three"])])
