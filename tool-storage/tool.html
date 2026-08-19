@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Map Overlay Creator</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:sans-serif;
+}
+
+#toolbar{
+    padding:10px;
+    background:#eee;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+canvas{
+    border-top:1px solid #aaa;
+}
+
+button{
+    padding:6px 12px;
+}
+
+#instructions{
+    color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<div id="toolbar">
+
+<input type="text" id="filename" placeholder="CSE">
+
+<input type="color" id="color" value="#ff0000">
+
+<button id="finish">Finish Polygon</button>
+
+<button id="export">Export PNG</button>
+
+<span id="instructions">
+Click vertices → Finish Polygon → Export
+</span>
+
+</div>
+
+<canvas id="c"></canvas>
+
+<script>
+
+const canvas = new fabric.Canvas('c');
+
+let points = [];
+let circles = [];
+let tempLines = [];
+
+const backgroundImage = "map.png";   // Change this to your image filename
+
+fabric.Image.fromURL(backgroundImage, function(img){
+
+    canvas.clear();
+
+    img.selectable = false;
+    img.evented = false;
+
+    canvas.setWidth(img.width);
+    canvas.setHeight(img.height);
+
+    canvas.setBackgroundImage(
+        img,
+        canvas.renderAll.bind(canvas)
+    );
+
+});
+
+canvas.on("mouse:down",function(opt){
+
+    if(window.finished) return;
+
+    const p = canvas.getPointer(opt.e);
+
+    points.push({x:p.x,y:p.y});
+
+    const circle=new fabric.Circle({
+        left:p.x-4,
+        top:p.y-4,
+        radius:4,
+        fill:"blue",
+        selectable:false,
+        evented:false
+    });
+
+    circles.push(circle);
+    canvas.add(circle);
+
+    if(points.length>1){
+
+        const prev=points[points.length-2];
+
+        const line=new fabric.Line(
+            [prev.x,prev.y,p.x,p.y],
+            {
+                stroke:"blue",
+                selectable:false,
+                evented:false
+            });
+
+        tempLines.push(line);
+        canvas.add(line);
+
+    }
+
+});
+
+document.getElementById("finish").onclick=function(){
+
+    if(points.length<3) return;
+
+    window.finished=true;
+
+    const first=points[0];
+    const last=points[points.length-1];
+
+    canvas.add(new fabric.Line(
+        [last.x,last.y,first.x,first.y],
+        {
+            stroke:"blue",
+            selectable:false,
+            evented:false
+        }));
+
+    circles.forEach(c=>canvas.remove(c));
+    tempLines.forEach(l=>canvas.remove(l));
+
+    window.poly=new fabric.Polygon(points,{
+        fill:document.getElementById("color").value,
+        stroke:"black",
+        strokeWidth:1,
+        objectCaching:false
+    });
+
+    canvas.add(poly);
+    canvas.setActiveObject(poly);
+
+};
+
+document.getElementById("export").onclick=function(){
+
+    if(!window.poly) return;
+
+    const exportCanvas=new fabric.StaticCanvas(null,{
+        width:canvas.width,
+        height:canvas.height,
+        backgroundColor:"rgba(0,0,0,0)"
+    });
+
+    poly.clone(function(clone){
+
+        exportCanvas.add(clone);
+
+        exportCanvas.renderAll();
+
+        const a=document.createElement("a");
+
+        a.download=(document.getElementById("filename").value || "overlay")+".png";
+
+        a.href=exportCanvas.toDataURL({
+            format:"png"
+        });
+
+        a.click();
+
+    });
+
+};
+
+</script>
+
+</body>
+</html>
