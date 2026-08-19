@@ -1,4 +1,12 @@
 const gpu = new GPU.GPU();
+sin(channel, freq, t=0) {
+    const sinKernel = gpu.createKernel(function(a,freq,t) {
+        return 1/2 - 1/2*Math.cos(Math.PI*a[this.thread.x]*2*freq + t);
+    }).setOutput([this.width*this.height]);
+    this[channel] = sinKernel(this[channel],freq,t);
+    sinKernel.destroy();
+    return this;
+}
 class Image {
     constructor(width,height) {
         this.width = width;
@@ -23,24 +31,7 @@ class Image {
         }
         return this;
     }
-    sin(channel, t=0) {
-        for (let i = 0; i < this.width * this.height;i++) {
-            this[channel][i] = Math.sin(this[channel][i]);
-        }
-        return this;
-    }
-    cos(channel, t=0) {
-        for (let i = 0; i < this.width * this.height;i++) {
-            this[channel][i] = Math.cos(this[channel][i]);
-        }
-        return this;
-    }
-    arctan(channel) {
-        for (let i = 0; i < this.width * this.height;i++) {
-            this[channel][i] = Math.atan(this[channel][i]);
-        }
-        return this;
-    }
+    
     gradient(channel, angle) {
         const dx = Math.cos(-angle);
         const dy = Math.sin(-angle);
